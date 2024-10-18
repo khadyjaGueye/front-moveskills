@@ -1,0 +1,126 @@
+
+<!-- <div class="bg-gradient-to-r from-[#114C5A] to-[#EF7743] min-h-screen flex items-center justify-center">
+  <div class="container mx-auto w-full max-w-lg h-96 p-8 bg-white rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-center mb-6">Connexion</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          placeholder="Entrez votre email" />
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm">
+          Veuillez entrer un email valide.
+        </div>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          placeholder="Entrez votre mot de passe" />
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm">
+          Le mot de passe doit comporter au moins 6 caractères.
+        </div>
+        <button type="button" (click)="togglePasswordVisibility()" class="absolute inset-y-0 right-0 flex items-center pr-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path *ngIf="!showPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12c0 4.418 6 9 9 9s9-4.582 9-9-6-9-9-9-9 4.582-9 9zm9 3.586L16.414 15 21 20.586 19.586 22 15 17.414 10.414 22 9 20.586 13.586 16z" />
+            <path *ngIf="showPassword" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12c0 4.418 6 9 9 9s9-4.582 9-9-6-9-9-9-9 4.582-9 9zm6-3v6l5 3V9l-5 3z" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex justify-center">
+        <button
+          type="submit" (click)="connecter()"
+          [disabled]="loginForm.invalid"
+          class="px-4 py-2 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] focus:ring-4 focus:ring-blue-300">
+          Se connecter
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-sm">Vous n'avez pas de compte ?</p>
+      <a  routerLink="register" class="text-blue-500 font-semibold">Inscrivez-vous ici</a>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="container bg-color">
+  <div class="login-box bg-gradient-to-r from-[#114C5A] to-[#EF7743]">
+    <img src="assets/images/mov.jpg" class="rounded-full" />
+    <h2>Connexion</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <input type="email" formControlName="email" placeholder="Entrez votre email" />
+      <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm">
+        Veuillez entrer un email valide.
+      </div>
+      <input type="password" placeholder="Entrez votre mot de passe" formControlName="password" />
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm">
+        Le mot de passe doit comporter au moins 6 caractères.
+      </div>
+      <button class="" (click)="connecter()" [disabled]="loginForm.invalid">Connecter</button>
+    </form>
+    <br />
+    <a href="#">Forgot Password?</a>
+    <div class="mt-6 text-center">
+      <p class="text-sm">Vous n'avez pas de compte ? <a routerLink="/inscription" class="text-blue-500 font-semibold">Inscrivez-vous ici</a></p>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="bg-gradient-to-r from-[#114C5A] to-[#EF7743] min-h-screen flex items-center justify-center">
+  <div class="container mx-auto w-full max-w-lg h-96 p-8 bg-white rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold text-center mb-6">Connexion</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          placeholder="Entrez votre email" />
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm">
+          Veuillez entrer un email valide.
+        </div>
+      </div>
+      <div class="relative">
+        <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          placeholder="Entrez votre mot de passe" />
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm">
+          Le mot de passe doit comporter au moins 6 caractères.
+        </div>
+        <button type="button" (click)="togglePasswordVisibility()" class="absolute inset-y-0 right-0 flex items-center pr-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path *ngIf="!showPassword" d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z"></path>
+            <path *ngIf="showPassword" d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z"></path>
+          </svg>
+        </button> 
+      </div>
+      <div class="flex justify-center">
+        <button
+          type="submit" (click)="connecter()"
+          [disabled]="loginForm.invalid"
+          class="px-4 py-2 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] focus:ring-4 focus:ring-blue-300">
+          Se connecter
+        </button>
+      </div>
+    </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-sm">Vous n'avez pas de compte ?</p>
+      <a routerLink="register" class="text-blue-500 font-semibold">Inscrivez-vous ici</a>
+    </div>
+  </div>
+</div>

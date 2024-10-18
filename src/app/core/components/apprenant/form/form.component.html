@@ -1,0 +1,313 @@
+<!-- start: Main -->
+<div class="mt-0 ml-5">
+  <div class="bg-gray-200 p-4 rounded-md m-5">
+    <span class="text-[#EF7743]">Description</span>
+    <p class="text-[#EF7743]">À terminer avant 10H00m.2024</p>
+    <button (click)="startTest()" class="bg-[#114C5A] hover:bg-[#EF7743] text-white font-bold py-2 px-4 rounded">
+      Démarrer le test
+    </button>
+  </div>
+  <!-- Afficher les couleurs et leurs caracteristiques -->
+  <div *ngIf="displayColorCharacteristics">
+    <span class="uppercase text-2xl font-bold ml-14">Ce qui me caracterise....</span>
+    <div class="flex justify-between">
+      <div>
+        <div class="flex gap-10">
+          <div class="flex gap-20">
+            <div class="ml-10" *ngIf="dominantColor === 'blue'">
+              <div class="text-white ml-10 w-96 text-center h-10 uppercase bg-blue-500">Bleu</div>
+              <p class="ml-20 mt-2">. Rechercher des frais et des explications logiques</p>
+              <p class="ml-20 mt-2">. Actions et prise de décision prudentes</p>
+              <p class="ml-20 mt-2">. Aime l'organisation et les structures</p>
+              <p class="ml-20 mt-2">. N'aime pas etre brusqué</p>
+              <p class="ml-20 mt-2">. S'intéresse aux détails</p>
+              <p class="ml-20 mt-2">. Objectif, analytique et orienté vers les taches</p>
+              <p class="ml-20 mt-2">. Travail seul et avec précision</p>
+              <p class="ml-20 mt-2">. Froid et disant; peu ouverte aux sentiments</p>
+            </div>
+            <div class="" *ngIf="dominantColor === 'red'">
+              <div class="text-white ml-10 w-96 text-center h-10 uppercase bg-red-500">Rouge</div>
+              <p class="ml-20 mt-2">. Rapide; décidé; énergique</p>
+              <p class="ml-20 mt-2">. Directe et pragmatique</p>
+              <p class="ml-20 mt-2">. Sene deu résultat</p>
+              <p class="ml-20 mt-2">. Aime la compétion</p>
+              <p class="ml-20 mt-2">. Recherche le maximum d'indépendance</p>
+              <p class="ml-20 mt-2">. N'aime pas l'inaction</p>
+              <p class="ml-20 mt-2">. TRavail rapidement et seul</p>
+              <p class="ml-20 mt-2">. Aimer controler</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-20 mt-5">
+          <div class="" *ngIf="dominantColor === 'green'">
+            <div class="text-white ml-10 w-96 text-center h-10 uppercase bg-green-500">Vert</div>
+            <p class="ml-20 mt-2">. Attentioné, stable, coopérant</p>
+            <p class="ml-20 mt-2">. Aime les relations personnalisés</p>
+            <p class="ml-20 mt-2">. N'aime pas les conflits</p>
+            <p class="ml-20 mt-2">. Soutien et écoute activement les autres</p>
+            <p class="ml-20 mt-2">. Renforce la cohésion</p>
+            <p class="ml-20 mt-2">. Accomodant</p>
+            <p class="ml-20 mt-2">. Patient</p>
+            <p class="ml-20 mt-2">. Lent à passer à l'acte à décider</p>
+          </div>
+          <div class="" *ngIf="dominantColor === 'yellow'">
+            <div class="text-white ml-10 w-96 text-center h-10 uppercase bg-yellow-500">Jaune</div>
+            <p class="ml-20 mt-2">. Optimisme, enthousiame, communiquant</p>
+            <p class="ml-20 mt-2">. Actions et décisions spontanées</p>
+            <p class="ml-20 mt-2">. Aime travailler en groupe</p>
+            <p class="ml-20 mt-2">. Créatif, tendance à rever</p>
+            <p class="ml-20 mt-2">. Spontanée, sens de l'improvisation</p>
+            <p class="ml-20 mt-2">. Talents de percusion</p>
+            <p class="ml-20 mt-2">. Impulsif</p>
+            <p class="ml-20 mt-2">. Saute d'une activité à l'autre</p>
+          </div>
+        </div>
+      </div>
+      <div class="relative mr-80">
+        <div class="circle-container">
+          <!-- Cercle coloré -->
+          <div class="color-circle" [ngStyle]="getCircleStyle()"></div>
+          <!-- Images à côté des couleurs avec espace -->
+          <div class="absolute top-0 left-0" *ngIf="scores['blue'] > 0">
+            <img src="assets/images/oiseau.jpg" alt="Oiseau" class="animal-icon" />
+            <span>Aigle</span> <!-- Texte alternatif -->
+          </div>
+          <div class="absolute top-0 right-0" *ngIf="scores['red'] > 0">
+            <img src="assets/images/taureau.jpg" alt="Taureau" class="animal-icon" />
+            <span>Taureau</span> <!-- Texte alternatif -->
+          </div>
+          <div class="absolute bottom-0 right-0" *ngIf="scores['yellow'] > 0">
+            <img src="assets/images/singe.jpeg" alt="Singe" class="animal-icon" />
+            <span>Singe</span> <!-- Texte alternatif -->
+          </div>
+          <div class="absolute bottom-0 left-0" *ngIf="scores['green'] > 0">
+            <img src="assets/images/tortue.png" alt="Tortue" class="animal-icon" />
+            <span>Tortue</span> <!-- Texte alternatif -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-10 justify-center">
+      <button (click)=" openModalComm()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Caracterise</button>
+      <button (click)=" openModal()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Communique</button>
+    </div>
+  </div>
+
+  <!-- après avoir cliqué sur le bouton "Démarrer le test" -->
+  <div class="flex items-center justify-center min-h-screen">
+    <!-- Le contenu à centrer -->
+    <div *ngIf="testStarted" class="border  border-gray-400 w-[60%] rounded-md shadow-l">
+      <!-- Indicateur de progression avec numéros -->
+      <div class="flex justify-between items-center p-2 ml-16">
+        <div class="flex space-x-2">
+          <div *ngFor="let question of questions; let index = index" class="relative flex flex-col items-center">
+            <div [class.bg-[#114C5A]]="index < currentQuestionIndex" [class.bg-gray-300]="index >= currentQuestionIndex"
+              class="w-8 h-8 rounded-full flex items-center justify-center text-white">
+              {{ index + 1 }}
+            </div>
+            <!-- Ligne entre les cercles (visible sauf pour le dernier élément) -->
+            <div *ngIf="index < questions.length" class="w-16 h-1 bg-gray-300"
+              [class.bg-green-500]="index < currentQuestionIndex"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Section -->
+      <div *ngIf="currentQuestionIndex < questions.length" class="p-20">
+        <h2 class="text-[#114C5A]">{{ currentQuestionIndex + 1 }}.{{ questions[currentQuestionIndex].text }}</h2>
+
+        <!-- Liste des réponses -->
+        <div *ngFor="let answer of remainingAnswers; let i = index" class="mt-5">
+          <p class="text-[#EF7743]">{{ answer.text }}</p>
+          <div>
+            <label *ngIf="remainingPoints.includes(6)">
+              <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, answer)"> Ce qui me correspond le
+              plus
+            </label>
+            <label *ngIf="remainingPoints.includes(3)">
+              <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, answer)"> Ce qui me correspond assez
+            </label>
+            <label *ngIf="remainingPoints.includes(1)">
+              <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, answer)"> Ce qui me correspond peu
+            </label>
+            <label *ngIf="remainingPoints.includes(0)">
+              <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, answer)"> Ce qui ne me correspond
+              pas du tout
+            </label>
+          </div>
+        </div>
+
+        <!-- Boutons pour naviguer entre les questions -->
+        <div class="mt-4">
+          <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()"
+            class="bg-[#EF7743] text-white px-4 py-2 rounded-md mr-2">
+            Précédent
+          </button>
+          <button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()"
+            class="bg-[#114C5A] text-white px-4 py-2 rounded-md">
+            Suivant
+          </button>
+        </div>
+      </div>
+
+      <!-- Si toutes les questions sont terminées, afficher le bouton Envoyer -->
+      <div *ngIf="currentQuestionIndex == questions.length" class="p-20">
+        <button (click)="sendResults(); closeTest()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">
+          Envoyer
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Apres avoir fait le test on affiche le couleur ce qui conrrond le plus avec le cercle de ces couleurs-->
+
+  <!-- Modal pour afficher les résultats -->
+  <!-- <div *ngIf="showResultsModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-xl font-bold mb-4">Résultats du test</h2>
+        <p class="text-red-500">Rouge: {{ scores['red'] }} points</p>
+        <p class="text-yellow-500">Jaune: {{ scores['yellow'] }} points</p>
+        <p class="text-green-500">Vert: {{ scores['green'] }} points</p>
+        <p class="text-blue-500">Bleu: {{ scores['blue'] }} points</p> -->
+  <!-- Affichage du texte avec la couleur du score le plus élevé -->
+  <!-- <p [ngStyle]="{'color': getHighestScoreColor()}">
+          Couleur avec le plus de points : {{ getHighestScoreColor() | titlecase }}
+        </p>
+        <p class="font-bold">Somme totale des points est : {{ calculateTotalColorScore() }} points</p> -->
+  <!-- Bouton pour fermer la modal -->
+  <!-- <button (click)="closeModal(); sendResults()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Fermer</button>
+      </div>
+    </div> -->
+</div>
+<!-- modal pour bien communiquer avec.... -->
+<div>
+  <div *ngIf="open" class="fixed inset-0 z-60 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-7xl w-full">
+      <div class="flex justify-between">
+        <span class="uppercase text-2xl font-bold ml-16">Pour bien communiquer avec...</span>
+        <button class="text-red-400 hover:text-gray-700 text-right" (click)="closeModal()">x</button>
+      </div>
+      <div class="flex">
+        <div>
+          <div class="flex gap-10">
+            <div class="flex gap-20">
+              <div class="">
+                <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-blue-500">Bleu</div>
+                <p class="ml-4 md:ml-20 mt-2">. Soyez précis, factuel, structuré</p>
+                <p class="ml-4 md:ml-20 mt-2">. Préparez vos entretiens</p>
+                <p class="ml-4 md:ml-20 mt-2">. Soutenez une approche réakiste et mesuré</p>
+                <p class="ml-4 md:ml-20 mt-2">. Prenez le temps d'aller dans les délaits</p>
+                <p class="ml-4 md:ml-20 mt-2">. Ne le brusquez pas</p>
+                <p class="ml-4 md:ml-20 mt-2">. Ne cherchez pas à rechauffer l'ambiance</p>
+                <p class="ml-4 md:ml-20 mt-2">. Restez distant, ne le touchez pas</p>
+                <p class="ml-4 md:ml-20 mt-2">. Soyez pret qu'il contient les faits</p>
+              </div>
+              <div class="">
+                <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-red-500">Rouge</div>
+                <p class="ml-4 md:ml-20 mt-2">. Soyez concis et affirmé</p>
+                <p class="ml-4 md:ml-20 mt-2">. Allez droit au but</p>
+                <p class="ml-4 md:ml-20 mt-2">. Les questionnaires sur leurs objectifs</p>
+                <p class="ml-4 md:ml-20 mt-2">. Amener les à etre moteur et décider</p>
+                <p class="ml-4 md:ml-20 mt-2">. Valoriser leur sens au défi et de la réactivité</p>
+                <p class="ml-4 md:ml-20 mt-2">. Eviter trop factuel</p>
+                <p class="ml-4 md:ml-20 mt-2">. Restez factuel</p>
+                <p class="ml-4 md:ml-20 mt-2">. Préparez vous à defendre vos arguments</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-20 mt-5">
+            <div class="">
+              <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-green-500">Vert</div>
+              <p class="ml-4 md:ml-20 mt-2">. Soyez empathique, relationnel et animal</p>
+              <p class="ml-4 md:ml-20 mt-2">. Créer des relations partenaires et solides</p>
+              <p class="ml-4 md:ml-20 mt-2">. Donnez vous du temps pour construie la confiance</p>
+              <p class="ml-4 md:ml-20 mt-2">. Accompagnez et aider les à décider</p>
+              <p class="ml-4 md:ml-20 mt-2">. Respectez leus idées</p>
+              <p class="ml-4 md:ml-20 mt-2">. N'ayez pas peur de leur moments de silence</p>
+              <p class="ml-4 md:ml-20 mt-2">. Ne critiquez pas de tierces personnes</p>
+              <p class="ml-4 md:ml-20 mt-2">. Soyez patients</p>
+            </div>
+            <div class="">
+              <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-yellow-500">Jaune</div>
+              <p class="ml-4 md:ml-20 mt-2">. Monterz vous relationnel</p>
+              <p class="ml-4 md:ml-20 mt-2">. Soyez créatif et informel</p>
+              <p class="ml-4 md:ml-20 mt-2">. Partagez leur plaisir et laissez les s'exprimer</p>
+              <p class="ml-4 md:ml-20 mt-2">. Revez avec eux</p>
+              <p class="ml-4 md:ml-20 mt-2">. Les aider à canaliser leur énergie</p>
+              <p class="ml-4 md:ml-20 mt-2">. Restez dynamique et engageant </p>
+              <p class="ml-4 md:ml-20 mt-2">. Valoriser leur sens de créativité</p>
+              <p class="ml-4 md:ml-20 mt-2">. Soyez pret à dévier du sujet</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour ce qui me caraterise... -->
+<div>
+  <div *ngIf="displayCom" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-7xl w-full">
+      <div class="flex justify-between">
+        <span class="uppercase text-2xl font-bold ml-16">Ce qui me caraterise...</span>
+        <button class="text-red-400 hover:text-gray-700 text-right" (click)="closeCom()">x</button>
+      </div>
+      <div class="flex">
+        <div>
+          <div class="flex gap-10">
+            <div class="flex gap-20">
+              <div class="">
+                <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-blue-500">Bleu</div>
+                <p class="ml-20 mt-2">. Rechercher des frais et des explications logiques</p>
+                <p class="ml-20 mt-2">. Actions et prise de décision prudentes</p>
+                <p class="ml-20 mt-2">. Aime l'organisation et les structures</p>
+                <p class="ml-20 mt-2">. N'aime pas etre brusqué</p>
+                <p class="ml-20 mt-2">. S'intéresse aux détails</p>
+                <p class="ml-20 mt-2">. Objectif, analytique et orienté vers les taches</p>
+                <p class="ml-20 mt-2">. Travail seul et avec précision</p>
+                <p class="ml-20 mt-2">. Froid et disant; peu ouverte aux sentiments</p>
+              </div>
+              <div class="">
+                <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-red-500">Rouge</div>
+                <p class="ml-20 mt-2">. Rapide; décidé; énergique</p>
+                <p class="ml-20 mt-2">. Directe et pragmatique</p>
+                <p class="ml-20 mt-2">. Sene deu résultat</p>
+                <p class="ml-20 mt-2">. Aime la compétion</p>
+                <p class="ml-20 mt-2">. Recherche le maximum d'indépendance</p>
+                <p class="ml-20 mt-2">. N'aime pas l'inaction</p>
+                <p class="ml-20 mt-2">. TRavail rapidement et seul</p>
+                <p class="ml-20 mt-2">. Aimer controler</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-20 mt-5">
+            <div class="">
+              <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-green-500">Vert</div>
+              <p class="ml-20 mt-2">. Attentioné, stable, coopérant</p>
+              <p class="ml-20 mt-2">. Aime les relations personnalisés</p>
+              <p class="ml-20 mt-2">. N'aime pas les conflits</p>
+              <p class="ml-20 mt-2">. Soutien et écoute activement les autres</p>
+              <p class="ml-20 mt-2">. Renforce la cohésion</p>
+              <p class="ml-20 mt-2">. Accomodant</p>
+              <p class="ml-20 mt-2">. Patient</p>
+              <p class="ml-20 mt-2">. Lent à passer à l'acte à décider</p>
+            </div>
+            <div class="">
+              <div class="text-white ml-16 w-96 text-center h-10 uppercase bg-yellow-500">Jaune</div>
+              <p class="ml-20 mt-2">. Optimisme, enthousiame, communiquant</p>
+              <p class="ml-20 mt-2">. Actions et décisions spontanées</p>
+              <p class="ml-20 mt-2">. Aime travailler en groupe</p>
+              <p class="ml-20 mt-2">. Créatif, tendance à rever</p>
+              <p class="ml-20 mt-2">. Spontanée, sens de l'improvisation</p>
+              <p class="ml-20 mt-2">. Talents de percusion</p>
+              <p class="ml-20 mt-2">. Impulsif</p>
+              <p class="ml-20 mt-2">. Saute d'une activité à l'autre</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

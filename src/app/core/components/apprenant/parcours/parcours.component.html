@@ -1,0 +1,140 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ml-10">
+  <div *ngFor="let parcour of parcours"
+    class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+    <div class="relative inline-block w-full">
+      <!-- Image avec spans superposés -->
+      <img class="w-full h-44 object-cover" src="assets/images/soi.avif" alt="product image" />
+
+      <!-- Span "Free" ou "Premium" en fonction de la disponibilité -->
+      <span *ngIf="parcour.status_disponibilite === 'disponible'; else premiumLabel"
+        class="absolute top-2 left-2 bg-[#114C5A] text-neutral-900 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-[#EF7743]">
+        Free
+      </span>
+
+      <!-- Label Premium si non disponible -->
+      <ng-template #premiumLabel>
+        <span
+          class="absolute top-2 left-2 bg-[#F9BD4F] text-neutral-900 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-[#EF7743]">
+          Premium
+        </span>
+      </ng-template>
+
+      <!-- Span "Durée" en bas à gauche -->
+      <span
+        class="absolute bottom-2 left-2 bg-blue-100 text-[#EF7743] text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-[#EF7743]">
+        {{parcour.duree}} jours
+      </span>
+    </div>
+
+    <div class="px-5 pb-5">
+      <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{parcour.nom_parcour}}</h5>
+      <span>Prix: {{parcour.prix}}</span>
+
+      <div class="flex items-center justify-between mt-4">
+        <img class="p-2 rounded-t-lg" src="assets/images/user.png" alt="user image" />
+        <h1>Monsieur Roland</h1>
+        <!-- <a routerLink="/core/apprenant/list" routerLinkActive="router-active"
+          class="text-white bg-[#114C5A] hover:bg-[#EF7743] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Ouvrir
+        </a> -->
+        <button (click)="openModalParcour()"
+          class="text-white bg-[#114C5A] hover:bg-[#EF7743] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Lire</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="display" tabindex="-1" aria-hidden="true" id="createParcoursModal"
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-[40%]">
+    <button class="flex items-center mb-4">
+      <svg (click)="closeModalParcour()" class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+        fill="currentColor">
+        <path
+          d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z">
+        </path>
+      </svg>
+      <h2>Parcours Confiance en soi</h2>
+    </button>
+
+    <div class="bg-[#114C5A] text-white p-3 mb-4">
+      <h1>Description</h1>
+      <p>Kale chips hashtag tofu, vegan semiotics pork belly selfies grailed blog pickled tote bag polaroid. Praxis lomo
+        gentrify cold-pressed 8-bit cardigan, ramps farm-to-table mixtape. Offal marxism forage Brooklyn asymmetrical.
+        Kinfolk drinking vinegar readymade jawn farm-to-table leggings. Vegan sus dreamcatcher pitchfork, mukbang hella
+        activated charcoal small batch williamsburg. Offal chia narwhal PBR&B, chartreuse forage blog schlitz
+        letterpress.</p>
+      <div class="flex justify-between">
+        <div class="flex gap-2">
+          <img class="p-2 rounded-t-lg" src="assets/images/user.png" alt="user image" />
+          <h1 class="mt-5">Monsieur Roland</h1>
+        </div>
+        <button class="text-[#FFDE73] bg-[#114C5A]">Voir profil</button>
+      </div>
+    </div>
+
+    <!-- Grille des catégories avec 2 colonnes -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Carte Vidéos -->
+      <div class="bg-[#4C4D79] p-4 text-center rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
+          <path
+            d="M2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM4 5V19H20V5H4ZM10.6219 8.41459L15.5008 11.6672C15.6846 11.7897 15.7343 12.0381 15.6117 12.2219C15.5824 12.2658 15.5447 12.3035 15.5008 12.3328L10.6219 15.5854C10.4381 15.708 10.1897 15.6583 10.0672 15.4745C10.0234 15.4088 10 15.3316 10 15.2526V8.74741C10 8.52649 10.1791 8.34741 10.4 8.34741C10.479 8.34741 10.5562 8.37078 10.6219 8.41459Z">
+          </path>
+        </svg>
+        <a routerLink="/core/apprenant/list" routerLinkActive="router-active">10 Vidéos</a>
+      </div>
+
+      <!-- Carte Articles -->
+      <div class="bg-[#114C5A] p-4 text-center rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
+          <path
+            d="M13 21V23H11V21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H9C10.1947 3 11.2671 3.52375 12 4.35418C12.7329 3.52375 13.8053 3 15 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H13ZM20 19V5H15C13.8954 5 13 5.89543 13 7V19H20ZM11 19V7C11 5.89543 10.1046 5 9 5H4V19H11Z">
+          </path>
+        </svg>
+        <a routerLink="/core/apprenant/list" routerLinkActive="router-active">4 Articles</a>
+      </div>
+
+      <!-- Carte Audios -->
+      <div class="bg-[#FFDE73] p-4 text-center rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
+          <path
+            d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM11 13.05C10.8384 13.0172 10.6712 13 10.5 13C9.11929 13 8 14.1193 8 15.5C8 16.8807 9.11929 18 10.5 18C11.8807 18 13 16.8807 13 15.5V11H16V9H11V13.05Z">
+          </path>
+        </svg>
+        <h2>5 Audios</h2>
+      </div>
+
+      <!-- Carte Challenges -->
+      <div class="bg-[#EF7743] p-4 text-center rounded-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
+          <path
+            d="M12 6.99999C16.4183 6.99999 20 10.5817 20 15C20 19.4183 16.4183 23 12 23C7.58172 23 4 19.4183 4 15C4 10.5817 7.58172 6.99999 12 6.99999ZM12 8.99999C8.68629 8.99999 6 11.6863 6 15C6 18.3137 8.68629 21 12 21C15.3137 21 18 18.3137 18 15C18 11.6863 15.3137 8.99999 12 8.99999ZM12 10.5L13.3225 13.1797L16.2798 13.6094L14.1399 15.6953L14.645 18.6406L12 17.25L9.35497 18.6406L9.86012 15.6953L7.72025 13.6094L10.6775 13.1797L12 10.5ZM18 1.99999V4.99999L16.6366 6.13755C15.5305 5.5577 14.3025 5.17884 13.0011 5.04948L13 1.99899L18 1.99999ZM11 1.99899L10.9997 5.04939C9.6984 5.17863 8.47046 5.55735 7.36441 6.13703L6 4.99999V1.99999L11 1.99899Z">
+          </path>
+        </svg>
+        <h2>3 Challenges</h2>
+      </div>
+    </div>
+    <div class="text-center">
+      <h1 class="mt-5">Partager le cours</h1>
+      <div class="flex justify-center p-2 gap-4">
+        <svg class="w-6 h-6 text-[#114C5A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.001 2C6.47813 2 2.00098 6.47715 2.00098 12C2.00098 16.9913 5.65783 21.1283 10.4385 21.8785V14.8906H7.89941V12H10.4385V9.79688C10.4385 7.29063 11.9314 5.90625 14.2156 5.90625C15.3097 5.90625 16.4541 6.10156 16.4541 6.10156V8.5625H15.1931C13.9509 8.5625 13.5635 9.33334 13.5635 10.1242V12H16.3369L15.8936 14.8906H13.5635V21.8785C18.3441 21.1283 22.001 16.9913 22.001 12C22.001 6.47715 17.5238 2 12.001 2Z"></path>
+        </svg>
+        <svg class="w-6 h-6 text-[#114C5A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.2048 2.25H21.5128L14.2858 10.51L22.7878 21.75H16.1308L10.9168 14.933L4.95084 21.75H1.64084L9.37084 12.915L1.21484 2.25H8.04084L12.7538 8.481L18.2048 2.25ZM17.0438 19.77H18.8768L7.04484 4.126H5.07784L17.0438 19.77Z"></path>
+        </svg>
+        <svg class="w-6 h-6 text-[#114C5A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7.25361 18.4944L7.97834 18.917C9.18909 19.623 10.5651 20 12.001 20C16.4193 20 20.001 16.4183 20.001 12C20.001 7.58172 16.4193 4 12.001 4C7.5827 4 4.00098 7.58172 4.00098 12C4.00098 13.4363 4.37821 14.8128 5.08466 16.0238L5.50704 16.7478L4.85355 19.1494L7.25361 18.4944ZM2.00516 22L3.35712 17.0315C2.49494 15.5536 2.00098 13.8345 2.00098 12C2.00098 6.47715 6.47813 2 12.001 2C17.5238 2 22.001 6.47715 22.001 12C22.001 17.5228 17.5238 22 12.001 22C10.1671 22 8.44851 21.5064 6.97086 20.6447L2.00516 22ZM8.39232 7.30833C8.5262 7.29892 8.66053 7.29748 8.79459 7.30402C8.84875 7.30758 8.90265 7.31384 8.95659 7.32007C9.11585 7.33846 9.29098 7.43545 9.34986 7.56894C9.64818 8.24536 9.93764 8.92565 10.2182 9.60963C10.2801 9.76062 10.2428 9.95633 10.125 10.1457C10.0652 10.2428 9.97128 10.379 9.86248 10.5183C9.74939 10.663 9.50599 10.9291 9.50599 10.9291C9.50599 10.9291 9.40738 11.0473 9.44455 11.1944C9.45903 11.25 9.50521 11.331 9.54708 11.3991C9.57027 11.4368 9.5918 11.4705 9.60577 11.4938C9.86169 11.9211 10.2057 12.3543 10.6259 12.7616C10.7463 12.8783 10.8631 12.9974 10.9887 13.108C11.457 13.5209 11.9868 13.8583 12.559 14.1082L12.5641 14.1105C12.6486 14.1469 12.692 14.1668 12.8157 14.2193C12.8781 14.2457 12.9419 14.2685 13.0074 14.2858C13.0311 14.292 13.0554 14.2955 13.0798 14.2972C13.2415 14.3069 13.335 14.2032 13.3749 14.1555C14.0984 13.279 14.1646 13.2218 14.1696 13.2222V13.2238C14.2647 13.1236 14.4142 13.0888 14.5476 13.097C14.6085 13.1007 14.6691 13.1124 14.7245 13.1377C15.2563 13.3803 16.1258 13.7587 16.1258 13.7587L16.7073 14.0201C16.8047 14.0671 16.8936 14.1778 16.8979 14.2854C16.9005 14.3523 16.9077 14.4603 16.8838 14.6579C16.8525 14.9166 16.7738 15.2281 16.6956 15.3913C16.6406 15.5058 16.5694 15.6074 16.4866 15.6934C16.3743 15.81 16.2909 15.8808 16.1559 15.9814C16.0737 16.0426 16.0311 16.0714 16.0311 16.0714C15.8922 16.159 15.8139 16.2028 15.6484 16.2909C15.391 16.428 15.1066 16.5068 14.8153 16.5218C14.6296 16.5313 14.4444 16.5447 14.2589 16.5347C14.2507 16.5342 13.6907 16.4482 13.6907 16.4482C12.2688 16.0742 10.9538 15.3736 9.85034 14.402C9.62473 14.2034 9.4155 13.9885 9.20194 13.7759C8.31288 12.8908 7.63982 11.9364 7.23169 11.0336C7.03043 10.5884 6.90299 10.1116 6.90299 9.61884C6.90299 9.15573 7.01655 8.67994 7.19512 8.25363C7.26898 8.07171 7.49691 7.41957 7.49691 7.41957C7.56866 7.22418 7.69768 7.12157 7.85361 7.30833Z"></path>
+        </svg>
+        <svg class="w-6 h-6 text-[#114C5A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12ZM12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12.3584 9.38246C11.3857 9.78702 9.4418 10.6244 6.5266 11.8945C6.05321 12.0827 5.80524 12.2669 5.78266 12.4469C5.74451 12.7513 6.12561 12.8711 6.64458 13.0343C6.71517 13.0565 6.78832 13.0795 6.8633 13.1039C7.37388 13.2698 8.06071 13.464 8.41776 13.4717C8.74164 13.4787 9.10313 13.3452 9.50222 13.0711C12.226 11.2325 13.632 10.3032 13.7203 10.2832C13.7826 10.269 13.8689 10.2513 13.9273 10.3032C13.9858 10.3552 13.98 10.4536 13.9739 10.48C13.9361 10.641 12.4401 12.0318 11.6659 12.7515C11.4351 12.9661 11.2101 13.1853 10.9833 13.4039C10.509 13.8611 10.1533 14.204 11.003 14.764C11.8644 15.3317 12.7323 15.8982 13.5724 16.4971C13.9867 16.7925 14.359 17.0579 14.8188 17.0156C15.0861 16.991 15.3621 16.7397 15.5022 15.9903C15.8335 14.2193 16.4847 10.3821 16.6352 8.80083C16.6484 8.6623 16.6318 8.485 16.6185 8.40717C16.6052 8.32934 16.5773 8.21844 16.4762 8.13635C16.3563 8.03913 16.1714 8.01863 16.0887 8.02009C15.7125 8.02672 15.1355 8.22737 12.3584 9.38246Z">
+          </path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>

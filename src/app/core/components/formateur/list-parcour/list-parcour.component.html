@@ -1,0 +1,390 @@
+<div class="p-6 mt-10">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+    <span>Les parcours</span>
+    <form class="max-w-md mx-auto">
+      <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+      <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
+        </div>
+        <input type="search" id="default-search"
+          class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Rechercher un parcours" required />
+      </div>
+    </form>
+    <button type="button" (click)="openModalParcour()" data-modal-target="authentication-modal"
+      class="py-2.5 px-1 me-2 mb-1 bg-[#114C5A] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">+
+      Créer parcours</button>
+  </div>
+
+
+  <div class="mt-20">
+    <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md w-full">
+      <div class="overflow-x-auto w-full">
+        <table class="w-full min-w-[540px]" data-tab-for="order" data-page="active">
+          <thead>
+            <tr>
+              <th
+                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
+                Parcours formation</th>
+              <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+                Audience</th>
+              <th
+                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
+                Prix(fcfa)</th>
+              <th
+                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
+                Apprenant</th>
+              <th
+                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
+                Durée</th>
+              <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+                Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let parcour of parcours">
+              <td class="py-2 px-4 border-b border-b-gray-50">{{parcour.nom_parcour}}</td>
+              <td class="py-2 px-4 border-b border-b-gray-50">
+                <span class="text-[13px] font-medium text-gray-400">Graduit</span>
+              </td>
+              <td class="py-2 px-4 border-b border-b-gray-50">
+                <span
+                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.prix}}</span>
+              </td>
+              <td class="py-2 px-4 border-b border-b-gray-50">
+                <span
+                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">90</span>
+              </td>
+              <td class="py-2 px-4 border-b border-b-gray-50">
+                <span
+                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.duree}}jours</span>
+              </td>
+              <td class="py-2 px-4 border-b border-b-gray-50">
+                <div class="flex items-center space-x-2"> <!-- Flexbox pour aligner sur une ligne -->
+                  <svg (click)="openModalDocument(parcour.id)" class="px-1 py-1 w-10 bg-[#F9BD4F] text-white" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M9 2.00318V2H19.9978C20.5513 2 21 2.45531 21 2.9918V21.0082C21 21.556 20.5551 22 20.0066 22H3.9934C3.44476 22 3 21.5501 3 20.9932V8L9 2.00318ZM5.82918 8H9V4.83086L5.82918 8ZM11 4V9C11 9.55228 10.5523 10 10 10H5V20H19V4H11Z">
+                    </path>
+                  </svg>
+                  <svg (click)="openModalVideo(parcour.id)" class="px-1 py-1 w-10 bg-[#F9BD4F] text-white"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M14 10.25L17 8V14L14 11.75V14H7V8H14V10.25ZM5.76282 17H20V5H4V18.3851L5.76282 17ZM6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455Z">
+                    </path>
+                  </svg>
+                </div>
+              </td>
+            </tr>
+            <!-- Add more rows as needed -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- !-- Modal 1 pour ajouter un parcours-->
+<div *ngIf="openModal" tabindex="-1" aria-hidden="true" id="createParcoursModal"
+  class=" fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6" *ngIf="currentStep === 1">
+
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold"></h2>
+      <button (click)="closeModals()" class="text-red-400 hover:text-gray-700">x</button>
+    </div>
+    <h1 class="text-center text-xl font-semibold">Information générales</h1>
+    <!-- Form for creating parcours -->
+    <form>
+      <div class="items-center border-b border-gray-400 py-2">
+        <label for="" class="uppercase">Nom du Parcours De Foramtion</label>
+        <input [(ngModel)]="formData.info.nom_parcour" name="nom"
+          class="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 px-2 leading-tight focus:outline-none"
+          type="text" placeholder="Nom de la formation" aria-label="Full name">
+      </div>
+      <div class="flex gap-5 mt-5">
+
+        <div class="flex gap-1">
+          <label class="uppercase text-slate-600 font-semibold">Type</label>
+          <div class="inline-flex items-center">
+            <label class="relative flex items-center cursor-pointer" for="html-custom-icon">
+              <input type="radio" [(ngModel)]="formData.info.status_type" type="radio" name="type" value="Gratuit"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
+                id="html-custom-icon" checked />
+            </label>
+            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="html-custom-icon">
+              Graduit
+            </label>
+          </div>
+          <div class="inline-flex items-center">
+            <label class="relative flex items-center cursor-pointer" for="react-custom-icon">
+              <input [(ngModel)]="formData.info.status_type" type="radio" name="type" value="Premium"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
+                id="react-custom-icon" />
+            </label>
+            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="react-custom-icon">
+              Permium
+            </label>
+          </div>
+        </div>
+        <div class="flex gap-1 ml-30">
+          <label class="uppercase text-slate-600 font-semibold">Audience</label>
+          <div class="inline-flex items-center">
+            <label class="relative flex items-center cursor-pointer" for="html-custom-icon">
+              <input [(ngModel)]="formData.info.status_audiance" type="radio" name="audience" value="Public"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
+                id="html-custom-icon" checked />
+            </label>
+            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="html-custom-icon">
+              Public
+            </label>
+          </div>
+          <div class="inline-flex items-center">
+            <label
+              class="relhttps://www.figma.com/design/kFSuaRPTTJVlS8LxXRKw1V/Move-Skills---Redesign?node-id=0-1&t=yze2rIcHVVsCbfzu-1ative flex items-center cursor-pointer"
+              for="react-custom-icon">
+              <input [(ngModel)]="formData.info.status_audiance" type="radio" name="audience" value="Privée"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
+                id="react-custom-icon" />
+            </label>
+            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="react-custom-icon">
+              Privée
+            </label>
+          </div>
+        </div>
+
+        <div class="items-center border-b border-gray-400 py-2 ml-60">
+          <label for="" class="uppercase">Durée(jours)</label>
+          <input [(ngModel)]="formData.info.duree" name="duree"
+            class="appearance-none bg-transparent border-none w-full text-gray-500  leading-tight focus:outline-none"
+            type="number" placeholder="10" aria-label="Full name">
+        </div>
+      </div>
+
+      <div class="items-center border-b border-gray-400 py-2">
+        <label for="" class="uppercase">Ojectif de la formation</label>
+        <input [(ngModel)]="formData.info.objectif" name="objectif"
+          class="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 px-2 leading-tight focus:outline-none"
+          type="text" placeholder="Renseigner l'objectif de la formation" aria-label="Full name">
+      </div>
+      <!-- Section des compétences sélectionnées -->
+      <h2 class="mt-8 text-lg font-bold">Compétences sélectionnées</h2>
+      <div class="flex flex-wrap gap-4 mt-4">
+        <div *ngFor="let selected of selectedSkills"
+          class="card w-40 bg-blue-100 p-4 text-center shadow-md rounded-md relative">
+          <p>{{ selected.name }}</p>
+          <button class="absolute top-1 right-1 text-red-500" (click)="removeSkill(selected)">✕</button>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-4 mt-5">
+        <!-- Liste des compétences -->
+        <div *ngFor="let skill of skills" class="card w-40 h-15 bg-gray-100 p-4 text-center shadow-md rounded-md">
+          <p (click)="selectSkill(skill)">{{ skill.name}}</p>
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <button (click)="submitParcours();closeModal()" type="submit"
+          class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md mt-5">Suivant</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal 2 (Step 2) pour ajouter des videos -->
+<div class="flex gap-4 mt-4">
+  <div *ngIf="displayVideo" tabindex="-1" aria-hidden="true" id="modalStep2"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Étape 2: Ajoutez un contenu</h2>
+        <button class="text-red-400 hover:text-gray-700" (click)="closeModalVideo()">x</button>
+      </div>
+      <div class="w-[90%] mx-auto ">
+        <div class="bg-[#2C7C7933] border-dashed border-2 border-gray-500 shadow-md shadow-black/5 p-6 rounded-md">
+          <span class="text-[#2C7C79]" *ngIf="!selectedFiles.length">Aucun contenu</span>
+          <ng-container *ngFor="let file of selectedFiles">
+            <ng-container *ngIf="file.type.startsWith('video/')">
+              <h3 class="font-bold">{{ file.name }}</h3> <!-- Afficher le nom du fichier -->
+              <video [src]="file.url" controls class="max-w-[100px] h-auto"></video>
+            </ng-container>
+            <ng-container
+              *ngIf="file.type.startsWith('application/pdf') || file.type.startsWith('application/msword') || file.type.startsWith('application/vnd.openxmlformats-officedocument.wordprocessingml.document')">
+              <h3 class="font-bold">{{ file.name }}</h3>
+              <a [href]="file.url" target="_blank" class="text-blue-500">Ouvrir le document</a>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="flex gap-4 mt-5">
+        <label class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
+          Vidéo
+          <input type="file" [(ngModel)]="formData.content.video" (change)="onFilesSelected($event, 'video')"
+            accept="video/*" multiple class="hidden">
+        </label>
+        <!-- <label class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
+          Document
+          <input type="file" [(ngModel)]="formData.content.document" (change)="onFilesSelected($event, 'document')"
+            accept=".pdf,.doc,.docx" multiple class="hidden">
+        </label> -->
+      </div>
+
+      <!-- Boutons "Précédent" et "Suivant" -->
+      <div class="mt-4 flex justify-between">
+        <!-- <button (click)="previousStep()" class="px-4 py-2 bg-gray-500 text-white rounded-md">Précédent</button> -->
+        <button (click)="submitVideo()"
+          class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md">Envoyer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal3 pour ajouter des documents -->
+<div class="flex gap-4 mt-4">
+  <div *ngIf="displayDocument" tabindex="-1" aria-hidden="true" id="modalStep2"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Étape 2: Ajoutez un contenu</h2>
+        <button class="text-red-400 hover:text-gray-700" (click)="closeModalDocument()">x</button>
+      </div>
+      <div class="w-[90%] mx-auto ">
+        <div class="bg-[#2C7C7933] border-dashed border-2 border-gray-500 shadow-md shadow-black/5 p-6 rounded-md">
+          <span class="text-[#2C7C79]" *ngIf="!selectedFiles.length">Aucun contenu</span>
+          <ng-container *ngFor="let file of selectedFiles">
+            <ng-container *ngIf="file.type.startsWith('video/')">
+              <h3 class="font-bold">{{ file.name }}</h3> <!-- Afficher le nom du fichier -->
+              <video [src]="file.url" controls class="max-w-[100px] h-auto"></video>
+            </ng-container>
+            <ng-container
+              *ngIf="file.type.startsWith('application/pdf') || file.type.startsWith('application/msword') || file.type.startsWith('application/vnd.openxmlformats-officedocument.wordprocessingml.document')">
+              <h3 class="font-bold">{{ file.name }}</h3>
+              <a [href]="file.url" target="_blank" class="text-blue-500">Ouvrir le document</a>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="flex gap-4 mt-5">
+        <!-- <label class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
+          Vidéo
+          <input type="file" [(ngModel)]="formData.content.video" (change)="onFilesSelected($event, 'video')"
+            accept="video/*" multiple class="hidden">
+        </label> -->
+        <label class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
+          Document
+          <input type="file" [(ngModel)]="formData.content.document" (change)="onFilesSelected($event, 'document')"
+            accept=".pdf,.doc,.docx" multiple class="hidden">
+        </label>
+      </div>
+
+      <!-- Boutons "Précédent" et "Suivant" -->
+      <div class="mt-4 flex justify-between">
+        <!-- <button (click)="previousStep()" class="px-4 py-2 bg-gray-500 text-white rounded-md">Précédent</button> -->
+        <button (click)="submitDocuments()"
+          class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md">Envoyer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal 2 (Step 2) -->
+<!-- <div class="flex gap-4 mt-4">
+    <div *ngIf="currentStep === 2" tabindex="-1" aria-hidden="true" id="modalStep2"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">Étape 2: Ajoutez un contenu</h2>
+          <button class="text-red-400 hover:text-gray-700" (click)="closeModals()">x</button>
+        </div>
+        <div class="w-[90%] mx-auto ">
+          <div class="bg-[#2C7C7933] border-dashed border-2 border-gray-500 shadow-md shadow-black/5 p-6 rounded-md">
+            <span class="text-[#2C7C79]">Aucun contenu</span>
+          </div>
+        </div>
+
+        <div class="flex gap-4 mt-5">
+          <button class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79]">Vidéo</button>
+          <button class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79]">Image</button>
+          <button class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79]">Document</button>
+          <button class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79]">Article</button>
+          <button class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79]">Lien Interne</button>
+        </div>
+
+
+        <div class="mt-4 flex justify-between">
+          <button (click)="previousStep()" class="px-4 py-2 bg-gray-500 text-white rounded-md">Précédent</button>
+          <button (click)="nextStep()" class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md">Suivant</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+<!-- Modal Étape 3 -->
+<div *ngIf="currentStep === 3" tabindex="-1" aria-hidden="true" id="modalStep3"
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">Étape 3: Confirmation</h2>
+      <button class="text-red-400 hover:text-gray-700" (click)="closeModals()">x</button>
+    </div>
+    <!-- Contenu de confirmation -->
+    <p class="mb-4">Merci d'avoir rempli les étapes. Confirmez vos choix.</p>
+
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Ordre
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Libelle
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Formateur
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Retirer de mon parcour
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let selected of selectedSkills; let i = index">
+          <tr>
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              {{i+1}}
+            </th>
+            <td class="px-6 py-4">
+              Formation Leadership
+            </td>
+            <td class="px-6 py-4">
+              Roland Kyedrebeogo
+            </td>
+            <td class="px-6 py-4 rounded-cell">
+              {{selected.name}}
+              <!-- Bouton pour retirer l'élément -->
+              <button (click)="removeSkillTab(i)" class="text-red-500 hover:text-red-700">
+                ✕
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- Boutons "Précédent" et "Fermer" -->
+    <div class="mt-4 flex justify-between">
+      <button (click)="previousStep()" class="px-4 py-2 bg-gray-500 text-white rounded-md">Précédent</button>
+      <button (click)="closeModals()" class="px-4 py-2 bg-[#114C5A] text-white rounded-md">Terminer</button>
+    </div>
+  </div>
+</div>
