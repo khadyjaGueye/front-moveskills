@@ -17,6 +17,8 @@ export class CoreComponent implements OnInit {
   prenom!: string;
   email!: string;
   specialite!: string;
+  display:boolean = true
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -46,6 +48,16 @@ export class CoreComponent implements OnInit {
   test(){
     alert("bonjour")
   }
+togle(){
+this.display = false;
+}
 
+ // Initialisez isNavOpen à false pour que le menu soit caché au démarrage
+ isNavOpen = false;
+
+ // Méthode pour basculer l'affichage du menu
+ toggleNav() {
+   this.isNavOpen = !this.isNavOpen;
+ }
 
 }

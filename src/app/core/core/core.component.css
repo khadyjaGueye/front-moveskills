@@ -1,0 +1,15 @@
+/* Ajoutez votre CSS ici si nécessaire */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.navigation {
+  transition: transform 0.3s ease;
+}
+
+.main {
+  transition: margin-left 0.3s ease;
+}
+
+/* Assurez-vous que le style pour la barre de recherche et d'autres éléments soit adapté */

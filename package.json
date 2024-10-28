@@ -22,6 +22,7 @@
     "@angular/router": "^17.3.0",
     "chart.js": "^4.4.5",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.14.3",
     "tslib": "^2.3.0",

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { RouterOutlet } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { RouterOutlet } from '@angular/router';
   imports: [
     CommonModule,
     CoreRoutingModule,
-    RouterOutlet
+    RouterOutlet,
+    SharedModule
   ]
 })
 export class CoreModule { }

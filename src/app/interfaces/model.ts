@@ -18,6 +18,9 @@ export interface Data {
   parcours: Parcour[]
   statusCode: boolean
   videos1: Video[]
+  chapitres:Chapitre[];
+  chapitre_id: string
+  contenu: Contenu[]
 }
 export interface Question {
   text: string;
@@ -49,6 +52,7 @@ export interface InfoData {
   duree: number;
   competences: string[];
   status_disponibilite: number
+  prix: number
 }
 
 export interface ContentData {
@@ -105,10 +109,10 @@ export interface Parcour {
   documents: Document[];
   status_type: number
   status_audiance: number;
-  status_disponibilite:string
+  status_disponibilite: string
 }
 export interface ContentItem {
-  id:number
+  id: number
   name: string;
   url: string;
   type: string;
@@ -124,4 +128,18 @@ export interface Video {
   file_path: string
   created_at: string
   updated_at: string
+}
+
+export interface Chapitre {
+  id: number;
+  nom_chapitre: string;
+  parcour_id:number
+}
+export interface Contenu {
+  id: number
+  libelle: string
+  file_path: string
+  created_at: string
+  is_viewed?: boolean
+  is_watched?: boolean
 }

@@ -9,11 +9,11 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule,RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   showPassword: boolean = false; // Variable pour gérer la visibilité du mot de passe
   message: string = "";
@@ -49,9 +49,11 @@ export class LoginComponent implements OnInit{
             this.router.navigateByUrl("core/apprenant/form");
           } if (user.role == "superviseur") {
             this.router.navigateByUrl("core/superviseur/listApprenant");
-          }if (user.role == "formateur") {
+          } if (user.role == "formateur") {
             this.router.navigateByUrl("core/formateur/listParcours");
           }
+          // Réinitialisation du formulaire après succès
+          this.loginForm.reset();
         })
       } else {
         this.router.navigateByUrl("");
@@ -65,7 +67,9 @@ export class LoginComponent implements OnInit{
         text: this.message,
         timer: 1500
       })
-    })
+      // Réinitialisation du formulaire en cas d'erreur
+      this.loginForm.reset();
+    });
   }
 
   togglePasswordVisibility() {

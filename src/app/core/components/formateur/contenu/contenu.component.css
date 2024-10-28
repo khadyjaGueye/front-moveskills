@@ -1,0 +1,38 @@
+/* Styles pour le fond estompé */
+.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); /* Fond estompé */
+  z-index: 50; /* Position en avant-plan */
+}
+
+/* Styles pour centrer et styliser la modale */
+.bg-white {
+  background-color: white;
+  max-width: 80%;
+  max-height: 80%;
+  overflow: auto;
+  padding: 1rem;
+  position: relative;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Bouton de fermeture */
+button {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+  .bg-white {
+    width: 95%;
+    height: 90%;
+  }
+}

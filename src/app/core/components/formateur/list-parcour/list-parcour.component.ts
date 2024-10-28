@@ -1,16 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormDataT, Parcour, Skill, VideoFile } from '../../../../interfaces/model';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Chapitre, Data, FormDataT, Model, Parcour, Skill, VideoFile } from '../../../../interfaces/model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormateurService } from '../service/formateur.service';
 import { environment } from '../../../../../environments/environment.development';
 import Swal from 'sweetalert2';
+import { SharedModule } from '../../../../shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-list-parcour',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, NgxPaginationModule, RouterLink],
   templateUrl: './list-parcour.component.html',
   styleUrl: './list-parcour.component.css'
 })
@@ -18,6 +23,7 @@ export class ListParcourComponent implements OnInit {
 
   selectedSkills: Skill[] = [];// Liste des compétences sélectionnées
   parcours: Parcour[] = [];
+  chapitres: Chapitre[] = [];
   selectedButton: string = '';
   openModal: boolean = false; // Contrôle de la première modal
   showSecondModal: boolean = false; // Contrôle de la deuxième modal
@@ -27,7 +33,14 @@ export class ListParcourComponent implements OnInit {
   savedData: any = {}; // Objet pour stocker les données à chaque étape
   displayVideo: boolean = false;
   displayDocument: boolean = false;
-
+  displayChapitre: boolean = false;
+  isLoading: boolean = true; // Variable de chargement
+  public page: number = 1;
+  public itemsPerPage: number = 5; // Nombre d'éléments par page
+  public searchTerm: string = ''; // Variable pour stocker la valeur de la recherche
+  formDataChap: FormGroup;
+  message: string = "";
+  showAddChapitreForm = false; // Variable pour afficher/masquer le formulaire
   tab: number = 0;
   // Liste des compétences disponibles
   skills: Skill[] = [
@@ -46,7 +59,8 @@ export class ListParcourComponent implements OnInit {
       status_audiance: 1,
       duree: 0,
       competences: [], // Modifié pour stocker les compétences sélectionnées
-      status_disponibilite: 20
+      status_disponibilite: 20,
+      prix: 0
     },
     content: {
       video: [],
@@ -58,11 +72,17 @@ export class ListParcourComponent implements OnInit {
   };
   selectedVideos: File[] = []; // Tableau pour stocker les vidéos
   selectedDocuments: File[] = []; // Tableau pour stocker l
-  idParcour: number = 1; // Variable pour stocker l'ID du parcours créé
-  constructor(private service: FormateurService, private sanitizer: DomSanitizer) { }
+  idParcour: number = 1; // Variable pour stocker l'ID du parcours créé .
+  nomParcour: string = ""; // Pour garder le parcour cliqué
+  constructor(private service: FormateurService, private sanitizer: DomSanitizer, private fb: FormBuilder) {
+    this.formDataChap = fb.group({
+      nom_chapitre: [''],
+    })
+  }
 
   ngOnInit(): void {
     this.getParcours()
+    //this.getDataChapitre();
   }
 
   // Sélectionner une compétence
@@ -134,28 +154,26 @@ export class ListParcourComponent implements OnInit {
 
     this.savedData = {
       nom_parcour: this.formData.info.nom_parcour,
-      prix: 1000, // Exemple d'ajustement pour le prix si applicable
+      prix: this.formData.info.prix,
       duree: this.formData.info.duree,
       status_type: 1, // Supposons que 'Gratuit' = 0 et 'Premium' = 1
       status_audiance: 1,
       status_disponibilite: 20, // Valeur d'exemple, ajustez selon vos besoins
       competences: this.selectedSkills.map(skill => skill.id)
     };
-    console.log(this.savedData);
-
     // Appeler le service pour envoyer les données
     this.service.store(this.savedData).subscribe({
       next: (response) => {
+
         // Si le backend renvoie un message de succès
         if (response.data && response.data.message) {
           Swal.fire('Succès', response.data.message, 'success');
         } else {
           Swal.fire('Succès', 'Le parcours a été créé avec succès!', 'success');
         }
+        this.savedData.reset();
       },
       error: (error) => {
-        console.error('Erreur lors de la création du parcours', error);
-
         // Gestion des erreurs du backend
         if (error.statusCode === 422) {
           Swal.fire('Erreur de validation', error.error.message || 'Des erreurs de validation sont survenues.', 'error');
@@ -164,6 +182,7 @@ export class ListParcourComponent implements OnInit {
         } else {
           Swal.fire('Erreur', 'Échec de la création du parcours.', 'error');
         }
+        this.savedData.reset();
       }
     });
   }
@@ -183,6 +202,17 @@ export class ListParcourComponent implements OnInit {
   }
   closeModalDocument() {
     this.displayDocument = false;
+  }
+
+  openModalChapitre(id: number, nom: string) {
+    this.displayChapitre = true
+    this.idParcour = id;
+    this.getDataChapitre(id)
+    localStorage.setItem('nomParcour', nom);
+    localStorage.setItem('idParcour', id.toString());
+  }
+  closeModalChapitre() {
+    this.displayChapitre = false
   }
 
   submitForm() {
@@ -285,13 +315,78 @@ export class ListParcourComponent implements OnInit {
     });
   }
 
-
   getParcours() {
     this.service.url = environment.apiBaseUrl + "parcours";
     this.service.all().subscribe(resp => {
-      this.parcours = resp.data.parcours
-     // console.log(this.parcours);
+      this.parcours = resp.data.parcours;
+      this.isLoading = false; // Données chargées, on masque le spinner
+      // console.log(this.parcours);
     })
+  }
+
+  // Fonction de filtre basée sur le nom du parcours
+  get filteredParcours() {
+    return this.parcours.filter(parcour =>
+      parcour.nom_parcour.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+  creatCapitre() {
+    this.service.url = environment.apiBaseUrl + "chapitre";
+    const data = this.formDataChap.value;
+    // Ajouter l'ID du parcours au FormData
+    data.parcour_id = this.idParcour;
+    this.service.store(data).subscribe(resp => {
+      this.service.handleResponse(resp)
+      data.reset();
+      this.showAddChapitreForm = false
+    }, error => {
+      this.service.handleResponse(error)
+    })
+  }
+  getDataChapitre(id: number): void {
+    this.service.url = `${environment.apiBaseUrl}chapitre-by-parcour/${id}`;
+
+    this.service.all().subscribe({
+      next: (response) => {
+        this.chapitres = response.data.chapitres;
+        // Afficher une alerte de succès
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'Succès',
+        //   text: 'Les chapitres ont été chargés avec succès',
+        //   confirmButtonText: 'OK'
+        // });
+      },
+      error: (err) => {
+        // console.error('Erreur lors de la récupération des chapitres:', err);
+        // Afficher une alerte d'erreur
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Erreur',
+        //   text: 'Une erreur s\'est produite lors du chargement des chapitres.',
+        //   confirmButtonText: 'OK'
+        // });
+      },
+      complete: () => {
+        //console.log('Récupération des chapitres terminée');
+        // Optionnel : afficher une alerte à la fin si besoin
+        // Swal.fire({
+        //   icon: 'info',
+        //   title: 'Info',
+        //   text: 'Chargement terminé.',
+        //   confirmButtonText: 'OK'
+        // });
+      }
+    });
+  }
+
+  // Afficher ou masquer le formulaire d'ajout de chapitre
+  toggleAddChapitre(): void {
+    this.showAddChapitreForm = !this.showAddChapitreForm;
+  }
+  setChapitreName(nomChapitre: string): void {
+    // Stocker le nom du chapitre dans le Local Storage
+    localStorage.setItem('nomChapitre', nomChapitre);
   }
 
 }

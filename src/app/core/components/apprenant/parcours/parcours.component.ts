@@ -6,11 +6,12 @@ import { ContentItem, Parcour } from '../../../../interfaces/model';
 import { ApprenantService } from '../service/apprenant.service';
 import { environment } from '../../../../../environments/environment.development';
 import { AppService } from '../service/app.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-parcours',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink,NgxPaginationModule],
   templateUrl: './parcours.component.html',
   styleUrl: './parcours.component.css'
 })
@@ -20,12 +21,17 @@ export class ParcoursComponent implements OnInit {
   videos: ContentItem[] = [];
   display: boolean = false;
   numberOfVideos: number = 0;
+  idParcour: number = 1;
+  public page: number = 1;
+  public itemsPerPage: number = 4; // Nombre d'éléments par page
+  public searchTerm: string = ''; // Variable pour stocker la valeur de la recherche
 
   constructor(private service: ApprenantService, private appService: AppService) {
 
   }
 
   ngOnInit(): void {
+
     this.getDataParcours();
     this.loadVideos();
   }
@@ -34,11 +40,14 @@ export class ParcoursComponent implements OnInit {
     this.service.url = environment.apiBaseUrl + "parcours";
     return this.service.all().subscribe(resp => {
       this.parcours = resp.data.parcours
+
     })
   }
-  
-  openModalParcour(): void {
+
+  openModalParcour(id: number): void {
     this.display = true;
+    // Stocker l'ID dans le localStorage
+    localStorage.setItem('idParcour', id.toString());
   }
 
   closeModalParcour(): void {
@@ -56,5 +65,11 @@ export class ParcoursComponent implements OnInit {
       console.error('Erreur lors de la récupération des vidéos:', error);
     }
     )
+  }
+
+  get filteredParcours() {
+    return this.parcours.filter(parcour =>
+      parcour.nom_parcour.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 }

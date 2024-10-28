@@ -7,11 +7,12 @@ import { TestService } from '../../../../shared/services/test.service';
 import { tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,RouterLink],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
@@ -70,7 +71,7 @@ export class FormComponent implements OnInit{
         { text: "Regles et consignes claires, et cotoyer des gens compétents", points: 6, color: 'red' },
         { text: "Variété; changement et ne pas devoir trop se prend au sérieux", points: 3, color: 'yellow' },
         { text: "Action, mouvement,risque, ambition et sentir que je peut décider", points: 1, color: 'green' },
-        { text: "Harmonie avec mescollégues, et pouvoir avancer à mon rytme", points: 0, color: 'blue' }
+        { text: "Harmonie avec mes collégues, et pouvoir avancer à mon rytme", points: 0, color: 'blue' }
       ]
     },
     {
@@ -131,6 +132,7 @@ export class FormComponent implements OnInit{
   message: string = "";
   diplayButton: boolean = true;
   dominantColor: string = ''; // Variable pour stocker la couleur dominante
+  answerSelected = false;
   // Scores pour chaque couleur
   scores: { [key: string]: number } = {
     red: 0,

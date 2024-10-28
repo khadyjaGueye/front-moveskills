@@ -5,13 +5,17 @@ import { ListComponent } from './list/list.component';
 import { FormComponent } from './form/form.component';
 import { authGuard } from '../../../shared/guard/auth.guard';
 import { ParcoursComponent } from './parcours/parcours.component';
+import { CaracteriseComponent } from './caracterise/caracterise.component';
+import { CommuquerComponent } from './commuquer/commuquer.component';
 
 const routes: Routes = [
   {
     path: '', component: ApprenantComponent, children: [
       { path: 'list', component: ListComponent, canActivate: [authGuard] },
       { path: 'form', component: FormComponent, canActivate: [authGuard] },
-      { path: 'parcour', component: ParcoursComponent, canActivate: [authGuard] }
+      { path: 'parcour', component: ParcoursComponent, canActivate: [authGuard] },
+      { path: 'caracterise', component: CaracteriseComponent,canActivate: [authGuard] },
+      {path:'comminuque',component:CommuquerComponent,canActivate: [authGuard]}
     ]
   }
 ];
