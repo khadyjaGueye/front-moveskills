@@ -18,9 +18,15 @@ export interface Data {
   parcours: Parcour[]
   statusCode: boolean
   videos1: Video[]
-  chapitres:Chapitre[];
+  chapitres: Chapitre[];
   chapitre_id: string
   contenu: Contenu[]
+  users: User[]
+  tests: Test[];
+  competences: Competence[];
+  skills: Skill[];
+  userDetails: UserDetail[];
+  report: Report;
 }
 export interface Question {
   text: string;
@@ -41,6 +47,7 @@ export interface Competences {
 export interface Skill {
   id: number;
   name: string;
+  nom: string
 }
 
 export interface InfoData {
@@ -69,6 +76,8 @@ export interface FormDataT {
   info: InfoData;
   content: ContentData;
   summary: SummaryData;
+  libelle: string;
+  chapitre_id: number
 }
 
 export interface Document {
@@ -110,6 +119,9 @@ export interface Parcour {
   status_type: number
   status_audiance: number;
   status_disponibilite: string
+  user: User
+  nombre_videos: number
+  nombre_documents: number
 }
 export interface ContentItem {
   id: number
@@ -133,7 +145,7 @@ export interface Video {
 export interface Chapitre {
   id: number;
   nom_chapitre: string;
-  parcour_id:number
+  parcour_id: number
 }
 export interface Contenu {
   id: number
@@ -142,4 +154,69 @@ export interface Contenu {
   created_at: string
   is_viewed?: boolean
   is_watched?: boolean
+}
+
+export interface User {
+  id: number;
+  phoneNumber: number;
+  name: string;
+  email: string;
+  code_invitaion: string;
+  role: string
+  question1: Question1[];
+}
+export interface Question1 {
+  id: number;
+  user_id: number;
+  rouge: number;
+  vert: number;
+  jaune: number;
+  bleu: number;
+}
+export interface Test {
+  rouge: number
+  vert: number
+  bleu: number
+  jaune: number
+  dominant_color: string
+  timestamp: string
+}
+export interface Competence {
+  id: number;
+  nom: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UserDetail {
+  id:number
+  name: string
+  email: string
+  couleur_dominante: string
+}
+
+export interface Report {
+  total_participants: number
+  color_distribution: ColorDistribution
+  percentage_distribution: PercentageDistribution
+}
+
+export interface ColorDistribution {
+  vert: number
+  jaune: number
+  rouge: number
+  bleu: number
+}
+
+export interface PercentageDistribution {
+  vert: number
+  jaune: number
+  rouge: number
+  bleu: number
+}
+export interface Item{
+  name:string;
+  color:string;
+  target:number;
+  counter:number;
 }

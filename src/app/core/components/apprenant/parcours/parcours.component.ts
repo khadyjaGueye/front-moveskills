@@ -40,6 +40,7 @@ export class ParcoursComponent implements OnInit {
     this.service.url = environment.apiBaseUrl + "parcours";
     return this.service.all().subscribe(resp => {
       this.parcours = resp.data.parcours
+      console.log(resp);
 
     })
   }

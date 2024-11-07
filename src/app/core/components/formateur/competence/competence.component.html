@@ -1,0 +1,79 @@
+<div class="flex justify-between">
+  <div class="ml-5">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Liste des compétences</h2>
+  </div>
+  <div class="relative">
+    <input [(ngModel)]="searchTerm"
+      class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
+      placeholder="Search..." />
+    <button class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded " type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+        class="w-8 h-8 text-slate-600">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+      </svg>
+    </button>
+  </div>
+  <div>
+    <!-- Bouton pour créer une compétence -->
+    <button *ngIf="!currentCompetenceId" (click)="OpenCreateComptence()" type="button"
+      class="py-2.5 px-1 me-2 mb-1 bg-[#114C5A] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+      + Créer compétence
+    </button>
+    <!-- Bouton pour mettre à jour une compétence -->
+    <button *ngIf="currentCompetenceId" (click)="updateCompetence()" type="button"
+      class="py-2.5 px-1 me-2 mb-1 bg-[#EF7743] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#114C5A] hover:bg-[#114C5A] hover:text-[#EF7743] focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+      Mettre à jour la compétence
+    </button>
+  </div>
+
+</div>
+<div *ngIf="showAddCompetenceForm" class="mt-4">
+  <form [formGroup]="formData" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4 flex gap-4 justify-center">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="nomChapitre">
+        Nom du Compétences
+      </label>
+      <input formControlName="nom"
+        class="shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="nomChapitre" type="text" placeholder="Nom du Compétences">
+      <button (click)="createCompetence()"
+        class="bg-[#114C5A] hover:bg-[#F9BD4F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button">
+        Envoyer
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Conteneur de défilement pour le tableau -->
+<div class="overflow-x-auto mt-10">
+  <table class="table-auto w-full border-collapse border border-gray-200">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border border-gray-300 px-4 py-2">Competences</th>
+        <th class="border border-gray-300 px-4 py-2">User</th>
+        <th class="border border-gray-300 px-4 py-2">Date</th>
+        <th class="border border-gray-300 px-4 py-2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let competence of filteredCompetence | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+        <td class="border border-gray-300 px-4 py-2">{{competence.nom}}</td>
+        <td class="border border-gray-300 px-4 py-2">Roland</td>
+        <td class="border border-gray-300 px-4 py-2">{{competence.created_at}}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <svg (click)="OpenUpdateCompetence(competence.id)" class="text-[#114C5A] text-center py-1 px-4 w-20"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M7.24264 17.9967H3V13.754L14.435 2.319C14.8256 1.92848 15.4587 1.92848 15.8492 2.319L18.6777 5.14743C19.0682 5.53795 19.0682 6.17112 18.6777 6.56164L7.24264 17.9967ZM3 19.9967H21V21.9967H3V19.9967Z">
+            </path>
+          </svg>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-5">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>

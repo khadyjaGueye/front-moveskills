@@ -155,112 +155,115 @@
 
 <!-- !-- Modal 1 pour ajouter un parcours-->
 <div *ngIf="openModal" tabindex="-1" aria-hidden="true" id="createParcoursModal"
-  class=" fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-lg shadow-lg p-6" *ngIf="currentStep === 1">
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg md:max-w-3/4 lg:max-w-1/2 mx-auto overflow-y-auto max-h-[90vh]"
+    *ngIf="currentStep === 1">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold"></h2>
       <button (click)="closeModals()" class="text-red-400 hover:text-gray-700">x</button>
     </div>
-    <h1 class="text-center text-xl font-semibold">Information générales</h1>
+    <h1 class="text-center text-xl font-semibold">Informations générales</h1>
+
     <!-- Form for creating parcours -->
     <form>
       <div class="items-center border-b border-gray-400 py-2">
-        <label for="" class="uppercase">Nom du Parcours De Foramtion</label>
+        <label for="" class="uppercase">Nom du Parcours De Formation</label>
         <input [(ngModel)]="formData.info.nom_parcour" name="nom"
           class="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 px-2 leading-tight focus:outline-none"
           type="text" placeholder="Nom de la formation" aria-label="Full name">
       </div>
-      <div class="flex gap-5 mt-5">
+
+      <!-- Responsive Layout for 'Type' and 'Audience' -->
+      <div class="flex flex-wrap gap-5 mt-5">
+        <!-- Type section -->
         <div class="flex gap-1">
           <label class="uppercase text-slate-600 font-semibold">Type</label>
           <div class="inline-flex items-center">
-            <label class="relative flex items-center cursor-pointer" for="html-custom-icon">
-              <input type="radio" [(ngModel)]="formData.info.status_type" type="radio" name="type" value="Gratuit"
+            <label class="relative flex items-center cursor-pointer">
+              <input type="radio" [(ngModel)]="formData.info.status_type" name="type" value="Gratuit"
                 class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
-                id="html-custom-icon" checked />
-            </label>
-            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="html-custom-icon">
-              Graduit
+                checked />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Gratuit</span>
             </label>
           </div>
           <div class="inline-flex items-center">
-            <label class="relative flex items-center cursor-pointer" for="react-custom-icon">
+            <label class="relative flex items-center cursor-pointer">
               <input [(ngModel)]="formData.info.status_type" type="radio" name="type" value="Premium"
-                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
-                id="react-custom-icon" />
-            </label>
-            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="react-custom-icon">
-              Permium
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all" />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Premium</span>
             </label>
           </div>
         </div>
-        <div class="flex gap-1 ml-30">
+
+        <!-- Audience section -->
+        <div class="flex gap-1">
           <label class="uppercase text-slate-600 font-semibold">Audience</label>
           <div class="inline-flex items-center">
-            <label class="relative flex items-center cursor-pointer" for="html-custom-icon">
+            <label class="relative flex items-center cursor-pointer">
               <input [(ngModel)]="formData.info.status_audiance" type="radio" name="audience" value="Public"
                 class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
-                id="html-custom-icon" checked />
-            </label>
-            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="html-custom-icon">
-              Public
+                checked />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Public</span>
             </label>
           </div>
           <div class="inline-flex items-center">
-            <label
-              class="relhttps://www.figma.com/design/kFSuaRPTTJVlS8LxXRKw1V/Move-Skills---Redesign?node-id=0-1&t=yze2rIcHVVsCbfzu-1ative flex items-center cursor-pointer"
-              for="react-custom-icon">
+            <label class="relative flex items-center cursor-pointer">
               <input [(ngModel)]="formData.info.status_audiance" type="radio" name="audience" value="Privée"
-                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
-                id="react-custom-icon" />
-            </label>
-            <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="react-custom-icon">
-              Privée
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all" />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Privée</span>
             </label>
           </div>
         </div>
-        <div class="items-center border-b border-gray-400 py-2 ml-60">
-          <label for="" class="uppercase">Durée(jours)</label>
+
+        <!-- Other input fields like Durée and Prix -->
+        <div class="items-center border-b border-gray-400 py-2 mt-5">
+          <label for="" class="uppercase">Durée (jours)</label>
           <input [(ngModel)]="formData.info.duree" name="duree"
-            class="appearance-none bg-transparent border-none w-full text-gray-500  leading-tight focus:outline-none"
+            class="appearance-none bg-transparent border-none w-full text-gray-500 leading-tight focus:outline-none"
             type="number" placeholder="10" aria-label="Full name">
         </div>
-        <div class="items-center border-b border-gray-400 py-2">
+
+        <div class="items-center border-b border-gray-400 py-2 mt-5">
           <label for="" class="uppercase">Prix</label>
-          <input [(ngModel)]="formData.info.prix" name="duree"
-            class="appearance-none bg-transparent border-none w-full text-gray-500  leading-tight focus:outline-none"
+          <input [(ngModel)]="formData.info.prix" name="prix"
+            class="appearance-none bg-transparent border-none w-full text-gray-500 leading-tight focus:outline-none"
             type="number" placeholder="10" aria-label="Full name">
         </div>
       </div>
 
-      <div class="items-center border-b border-gray-400 py-2">
-        <label for="" class="uppercase">Ojectif de la formation</label>
+      <!-- Section for 'Objectif' and skills -->
+      <div class="items-center border-b border-gray-400 py-2 mt-5">
+        <label for="" class="uppercase">Objectif de la formation</label>
         <input [(ngModel)]="formData.info.objectif" name="objectif"
           class="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 px-2 leading-tight focus:outline-none"
-          type="text" placeholder="Renseigner l'objectif de la formation" aria-label="Full name">
+          type="text" placeholder="Renseigner l'objectif de la formation" aria-label="Objectif">
       </div>
-      <!-- Section des compétences sélectionnées -->
+
+      <!-- Compétences sélectionnées -->
       <h2 class="mt-8 text-lg font-bold">Compétences sélectionnées</h2>
       <div class="flex flex-wrap gap-4 mt-4">
         <div *ngFor="let selected of selectedSkills"
-          class="card w-40 bg-blue-100 p-4 text-center shadow-md rounded-md relative">
-          <p>{{ selected.name }}</p>
+          class="card w-full sm:w-40 bg-blue-100 p-4 text-center shadow-md rounded-md relative">
+          <p>{{ selected.nom }}</p>
           <button class="absolute top-1 right-1 text-red-500" (click)="removeSkill(selected)">✕</button>
         </div>
       </div>
+
       <div class="flex flex-wrap gap-4 mt-5">
-        <!-- Liste des compétences -->
-        <div *ngFor="let skill of skills" class="card w-40 h-15 bg-gray-100 p-4 text-center shadow-md rounded-md">
-          <p (click)="selectSkill(skill)">{{ skill.name}}</p>
+        <div *ngFor="let skill of skills" class="card w-full sm:w-40 bg-gray-100 p-4 text-center shadow-md rounded-md">
+          <p (click)="selectSkill(skill)">{{ skill.nom}}</p>
         </div>
       </div>
-      <div class="flex justify-center">
+
+      <!-- Submit Button -->
+      <div class="flex justify-center mt-5">
         <button (click)="submitParcours();closeModal()" type="submit"
-          class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md mt-5">Suivant</button>
+          class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md">Suivant</button>
       </div>
     </form>
   </div>
 </div>
+
 
 <!-- Modal 2 (Step 2) pour ajouter des videos -->
 <div class="flex gap-4 mt-4">
@@ -433,7 +436,7 @@
               Roland Kyedrebeogo
             </td>
             <td class="px-6 py-4 rounded-cell">
-              {{selected.name}}
+              {{selected.nom}}
               <!-- Bouton pour retirer l'élément -->
               <button (click)="removeSkillTab(i)" class="text-red-500 hover:text-red-700">
                 ✕
@@ -454,7 +457,7 @@
 </div>
 
 <div *ngIf="isLoading">
-  <app-loarder></app-loarder>
+  <!-- <app-loarder></app-loarder> -->
 </div>
 
 

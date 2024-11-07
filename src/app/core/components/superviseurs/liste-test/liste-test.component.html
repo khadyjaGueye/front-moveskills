@@ -1,0 +1,104 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+  <div *ngFor="let item of items"
+    class="card p-4 text-white rounded-lg shadow-md flex flex-col items-center justify-center"
+    [style.backgroundColor]="item.color">
+    <h3 class="text-xl font-bold">{{ item.name }}</h3>
+    <p class="text-2xl font-semibold">
+      <span>{{ item.counter }}</span>%
+    </p>
+  </div>
+</div>
+
+<div class="w-full flex justify-between items-center mt-5">
+  <div class="ml-5">
+    <h3 class="text-xl font-bold text-slate-800">Liste des participants qui ont fais le test</h3>
+  </div>
+  <div class="mr-5">
+    <div class="w-full max-w-sm min-w-[200px] relative">
+      <div class="relative">
+        <input
+          class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
+          placeholder="Search..." />
+        <button class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded " type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+            class="w-8 h-8 text-slate-600">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flex justify-between items-center mr-5 space-x-4">
+  <!-- Card avant le bouton avec même taille que les cartes de pourcentage -->
+  <div class="bg-[#DC7B27] rounded-lg shadow-md p-4 text-gray-700 border border-gray-200 w-full sm:w-1/2 md:w-1/4 flex flex-col items-center">
+    <h3 class="text-lg font-semibold">Nombre total des participants</h3>
+    <span>{{report.total_participants}}</span>
+  </div>
+
+  <!-- Bouton Imprimer la liste -->
+  <button (click)="generatePDF()"
+    class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+    Imprimer la liste
+  </button>
+</div>
+
+
+
+<div
+  class="relative mt-10 ml-5 flex flex-col h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+  <table id="listToConvert" class="w-full text-left table-auto min-w-max">
+    <thead id="tableHeader">
+      <tr>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-xl font-normal leading-none text-slate-500">
+            Numero
+          </p>
+        </th>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-xl font-normal leading-none text-slate-500">
+            Name
+          </p>
+        </th>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-xl font-normal leading-none text-slate-500">
+            Email
+          </p>
+        </th>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-xl font-normal leading-none text-slate-500">
+            CouleurDominant
+          </p>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="listToConvert">
+      <!-- <tr> -->
+      <tr class="hover:bg-slate-50"
+        *ngFor="let user of userDetails | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; let index = index">
+        <td class="p-4 border-b border-slate-200 py-5">
+          <p class="block  text-sm text-slate-800">{{index +1}}</p>
+        </td>
+        <td class="p-4 border-b border-slate-200 py-5">
+          <p class="block  text-sm text-slate-800">{{user.name}}</p>
+        </td>
+        <td class="p-4 border-b border-slate-200 py-5">
+          <p class="text-sm text-slate-800">{{user.email}}</p>
+        </td>
+        <td class="p-4 border-b border-slate-200 py-5">
+          <p class="text-sm" [ngClass]="getColorClass(user.couleur_dominante)">
+            {{ user.couleur_dominante }}
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-5">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+</div>
+
+<!-- <div *ngIf="isLoading">
+  <app-loarder></app-loarder>
+</div> -->

@@ -5,13 +5,15 @@ import { ListApprenantComponent } from './list-apprenant/list-apprenant.componen
 import { guardGuard } from '../../../auth/guards/guard.guard';
 import { ResultatComponent } from './resultat/resultat.component';
 import { ColorDetailsModalComponent } from './color-details-modal/color-details-modal.component';
+import { ListeTestComponent } from './liste-test/liste-test.component';
 
 const routes: Routes = [
   {
     path: '', component: SuperviseurComponent, children: [
       { path: 'listApprenant', component: ListApprenantComponent, },
       { path: 'resultat', component: ResultatComponent },
-      { path: 'color', component: ColorDetailsModalComponent }
+      { path: 'color', component: ColorDetailsModalComponent },
+      { path: 'participant', component: ListeTestComponent },
 
     ]
   }

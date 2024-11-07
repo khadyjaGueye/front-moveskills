@@ -1,12 +1,15 @@
 <div class="w-full flex justify-between items-center ">
-  <div>
-    <h3 class="text-xl ml-5 font-semibold text-slate-800">Liste des apprenants</h3>
+  <div class="ml-5">
+    <h3 class="text-xl font-semibold text-slate-800">Liste total des participants</h3>
     <!-- <p class="text-slate-500">Overview of the invoices.</p> -->
   </div>
+  <button (click)="generatePDF()" class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+    Imprimer la liste
+  </button>
   <div class="mr-5">
     <div class="w-full max-w-sm min-w-[200px] relative">
       <div class="relative">
-        <input
+        <input [(ngModel)]="searchTerm"
           class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
           placeholder="Search..." />
         <button class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded " type="button">
@@ -23,9 +26,14 @@
 
 <div
   class="relative mt-10 ml-5 flex flex-col h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-  <table class="w-full text-left table-auto min-w-max">
-    <thead>
+  <table id="listToConvert"  class="w-full text-left table-auto min-w-max">
+    <thead id="tableHeader">
       <tr>
+        <th class="p-4 border-b border-slate-300 bg-slate-50">
+          <p class="block text-xl font-normal leading-none text-slate-500">
+            Numero
+          </p>
+        </th>
         <th class="p-4 border-b border-slate-300 bg-slate-50">
           <p class="block text-xl font-normal leading-none text-slate-500">
             Name
@@ -38,107 +46,69 @@
         </th>
         <th class="p-4 border-b border-slate-300 bg-slate-50">
           <p class="block text-xl font-normal leading-none text-slate-500">
-            Phone
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Entreprise
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
             Option
           </p>
         </th>
       </tr>
     </thead>
-    <tbody>
-      <tr class="hover:bg-slate-50">
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block font-semibold text-sm text-slate-800">Mamadou FALL</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">fallgmail.com</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">778765432</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">2-orange</p>
-        </td>
-        <td class="border-b border-slate-200 ">
-          <svg class="text-[#114C5A] py-1 px-1 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-            fill="currentColor">
-            <path
-              d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z">
-            </path>
-          </svg>
-        </td>
-      </tr>
-      <tr class="hover:bg-slate-50">
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block font-semibold text-sm text-slate-800">Mamadou FALL</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">fallgmail.com</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">778765432</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">2-orange</p>
-        </td>
-        <td class="border-b border-slate-200 ">
-          <svg (click)="openModal()" class="text-[#114C5A] py-1 px-1 w-10" xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z">
-            </path>
-          </svg>
-        </td>
-      </tr>
-      <tr class="hover:bg-slate-50">
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block font-semibold text-sm text-slate-800">Mamadou FALL</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">fallgmail.com</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">778765432</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-500">2-orange</p>
-        </td>
-        <td class="border-b border-slate-200 ">
-          <svg class="text-[#114C5A] py-1 px-1 w-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-            fill="currentColor">
-            <path
-              d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z">
-            </path>
-          </svg>
-        </td>
-      </tr>
+    <tbody id="listToConvert">
 
+      <tr class="hover:bg-slate-50"
+        *ngFor="let apprenant of apprenants | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+        <td class="p-4 border-b border-slate-200 py-5">
+          <p class="block  text-sm text-slate-800">{{apprenant.id}}</p>
+        </td>
+        <td class="p-4 border-b border-slate-200 py-5">
+          <p class="block  text-sm text-slate-800">{{apprenant.name}}</p>
+        </td>
+        <td class="p-4 border-b border-slate-200 py-5">
+          <p class="text-sm text-slate-800">{{apprenant.email}}</p>
+        </td>
+        <td class="border-b border-slate-200 ">
+          <svg (click)="openModal(apprenant.id)" class="text-[#114C5A] py-1 px-1 w-10"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z">
+            </path>
+          </svg>
+        </td>
+      </tr>
     </tbody>
   </table>
+  <div class="mt-5">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
 </div>
 
 <!-- Modal pour information d'etudiant -->
-<div *ngIf="display" class="fixed z-10 inset-0 overflow-y-auto">
+<div *ngIf="display" class="fixed z-10 inset-0 bg-black bg-opacity-50 overflow-y-auto">
   <div class="flex items-center justify-center min-h-screen">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
+    <!-- Augmentation de la taille du modal ici -->
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl  overflow-auto">
       <div class="flex justify-between">
-        <h2 class="text-2xl font-bold mb-4">Information de l'apprenant</h2>
-        <h2 class="text-red-500">X</h2>
+        <h2 class="text-2xl font-bold mb-4">Information de participant</h2>
+        <h2 class="text-red-500 cursor-pointer" (click)="closeModal()">X</h2>
       </div>
-      <p><strong>Nom:</strong> </p>
-      <p><strong>Email:</strong> </p>
-      <p><strong>Téléphone:</strong> </p>
-      <p><strong>Entreprise:</strong> </p>
-
+      <table class="table-auto w-full border-collapse border border-gray-200">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border border-gray-300 px-4 py-2">Couleur Dominant</th>
+            <th class="border border-gray-300 px-4 py-2">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let test of tests">
+            <td class="border border-gray-300 px-4 py-2" [ngStyle]="{ 'color': getColorStyle(test.dominant_color) }">
+              {{test.dominant_color}}</td>
+            <td class="border border-gray-300 px-4 py-2">{{test.timestamp}}</td>
+          </tr>
+        </tbody>
+      </table>
       <button (click)="closeModal()" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Fermer</button>
     </div>
   </div>
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>

@@ -3,7 +3,8 @@
 </div>
 <div class="grid grid-cols-2 gap-4 w-[50%] ml-60 mt-5">
   <div *ngFor="let contenu of contenus, let i = index">
-    <div (click)="afficheContenu(contenu.file_path, getExtension(contenu.file_path))" class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+    <div (click)="afficheContenu(contenu.file_path, getExtension(contenu.file_path))"
+      class="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
       {{i + 1}} {{contenu.libelle}}
     </div>
     <div *ngIf="displayContenu && contenuAffiche === contenu.file_path" class="mt-4">
@@ -22,10 +23,61 @@
 
 
 <div class="flex justify-center gap-5 mt-10">
-  <button
+  <h1
     class="bg-[#114C5A] hover:bg-[#F9BD4F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    type="button">AjoutDocument</button>
-  <button
+    type="button">AjoutDocument</h1>
+  <h1 (click)="openModalVideo()"
     class="bg-[#114C5A] hover:bg-[#F9BD4F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    type="button">AjoutVideo</button>
+    type="button">AjoutVideo</h1>
+</div>
+
+
+<!-- Modal pour ajouter des videos -->
+<div class="flex gap-4 mt-4">
+  <div *ngIf="displayVideo" tabindex="-1" aria-hidden="true" id="modalStep2"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">Ajoutez les vidéos</h2>
+        <button class="text-red-400 hover:text-gray-700" (click)="closeModalVideo()">x</button>
+      </div>
+      <div class="w-[90%] mx-auto">
+        <div class="bg-[#2C7C7933] border-dashed border-2 border-gray-500 shadow-md shadow-black/5 p-6 rounded-md">
+          <span class="text-[#2C7C79]" *ngIf="!selectedFiles.length">Aucun contenu</span>
+
+          <!-- Afficher les fichiers sélectionnés sous forme de cartes -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ng-container *ngFor="let file of selectedFiles">
+              <ng-container *ngIf="file.type.startsWith('video/')">
+                <div class="bg-white border border-gray-300 rounded-lg p-4 shadow-md flex flex-col items-center">
+                  <h3 class="font-bold text-center mb-2">{{ file.name }}</h3>
+                  <video [src]="file.url" controls class="w-full h-32 rounded"></video>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-4 mt-5">
+        <label class="bg-[#2C7C7933] py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
+          Vidéo
+          <input [(ngModel)]="formData.content.video" type="file" (change)="onFilesSelected($event, 'video')" accept="video/*" multiple class="hidden">
+        </label>
+
+        <input [(ngModel)]="formData.libelle"
+          class="bg-[#2C7C7933] shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="nomChapitre" type="text" placeholder="Nom du libellé">
+        <select [(ngModel)]="formData.chapitre_id" *ngFor="let chap of chapitres" name="" id=""
+          class="bg-[#2C7C7933] shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <option value="">Sélectionner un chapitre</option>
+          <option value="" [value]="chap.id">{{chap.nom_chapitre}}</option>
+        </select>
+      </div>
+
+      <div class="mt-4 flex justify-center">
+        <h1 (click)="submitVideo()" class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md">Envoyer</h1>
+      </div>
+    </div>
+  </div>
 </div>

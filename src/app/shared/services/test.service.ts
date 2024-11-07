@@ -12,11 +12,26 @@ export class TestService {
   url: string = "https://moovskil.tucamarketing.com/api/question1";
   constructor(private http: HttpClient) { }
 
-  store(data: any, token: string |null):Observable<Model<Data>> {
+  store(data: any, token: string | null): Observable<Model<Data>> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}` // Ajouter le token dans l'en-tête Authorization
     });
     return this.http.post<Model<Data>>(this.url, data, { headers });
+  }
+
+  private results: any; // Stocker les résultats ici
+
+  setResults(results: any) {
+    this.results = results;
+  }
+
+  getResults() {
+    return this.results;
+  }
+
+  //Méthode pour vérifier si des résultats existent
+  hasResults(): boolean {
+    return this.results !== undefined && this.results !== null;
   }
 
 }

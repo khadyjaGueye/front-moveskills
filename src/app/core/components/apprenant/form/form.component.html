@@ -1,20 +1,33 @@
 <!-- start: Main -->
 <div class="mt-0 ml-5">
   <div class="bg-gray-200 p-4 rounded-md m-5">
-    <span class="text-[#EF7743]">Description</span>
-    <p class="text-[#EF7743]">À terminer avant 10H00m.2024</p>
-    <button (click)="startTest()" class="bg-[#114C5A] hover:bg-[#EF7743] text-white font-bold py-2 px-4 rounded">
-      Démarrer le test
-    </button>
+    <span class="text-neutral-800 text-xl">Bonjour chère équipe PNUD,</span>
+    <span class="text-neutral-800 text-xl">Bienvenue sur le test du Mini DISC Comportemental. C’est un outil simple et
+      efficace
+      permettant de mieux comprendre les comportements individuels et d'améliorer les interactions au sein des
+      équipes.</span>
+    <span class="text-neutral-800 text-xl">Pour chaque ligne, identifiez la case qui vous :</span>
+    <p class="text-neutral-800 font-bold text-center">Correspond le plus</p>
+    <p class="text-neutral-800 font-bold text-center">Correspond assez</p>
+    <p class="text-neutral-800 font-bold text-center">Correspond assez peu</p>
+    <p class="text-neutral-800 font-bold text-center">Correspond pas du tout</p>
+    <p class="text-neutral-800 font-bold text-center">Bon test!</p>
+    <div class="flex justify-center">
+      <button *ngIf="!testStarted" (click)="startTest()" class="bg-[#114C5A] hover:bg-[#EF7743] text-white font-bold py-2 px-4 rounded">
+        Démarrer le test
+      </button>
+    </div>
   </div>
   <!-- Afficher les couleurs et leurs caracteristiques -->
   <div *ngIf="displayColorCharacteristics" class="flex flex-col items-center">
-    <span class="uppercase text-2xl font-bold mb-6 text-center">Bravo, la couleur qui vous caractérise c'est le {{dominantColor}}</span>
+    <span class="uppercase text-2xl font-bold mb-6 text-center">
+      Bravo, la couleur qui vous caractérise c'est le {{ getDominantColorInFrench() }}
+    </span>
 
     <div class="flex flex-col md:flex-row justify-center gap-10">
       <div *ngIf="dominantColor === 'blue'" class="flex flex-col items-center">
         <div class="text-white w-96 text-center h-10 uppercase bg-[#0000FF]">Bleu</div>
-        <p class="mt-2 text-center">. Rechercher des frais et des explications logiques</p>
+        <p class="mt-2 text-center">. Rechercher des faits et des explications logiques</p>
         <p class="mt-2 text-center">. Actions et prise de décision prudentes</p>
         <p class="mt-2 text-center">. Aime l'organisation et les structures</p>
         <p class="mt-2 text-center">. N'aime pas être brusqué</p>
@@ -28,7 +41,7 @@
         <div class="text-white w-96 text-center h-10 uppercase bg-[#FF0000]">Rouge</div>
         <p class="mt-2 text-center">. Rapide; décidé; énergique</p>
         <p class="mt-2 text-center">. Directe et pragmatique</p>
-        <p class="mt-2 text-center">. Sense des résultats</p>
+        <p class="mt-2 text-center">. Sens du résultat</p>
         <p class="mt-2 text-center">. Aime la compétition</p>
         <p class="mt-2 text-center">. Recherche le maximum d'indépendance</p>
         <p class="mt-2 text-center">. N'aime pas l'inaction</p>
@@ -38,10 +51,10 @@
 
       <div *ngIf="dominantColor === 'green'" class="flex flex-col items-center">
         <div class="text-white w-96 text-center h-10 uppercase bg-[#008000]">Vert</div>
-        <p class="mt-2 text-center">. Attentionné, stable, coopérant</p>
+        <p class="mt-2 text-center">. Attentioné, stable, coopérant</p>
         <p class="mt-2 text-center">. Aime les relations personnalisées</p>
         <p class="mt-2 text-center">. N'aime pas les conflits</p>
-        <p class="mt-2 text-center">. Soutient et écoute activement les autres</p>
+        <p class="mt-2 text-center">. Soutien et écoute activement les autres</p>
         <p class="mt-2 text-center">. Renforce la cohésion</p>
         <p class="mt-2 text-center">. Accommodant</p>
         <p class="mt-2 text-center">. Patient</p>
@@ -50,7 +63,7 @@
 
       <div *ngIf="dominantColor === 'yellow'" class="flex flex-col items-center">
         <div class="text-white w-96 text-center h-10 uppercase bg-[#FFFF00]">Jaune</div>
-        <p class="mt-2 text-center">. Optimisme, enthousiasme, communicant</p>
+        <p class="mt-2 text-center">. Optimisme, enthousiasme, communiquant</p>
         <p class="mt-2 text-center">. Actions et décisions spontanées</p>
         <p class="mt-2 text-center">. Aime travailler en groupe</p>
         <p class="mt-2 text-center">. Créatif, tendance à rêver</p>
@@ -86,8 +99,13 @@
     </div>
 
     <div class="flex gap-10 justify-center mt-6">
-      <a routerLink="/core/apprenant/caracterise" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Caractérise</a>
-      <a routerLink="/core/apprenant/comminuque" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Communique</a>
+      <button (click)="openModal()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Caractéristique des autres couleurs</button>
+      <button (click)="openModalComm()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Comment
+        communiquer avec les autres couleurs</button>
+      <!-- <a routerLink="/core/apprenant/caracterise"
+        class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Caractéristique des autres couleurs</a>
+      <a routerLink="/core/apprenant/comminuque" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Comment
+        communiquer avec les autres couleurs</a> -->
     </div>
   </div>
 
@@ -107,20 +125,20 @@
           <p class="text-[#EF7743]">{{ answer.text }}</p>
           <div>
             <label *ngIf="remainingPoints.includes(6)">
-              <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, answer); answerSelected = true"> Ce
-              qui me correspond le plus
+              <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, answer); answerSelected = true">
+              Me correspond le plus
             </label>
             <label *ngIf="remainingPoints.includes(3)">
-              <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, answer); answerSelected = true"> Ce
-              qui me correspond assez
+              <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, answer); answerSelected = true">
+              Me correspond assez
             </label>
             <label *ngIf="remainingPoints.includes(1)">
-              <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, answer); answerSelected = true"> Ce
-              qui me correspond peu
+              <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, answer); answerSelected = true">
+              Me correspond peu
             </label>
             <label *ngIf="remainingPoints.includes(0)">
-              <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, answer); answerSelected = true"> Ce
-              qui ne me correspond pas du tout
+              <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, answer); answerSelected = true">
+              Ne me correspond pas du tout
             </label>
           </div>
         </div>
@@ -141,7 +159,7 @@
       <!-- Si toutes les questions sont terminées, afficher le bouton Envoyer -->
       <div *ngIf="currentQuestionIndex == questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20">
         <button (click)="sendResults(); closeTest()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">
-          Voir ces résultats
+          Voir mes résultats
         </button>
       </div>
     </div>
@@ -172,7 +190,7 @@
     </div> -->
 </div>
 <!-- modal pour bien communiquer avec.... -->
-<!-- <div>
+<div>
   <div *ngIf="open" class="fixed inset-0 z-60 flex items-center justify-center bg-gray-900 bg-opacity-50">
     <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-full sm:max-w-7xl w-full">
       <div class="flex justify-between items-center mb-4">
@@ -232,12 +250,12 @@
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 
 
 <!-- Modal pour ce qui me caraterise... -->
-<!-- <div>
+<div>
   <div *ngIf="displayCom" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
     <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-full sm:max-w-7xl w-full">
       <div class="flex justify-between items-center mb-4">
@@ -297,6 +315,4 @@
       </div>
     </div>
   </div>
-</div> -->
-
-
+</div>

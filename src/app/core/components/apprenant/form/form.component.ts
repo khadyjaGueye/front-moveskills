@@ -12,21 +12,21 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule,RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
-export class FormComponent implements OnInit{
+export class FormComponent implements OnInit {
 
-   // Tableau de questions
-   questions: Question[] = [
+  // Tableau de questions
+  questions: Question[] = [
     {
-      text: "Dans la vie générale, ce qui me motive c'est...",
+      text: "Dans la vie en générale, ce qui me motive c'est...",
       answers: [
-        { text: "Des buts et de l\'action", points: 6, color: 'red' },
-        { text: "Des relations profondes et harmonieuses", points: 3, color: 'yellow' },
+        { text: "Des buts et de l\'action, se dépasser soi-meme", points: 6, color: 'red' },
+        { text: "Des relations profondes et harmonieuses avec les autres", points: 3, color: 'yellow' },
         { text: "La stabilité et le sentiment de maîtriser son existence", points: 1, color: 'green' },
-        { text: "Participer dans l\'enthousiasme et découvrir", points: 0, color: 'blue' }
+        { text: "Participer dans l\'enthousiasme et découvrir et apprendre", points: 0, color: 'blue' }
       ]
     },
     {
@@ -34,59 +34,59 @@ export class FormComponent implements OnInit{
       answers: [
         { text: "Chances et opprtunités", points: 6, color: 'red' },
         { text: "Processus et stratégie", points: 3, color: 'yellow' },
-        { text: "Risque et difficultés", points: 1, color: 'green' },
-        { text: "Enjeux et gain", points: 0, color: 'blue' }
+        { text: "Risques et difficultés", points: 1, color: 'green' },
+        { text: "Enjeux et gains", points: 0, color: 'blue' }
       ]
     },
     {
       text: "Au quotidien; je me montre le plus souvent...",
       answers: [
         { text: "Calme et réflexif", points: 6, color: 'red' },
-        { text: "determiné et actif", points: 3, color: 'yellow' },
-        { text: "Créatif et synpathiue", points: 1, color: 'green' },
-        { text: "Prudent et concilliant", points: 0, color: 'blue' }
+        { text: "Determiné et actif", points: 3, color: 'yellow' },
+        { text: "Créatif et sympathique", points: 1, color: 'green' },
+        { text: "Prudent et conciliant", points: 0, color: 'blue' }
       ]
     },
     {
       text: "Quand les choses ne se passent pas comme je veux, je deviens...",
       answers: [
-        { text: "Impatient,colérique", points: 6, color: 'red' },
-        { text: "Désordonné et chaotique", points: 3, color: 'yellow' },
-        { text: "Lent borné", points: 1, color: 'green' },
+        { text: "Impatient, colérique", points: 6, color: 'red' },
+        { text: "Désordonné, chaotique", points: 3, color: 'yellow' },
+        { text: "Lent, borné", points: 1, color: 'green' },
         { text: "Tatillon, pinailleur", points: 0, color: 'blue' }
       ]
     },
     {
-      text: "Pour aider le autres, je sais (je suis bon pour...",
+      text: "Pour aider les autres, je sais (je suis bon pour...",
       answers: [
         { text: "Ecouter sans préjugé, partager sincérement", points: 6, color: 'red' },
-        { text: "Encourager, pousser à décidé", points: 3, color: 'yellow' },
+        { text: "Encourager, pousser à décider", points: 3, color: 'yellow' },
         { text: "Expliquer, clarifier, analyser", points: 1, color: 'green' },
-        { text: "Inspirer;donner envie", points: 0, color: 'blue' }
+        { text: "Inspirer, donner envie", points: 0, color: 'blue' }
       ]
     },
     {
       text: "Pour etre efficase au travail, je préfére surtout disposer de...",
       answers: [
         { text: "Regles et consignes claires, et cotoyer des gens compétents", points: 6, color: 'red' },
-        { text: "Variété; changement et ne pas devoir trop se prend au sérieux", points: 3, color: 'yellow' },
-        { text: "Action, mouvement,risque, ambition et sentir que je peut décider", points: 1, color: 'green' },
-        { text: "Harmonie avec mes collégues, et pouvoir avancer à mon rytme", points: 0, color: 'blue' }
+        { text: "Variété; changement et ne pas devoir trop se prendre au sérieux", points: 3, color: 'yellow' },
+        { text: "Action, mouvement,risque, ambition et sentir que je peux décider", points: 1, color: 'green' },
+        { text: "Harmonie avec mes collégues, et pouvoir avancer à mon rythme", points: 0, color: 'blue' }
       ]
     },
     {
       text: "Ce que j'apprécie dans une équipe,...",
       answers: [
         { text: "Se sentir plus fort pour viser plus haut et gagner", points: 6, color: 'red' },
-        { text: "flexibilité et bonne volonté", points: 3, color: 'yellow' },
-        { text: "Réflexion et analyse ", points: 1, color: 'green' },
-        { text: "Esprit de décision et d'organisation", points: 0, color: 'blue' }
+        { text: "Un fonctionnement fluide, où chacun sait ce qu'il doit faire ", points: 3, color: 'yellow' },
+        { text: "Renforcer l'amitié' et la solidarité' entre nous", points: 1, color: 'green' },
+        { text: "Un climat ouvert à la créativité et à l’expression libre de chacun", points: 0, color: 'blue' }
       ]
     },
     {
       text: "Dans les réuinion, je fais preuve de...",
       answers: [
-        { text: "Optimiser et sens de l'humour", points: 6, color: 'red' },
+        { text: "Optimisme et sens de l'humour", points: 6, color: 'red' },
         { text: "Flexibité et bonne volonté", points: 3, color: 'yellow' },
         { text: "Réflexion et analyse", points: 1, color: 'green' },
         { text: "Esprit de décision et d'organisation", points: 0, color: 'blue' }
@@ -97,22 +97,22 @@ export class FormComponent implements OnInit{
       answers: [
         { text: "Etant patient tolérant, et flexible", points: 6, color: 'red' },
         { text: "Impliquant tous les acteurs autour de solution originales", points: 3, color: 'yellow' },
-        { text: "Me monrant proactif direct, concret", points: 1, color: 'green' },
+        { text: "Me montrant proactif, direct, concret", points: 1, color: 'green' },
         { text: "Faisant preuve d'objectivité, de rationalité, de recul", points: 0, color: 'blue' }
       ]
     },
     {
-      text: "Ce que je déteste dans les changement c'est quand...",
+      text: "Ce que je déteste dans les changements c'est quand...",
       answers: [
-        { text: "C'est le régle de la confusion", points: 6, color: 'red' },
+        { text: "C'est le règne de la confusion", points: 6, color: 'red' },
         { text: "Il y a des gagnants et des perdants", points: 3, color: 'yellow' },
-        { text: "On se peut pas y participer directement", points: 1, color: 'green' },
-        { text: "Ca n'avance pas assez vite!", points: 0, color: 'blue' }
+        { text: "On ne peut pas y participer directement", points: 1, color: 'green' },
+        { text: "Ça n'avance pas assez vite!", points: 0, color: 'blue' }
       ]
     },
   ];
   role: string = "";
-  userId!:number;
+  userId!: number;
   nom!: string;
   prenom!: string;
   email!: string;
@@ -144,24 +144,29 @@ export class FormComponent implements OnInit{
   testStarted: boolean = false; // Nouvelle variable pour gérer l'affichage du test
   token: string = "";
 
+
   constructor(private service: ApprenantService, private test: TestService) { }
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token")!;
-      // Récupérer l'utilisateur JSON
-      const userJson = localStorage.getItem('user');
-      if (userJson != null) {
-        // Parse seulement si non null
-        const user = JSON.parse(userJson);
-        this.userId = user.id;
-        this.nom = user.name;
-        this.prenom = user.prenom;
-        this.email = user.email;
-        this.role = user.role;
-        this
-      } else {
-        // Gérer le cas où pas d'utilisateur authentifié
-      }
+    // Récupérer l'utilisateur JSON
+    const userJson = localStorage.getItem('user');
+
+    if (userJson != null) {
+      // Parse seulement si non null
+      const user = JSON.parse(userJson);
+      this.userId = user.id;
+      this.nom = user.name;
+      this.prenom = user.prenom;
+      this.email = user.email;
+      this.role = user.role;
+      this
+    } else {
+      // Gérer le cas où pas d'utilisateur authentifié
+    }
+
+
+
   }
 
   openModal() {
@@ -308,48 +313,36 @@ export class FormComponent implements OnInit{
 
   sendResults() {
     const percentages = this.calculatePercentages();
+    // Déterminer la couleur dominante en utilisant `keyof typeof percentages` pour le typage
+    const dominantColor = (Object.keys(percentages) as Array<keyof typeof percentages>).reduce((a, b) =>
+      percentages[a] > percentages[b] ? a : b
+    );
+    // Enregistrer la couleur dominante dans le localStorage
+    localStorage.setItem("dominantColor", dominantColor);
     const data = {
-      red: percentages.red,
-      yellow: percentages.yellow,
-      green: percentages.green,
-      blue: percentages.blue
+      rouge: percentages.red,
+      jaune: percentages.yellow,
+      vert: percentages.green,
+      bleu: percentages.blue,
+      user_id:this.userId
     };
+    // console.log(data);
+
     // Envoyer les données avec le token
     this.test.store(data, this.token).pipe(tap({
       next: (resp) => {
-        console.log(resp);
-        //this.handleResponse(resp.data.message);
+        this.service.handleResponse(resp)
+        //this.testStarted = false;
       }, complete: () => {
-        console.log("Observable Termite");
+        // console.log("Observable Termite");
       }, error: (error) => {
-        console.log(error);
-        //this.handleResponse(error);
+        // console.log(error);
+       //this.service.handleResponse(error);
       }
     })).subscribe();
   }
 
-  //Fonction pour afficher les messages d'erreurs
-  handleResponse<T>(responseOrError: T | HttpErrorResponse) {
-    if (responseOrError instanceof HttpErrorResponse) {
-      this.message = responseOrError.error.data.message;
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: this.message,
-        timer: 1500
-      });
-    } else {
-      const response = responseOrError as Model<Data>;
-      this.message = response.data.message;
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: this.message,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  }
+
 
   // Méthode pour aller à la question suivante
   nextQuestion() {
@@ -364,4 +357,14 @@ export class FormComponent implements OnInit{
     }
   }
 
+  // Méthode pour obtenir la couleur en français
+  getDominantColorInFrench(): string {
+    const colorMap: { [key: string]: string } = {
+      red: 'rouge',
+      yellow: 'jaune',
+      green: 'vert',
+      blue: 'bleu'
+    };
+    return colorMap[this.dominantColor] || this.dominantColor;
+  }
 }

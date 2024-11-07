@@ -3,12 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuperviseurService } from '../services/superviseur.service';
 import { Chart } from 'chart.js/auto';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { environment } from '../../../../../environments/environment.development';
+import { User } from '../../../../interfaces/model';
+import { ChartEvent } from 'chart.js/dist/core/core.plugins';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
   selector: 'app-resultat',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, CommonModule, NgxPaginationModule, SharedModule,],
   templateUrl: './resultat.component.html',
   styleUrl: './resultat.component.css'
 })
@@ -18,6 +22,12 @@ export class ResultatComponent implements OnInit {
   // Données du graphique
   isModalOpen = false;
   selectedColorDetails: any;
+  dataColor: User[] = [];
+  pieChart: any;
+  isTableVisible = false;
+  public searchTerm: string = ''; // Variable pour stocker la valeur de la recherche
+  public page: number = 1;
+  public itemsPerPage: number = 5; // Nombre d'éléments par page
   // Exemple de données
   data = [
     { color: 'Rouge', percentage: 40, details: 'Caractéristiques de la couleur Rouge' },
@@ -29,60 +39,9 @@ export class ResultatComponent implements OnInit {
   constructor(private service: SuperviseurService) { }
 
   ngOnInit(): void {
-    this.createChart();
-  }
-
-  // Fonction pour créer le graphique
-  createChart() {
-    const ctx = document.getElementById('myPieChart') as HTMLCanvasElement;
-    this.chart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: this.data.map(item => item.color),
-        datasets: [{
-          data: this.data.map(item => item.percentage),
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-
-        }]
-      },
-      options: {
-        responsive: true,
-        onClick: (event) => this.handleChartClick(event),
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: (tooltipItem) => {
-                const dataset = tooltipItem.dataset;
-                const index = tooltipItem.dataIndex;
-
-                // Ensure the total is calculated correctly and is a number
-                const total = (dataset.data as number[]).reduce((a, b) => (a as number) + (b as number), 0);
-                const percentage = total > 0 ? ((dataset.data[index] as number) / total * 100).toFixed(2) : '0';
-                return `${tooltipItem.label}: ${percentage}%`; // Display the percentage in the tooltip
-              }
-            }
-          },
-          datalabels: {
-            color: '#fff',
-            anchor: 'end',
-            align: 'end',
-            formatter: (value, context) => {
-              // Ensure the total is calculated correctly and is a number
-              const total = (context.chart.data.datasets[0].data as number[]).reduce((a, b) => (a as number) + (b as number), 0);
-
-              // Check that total is not null or zero before dividing
-              const percentage = total > 0 ? ((value as number) / total * 100).toFixed(2) : '0';
-              return `${percentage}%`; // Display the percentage on the chart
-            },
-          }
-        }
-      }
-      // options: {
-      //   //  cutout: '10%',  // Ajuste ce pourcentage selon tes besoins (ex: 40% pour réduire la taille)
-      //   onClick: (event) => this.handleChartClick(event),
-      //   responsive: true,
-      // }
-    });
+    // this.createChart();
+    this.createPieChart();
+    this.setupClickEvent();
   }
 
   // Gestion du clic sur le graphique
@@ -104,6 +63,71 @@ export class ResultatComponent implements OnInit {
   // Ferme le modal
   closeModal() {
     this.isModalOpen = false;
+  }
+  showTable() {
+    this.isTableVisible = true;
+  }
+
+  closeTable() {
+    this.isTableVisible = false;
+  }
+
+  createPieChart(): void {
+    // Vérifiez si le graphique existe déjà, et détruisez-le
+    if (this.pieChart) {
+      this.pieChart.destroy();
+    }
+    // Créez une nouvelle instance du graphique
+    const ctx = document.getElementById('myPieChart') as HTMLCanvasElement;
+    this.pieChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        // Configurez vos données
+        labels: ['Vert', 'Jaune', 'Rouge', 'Bleu'],
+        datasets: [{
+          label: 'Dataset',
+          data: [25, 25, 25, 25],
+          backgroundColor: ['#008000', '#DACF0A', '#FF0000', '#0000FF']
+        }]
+      },
+      options: {
+        // Configurez vos options
+      }
+    });
+  }
+  setupClickEvent() {
+    const canvas = document.getElementById('myPieChart') as HTMLCanvasElement;
+    canvas.addEventListener('click', (event) => this.onChartClick(event));
+  }
+
+  onChartClick(event: MouseEvent) {
+    const elements = this.pieChart.getElementsAtEventForMode(event as unknown as ChartEvent, 'nearest', { intersect: true }, false);
+    if (elements.length) {
+      const elementIndex = elements[0].index;
+      const colorId = this.getColorIdByIndex(elementIndex);
+      this.getDataResultatTest(colorId);
+    }
+  }
+
+  getColorIdByIndex(index: number): number {
+    const colorMap = [0, 1, 2, 3]; // Correspondance des index
+    return colorMap[index];
+  }
+
+  getDataResultatTest(colorId: number) {
+    this.service.url = `${environment.apiBaseUrl}couleur-dominante/${colorId}`;
+    this.service.all().subscribe(resp => {
+      //console.log(resp);
+      this.dataColor = resp.data.users;
+      this.selectedColorDetails = this.dataColor;
+      this.isModalOpen = true;
+    });
+  }
+
+  get filteredApprenant() {
+    return this.dataColor.filter(appreant =>
+      appreant.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
 }

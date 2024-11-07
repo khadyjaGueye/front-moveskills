@@ -41,19 +41,19 @@ export class RegisterComponent implements OnInit {
   // Fonction pour soumettre le formulaire
   onSubmit() {
     this.service.url = environment.apiBaseUrl + "register";
-    console.log(this.inscriptionForm.value);
+
     const data = this.inscriptionForm.value
     this.service.store(data).pipe(tap({
       next: (resp) => {
-        console.log(resp);
-        //this.handleResponse(resp.data.message);
+
+        this.service.handleResponse(resp);
         // Redirection vers la page de connexion après le succès
         this.router.navigate(['']);
       }, complete: () => {
-        console.log("Observable Termite");
+        // console.log("Observable Termite");
       }, error: (error) => {
-        console.log(error);
-        //sthis.handleResponse(error);
+        // console.log(error);
+        this.service.handleResponse(error);
       }
     })).subscribe();
 
@@ -65,28 +65,7 @@ export class RegisterComponent implements OnInit {
     // }
   }
 
-  //Fonction pour afficher les messages d'erreurs
-  handleResponse<T>(responseOrError: T | HttpErrorResponse) {
-    if (responseOrError instanceof HttpErrorResponse) {
-      this.message = responseOrError.error.data.message;
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: this.message,
-        timer: 1500
-      });
-    } else {
-      const response = responseOrError as Model<Data>;
-      this.message = response.data.message;
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: this.message,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  }
+
 
 
 

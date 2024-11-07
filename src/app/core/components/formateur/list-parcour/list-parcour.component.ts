@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Chapitre, Data, FormDataT, Model, Parcour, Skill, VideoFile } from '../../../../interfaces/model';
+import { Chapitre, Competence, Data, FormDataT, Model, Parcour, Skill, VideoFile } from '../../../../interfaces/model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormateurService } from '../service/formateur.service';
 import { environment } from '../../../../../environments/environment.development';
@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ListParcourComponent implements OnInit {
 
-  selectedSkills: Skill[] = [];// Liste des compétences sélectionnées
+  selectedSkills: Competence[] = [];// Liste des compétences sélectionnées
   parcours: Parcour[] = [];
   chapitres: Chapitre[] = [];
   selectedButton: string = '';
@@ -43,14 +43,15 @@ export class ListParcourComponent implements OnInit {
   showAddChapitreForm = false; // Variable pour afficher/masquer le formulaire
   tab: number = 0;
   // Liste des compétences disponibles
-  skills: Skill[] = [
-    { id: 1, name: 'Développement Web' },
-    { id: 2, name: 'Analyse de données' },
-    { id: 3, name: 'Design UX/UI' },
-    { id: 4, name: 'Management' },
-    { id: 5, name: 'Gestion de projet' },
-    { id: 6, name: 'Leadership' },
-  ];
+  // skills: Skill[] = [
+  //   { id: 1, name: 'Développement Web' },
+  //   { id: 2, name: 'Analyse de données' },
+  //   { id: 3, name: 'Design UX/UI' },
+  //   { id: 4, name: 'Management' },
+  //   { id: 5, name: 'Gestion de projet' },
+  //   { id: 6, name: 'Leadership' },
+  // ];
+  skills: Competence[] = [];
   formData: FormDataT = {
     info: {
       nom_parcour: '',
@@ -68,7 +69,8 @@ export class ListParcourComponent implements OnInit {
     },
     summary: {
       confirmation: false
-    }
+    }, libelle: "",
+    chapitre_id: 1,
   };
   selectedVideos: File[] = []; // Tableau pour stocker les vidéos
   selectedDocuments: File[] = []; // Tableau pour stocker l
@@ -77,23 +79,29 @@ export class ListParcourComponent implements OnInit {
   constructor(private service: FormateurService, private sanitizer: DomSanitizer, private fb: FormBuilder) {
     this.formDataChap = fb.group({
       nom_chapitre: [''],
+      prix: [''],
+      duree: [''],
+      status_type: [''],
+      status_audiance: [''],
+      status_disponibilite: [''],
+      competences: [''],
     })
   }
 
   ngOnInit(): void {
     this.getParcours()
-    //this.getDataChapitre();
+    this.getDataCompetence();
   }
 
   // Sélectionner une compétence
-  selectSkill(skill: Skill) {
+  selectSkill(skill: Competence) {
     if (!this.selectedSkills.includes(skill)) {
       this.selectedSkills.push(skill);
     }
   }
 
   // Retirer une compétence
-  removeSkill(skill: Skill) {
+  removeSkill(skill: Competence) {
     this.selectedSkills = this.selectedSkills.filter(s => s !== skill);
   }
   index() {
@@ -151,7 +159,6 @@ export class ListParcourComponent implements OnInit {
 
   submitParcours() {
     this.service.url = environment.apiBaseUrl + "parcours";
-
     this.savedData = {
       nom_parcour: this.formData.info.nom_parcour,
       prix: this.formData.info.prix,
@@ -343,9 +350,18 @@ export class ListParcourComponent implements OnInit {
       this.service.handleResponse(error)
     })
   }
+
+  getDataCompetence() {
+    this.service.url = environment.apiBaseUrl + "competences";
+    this.service.all().subscribe({
+      next: (resp) => {
+        this.skills = resp.data.competences
+      }
+    })
+  }
+
   getDataChapitre(id: number): void {
     this.service.url = `${environment.apiBaseUrl}chapitre-by-parcour/${id}`;
-
     this.service.all().subscribe({
       next: (response) => {
         this.chapitres = response.data.chapitres;
