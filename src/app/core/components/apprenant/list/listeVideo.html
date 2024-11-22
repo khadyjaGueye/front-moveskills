@@ -1,0 +1,63 @@
+<!-- Section Vidéos -->
+<div class="container mx-auto mt-10">
+  <h1 class="text-3xl font-bold mb-8 text-[#114C5A] text-center">Mes Contenus</h1>
+
+  <!-- Section Vidéos -->
+  <div class="mb-10">
+    <div *ngIf="videos && videos.length > 0; else noVideo">
+      <h2 class="text-2xl font-semibold text-[#EF7743] mb-4">Vidéos</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let video of videos; let i = index">
+          <div *ngIf="idParcour == video.parcour_id">
+            <!-- Titre ou URL de la vidéo (facultatif) -->
+            <h3 class="font-bold mb-2 text-center">Chapitre {{ i + 1 }}</h3>
+            <!-- Vidéo player -->
+            <video [src]="url + video.file_path" controls class="w-full h-48 bg-black"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Template pour le cas où il n'y a pas de vidéos -->
+    <ng-template #noVideo>
+      <div class="text-center text-white bg-[#114C5A] p-4 rounded-md ">
+        Aucun Vidéos disponible pour ce parcours.
+      </div>
+    </ng-template>
+  </div>
+
+
+
+  <!-- Section Documents -->
+  <div class="mb-10">
+    <div *ngIf="documents && documents.length > 0; else noDocument">
+      <h2 class="text-2xl font-semibold text-[#EF7743] mb-4">Documents</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let document of documents">
+          <div class="p-4 border rounded-lg shadow-lg bg-white">
+            <h3 class="font-bold mb-2">{{ document.name }}</h3>
+            <p class="text-gray-600">Format : {{ document.file_path.split('.').pop() }}</p>
+            <a [href]="url + document.file_path" target="_blank" class="text-blue-500 underline">Ouvrir le document</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Template si aucun document n'existe -->
+    <ng-template #noDocument>
+      <div class="text-center text-white bg-[#114C5A] p-4 rounded-md ">
+        Aucun Document disponible pour ce parcours.
+      </div>
+    </ng-template>
+  </div>
+
+
+  <!-- Section Articles et Liens externes -->
+  <div>
+    <h2 class="text-2xl font-semibold text-[#EF7743] mb-4">Liens Externes et Articles</h2>
+    <ul class="list-disc pl-5">
+      <li *ngFor="let link of externalLinks" class="mb-2">
+        <a [href]="link.url" target="_blank" class="text-blue-500 underline">{{ link.name }}</a>
+      </li>
+    </ul>
+  </div>
+</div>

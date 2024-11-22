@@ -8,5 +8,5 @@ export interface UserInfo {
   role: string
   phoneNumber: number
   password_confirmation: string
-  Code_invitation:string
+  Code_invitaion:string
 }

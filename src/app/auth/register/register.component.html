@@ -1,27 +1,33 @@
-<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-  <h2 class="text-2xl font-bold text-center mb-6">Inscription Apprenant</h2>
+<div class="container mx-auto mt-10 p-8 bg-white rounded-lg shadow-lg max-w-2xl">
+  <h2 class="text-3xl font-bold text-center text-[#114C5A] mb-6">Inscription Apprenant</h2>
 
-  <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()" class="space-y-4">
+  <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()" class="space-y-6">
     <!-- Champ Nom -->
     <div>
       <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
-      <input id="name" type="text" formControlName="name"
-        class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="Entrez votre nom" />
-      <div *ngIf="inscriptionForm.get('name')?.invalid && inscriptionForm.get('name')?.touched"
-        class="text-red-500 text-sm">
-        Nom est requis et doit comporter au moins 3 caractères.
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez votre nom complet"
+      />
+      <div *ngIf="inscriptionForm.get('name')?.invalid && inscriptionForm.get('name')?.touched" class="text-red-500 text-sm mt-1">
+        Le nom est requis et doit comporter au moins 3 caractères.
       </div>
     </div>
 
     <!-- Champ Email -->
     <div>
       <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-      <input id="email" type="email" formControlName="email"
-        class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="Entrez votre email" />
-      <div *ngIf="inscriptionForm.get('email')?.invalid && inscriptionForm.get('email')?.touched"
-        class="text-red-500 text-sm">
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez votre email"
+      />
+      <div *ngIf="inscriptionForm.get('email')?.invalid && inscriptionForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
         Veuillez entrer un email valide.
       </div>
     </div>
@@ -29,11 +35,14 @@
     <!-- Champ Mot de Passe -->
     <div>
       <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-      <input id="password" type="password" formControlName="password"
-        class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="Entrez un mot de passe" />
-      <div *ngIf="inscriptionForm.get('password')?.invalid && inscriptionForm.get('password')?.touched"
-        class="text-red-500 text-sm">
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez un mot de passe"
+      />
+      <div *ngIf="inscriptionForm.get('password')?.invalid && inscriptionForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
         Le mot de passe doit comporter au moins 6 caractères.
       </div>
     </div>
@@ -41,57 +50,72 @@
     <!-- Champ Confirmation du Mot de Passe -->
     <div>
       <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirmez le mot de passe</label>
-      <input id="confirmPassword" type="password" formControlName="password_confirmation"
-        class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="Confirmez votre mot de passe" />
-      <div *ngIf="!checkPasswords() && inscriptionForm.get('confirmPassword')?.touched" class="text-red-500 text-sm">
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="password_confirmation"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Confirmez votre mot de passe"
+      />
+      <div *ngIf="!checkPasswords() && inscriptionForm.get('password_confirmation')?.touched" class="text-red-500 text-sm mt-1">
         Les mots de passe ne correspondent pas.
       </div>
     </div>
-    <div>
+
+    <!-- Champ Code d'invitation -->
+    <div *ngIf="inscriptionForm.get('role')?.value === 'apprenant'">
       <label for="code_invitation" class="block text-sm font-medium text-gray-700">Code d'invitation</label>
-      <input id="code_invitation" type="text" formControlName="code_invitation"
-        class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="Entre votre code d'invitation" />
-      <div *ngIf="inscriptionForm.get('code_invitation')?.invalid && inscriptionForm.get('code_invitation')?.touched"
-        class="text-red-500 text-sm">
-        Code_invitation est requis et doit comporter au moins 3 caractères.
+      <input
+        id="code_invitation"
+        type="text"
+        formControlName="code_invitaion"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entre votre code d'invitation"
+      />
+      <div *ngIf="inscriptionForm.get('code_invitaion')?.invalid && inscriptionForm.get('code_invitaion')?.touched" class="text-red-500 text-sm mt-1">
+        Le code est requis et doit comporter au moins 3 caractères.
       </div>
     </div>
 
     <!-- Champ Téléphone -->
     <div>
       <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
-      <input id="phone" type="text" formControlName="phoneNumber"
-        class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="Entrez votre numéro de téléphone" />
-      <div *ngIf="inscriptionForm.get('phone')?.invalid && inscriptionForm.get('phone')?.touched"
-        class="text-red-500 text-sm">
-        Veuillez entrer un numéro de téléphone valide.
+      <input
+        id="phone"
+        type="text"
+        formControlName="phoneNumber"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez votre numéro de téléphone"
+      />
+      <div *ngIf="inscriptionForm.get('phoneNumber')?.invalid && inscriptionForm.get('phoneNumber')?.touched" class="text-red-500 text-sm mt-1">
+        Veuillez entrer un numéro de téléphone valide (9 chiffres).
       </div>
     </div>
 
-    <!-- Champ Adresse -->
+    <!-- Champ Rôle -->
     <div>
-      <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-      <select id="role" formControlName="role"
-        class="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+      <label for="role" class="block text-sm font-medium text-gray-700">Rôle</label>
+      <select
+        id="role"
+        formControlName="role"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+      >
         <option value="">Sélectionnez votre rôle</option>
         <option value="apprenant">Apprenant</option>
         <option value="formateur">Formateur</option>
         <option value="superviseur">Superviseur</option>
       </select>
-      <div *ngIf="inscriptionForm.get('role')?.invalid && inscriptionForm.get('role')?.touched"
-        class="text-red-500 text-sm">
-        Le rôle est requis.
+      <div *ngIf="inscriptionForm.get('role')?.invalid && inscriptionForm.get('role')?.touched" class="text-red-500 text-sm mt-1">
+        Veuillez sélectionner un rôle.
       </div>
     </div>
 
-
     <!-- Bouton d'inscription -->
     <div class="flex justify-center">
-      <button type="submit"
-        class="px-4 py-2 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] focus:ring-4 focus:ring-blue-300">
+      <button
+        type="submit"
+        class="px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition-all duration-300 focus:ring-4 focus:ring-blue-300"
+      >
         S'inscrire
       </button>
     </div>

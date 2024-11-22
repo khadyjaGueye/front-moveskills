@@ -1,0 +1,202 @@
+<div class="text-[#114C5A] flex justify-center"><h1>Historisque des resultats du test</h1></div>
+<div class="gap-5 p-6 border border-gray-300 rounded-lg bg-gray-50">
+  <!-- Premier div : Affichage des tests sous forme de cartes -->
+  <div class="flex-1 border border-blue-500 rounded-lg p-6 bg-white shadow-md">
+    <h2 class="text-lg font-semibold mb-6 text-blue-700 text-center">Liste des Tests</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Boucle pour les tests -->
+      <div
+        *ngFor="let test of tests; let i = index"
+        (click)="openModal(test)"
+        class="bg-blue-100 p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-blue-200 transition-all cursor-pointer"
+      >
+        <span class="text-blue-700 font-semibold">Test {{ i + 1 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second div : Élément "Disque" -->
+  <div class="flex-1 mt-10   border border-green-500 rounded-lg p-6 bg-white shadow-md flex items-center justify-center">
+    <div class="relative w-40 h-40 md:w-60 md:h-60">
+      <!-- Cercle de couleur -->
+      <div class="color-circle w-full h-full rounded-full border-2 border-gray-300" [ngStyle]="getCircleStyle()"></div>
+
+      <!-- Taureau -->
+      <div class="absolute top-6 left-[100%] translate-x-[-50%] flex flex-col items-center -mt-12">
+        <img src="assets/images/1.jpg" alt="Taureau" class="animal-icon w-10 h-10 md:w-14 md:h-14" />
+        <span class="text-sm md:text-base text-gray-700 mt-1">Taureau</span>
+      </div>
+
+      <!-- Singe -->
+      <div class="absolute top-[80%] -right-16 transform -translate-y-1/2 flex flex-col items-center">
+        <img src="assets/images/33.avif" alt="Singe" class="animal-icon w-10 h-10 md:w-14 md:h-14" />
+        <span class="text-sm md:text-base text-gray-700 mt-1">Singe</span>
+      </div>
+
+      <!-- Tortue -->
+      <div class="absolute bottom-0 -left-[20%] transform -translate-x-1/2 flex flex-col items-center">
+        <img src="assets/images/tortue.png" alt="Tortue" class="animal-icon w-10 h-10 md:w-14 md:h-14" />
+        <span class="text-sm md:text-base text-gray-700 mt-1">Tortue</span>
+      </div>
+
+      <!-- Aigle -->
+      <div class="absolute top-5 left-0 translate-y-[-50%] flex flex-col items-center -ml-12">
+        <img src="assets/images/12.jpg" alt="Aigle" class="animal-icon w-10 h-10 md:w-14 md:h-14" />
+        <span class="text-sm md:text-base text-gray-700 mt-1">Aigle</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div
+  *ngIf="selectedTest"
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg max-w-2xl w-full p-6 relative">
+    <!-- Bouton de fermeture -->
+    <button
+      (click)="closeModal()"
+      class="absolute top-3 right-3 bg-gray-200 hover:bg-gray-300 rounded-full p-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 9a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1z" clip-rule="evenodd" />
+        <path fill-rule="evenodd" d="M9 8a1 1 0 001-1V4a1 1 0 112 0v3a1 1 0 01-1 1H9z" clip-rule="evenodd" />
+      </svg>
+    </button>
+
+    <!-- Contenu du modal -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Première carte : Détails de la couleur dominante -->
+      <div class="bg-blue-50 border border-blue-300 rounded-lg shadow-md p-6">
+        <h2 class="text-center font-semibold text-lg text-gray-700">
+          Couleur Dominante
+        </h2>
+        <div class="flex items-center justify-center my-4">
+          <!-- Disque coloré -->
+          <div
+            [ngStyle]="{'background-color': getColorCode(selectedTest.dominant_color)}"
+            class="w-16 h-16 rounded-full border-2 border-gray-300"></div>
+        </div>
+        <div class="text-center">
+
+          <p class="text-gray-700">
+            Couleur : {{ selectedTest.dominant_color }}
+          </p>
+          <div class="mt-4">
+            <img
+              [src]="getAnimalImage(selectedTest.dominant_color)"
+              alt="{{ getAnimal(selectedTest.dominant_color) }}"
+              class="w-24 h-24 object-contain mx-auto"
+            />
+            <p class="text-gray-700">
+                 {{ getAnimal(selectedTest.dominant_color) }}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Deuxième carte : Pourcentages des autres couleurs -->
+      <div class="bg-gray-50 border border-gray-300 rounded-lg shadow-md p-6">
+        <h2 class="text-center font-semibold text-lg text-gray-700">
+          Pourcentage des Autres Couleurs
+        </h2>
+        <div class="grid grid-cols-1 gap-2 mt-4">
+          <div
+            *ngFor="let color of getOtherColors(selectedTest)"
+            [ngStyle]="{ 'background-color': getColorBackground(color.name) }"
+            class="border border-gray-300 rounded-lg p-4 flex justify-between items-center">
+            <span class="text-white font-semibold">{{ color.name }}</span>
+            <span class="text-white font-bold">{{ color.percentage }}%</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Afficher les couleurs et leurs caracteristiques -->
+<!-- <div class="flex flex-col items-center" *ngFor="let test of tests">
+  <span class="uppercase text-[#114C5A] text-2xl font-bold mb-6 text-center">
+    Bravo, la couleur qui vous caractérise c'est le {{test.dominant_color}} pour le test du {{test.timestamp}}
+  </span>
+  <div> -->
+
+    <!-- <div class="flex flex-col md:flex-row justify-center gap-10">
+      <div *ngIf="test.dominant_color == 'bleu'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#0000FF]">Bleu</div>
+        <p class="mt-2 text-center">. Rechercher des faits et des explications logiques</p>
+        <p class="mt-2 text-center">. Actions et prise de décision prudentes</p>
+        <p class="mt-2 text-center">. Aime l'organisation et les structures</p>
+        <p class="mt-2 text-center">. N'aime pas être brusqué</p>
+        <p class="mt-2 text-center">. S'intéresse aux détails</p>
+        <p class="mt-2 text-center">. Objectif, analytique et orienté vers les tâches</p>
+        <p class="mt-2 text-center">. Travaille seul et avec précision</p>
+        <p class="mt-2 text-center">. Froid et distant; peu ouvert aux sentiments</p>
+      </div>
+
+      <div *ngIf="test.dominant_color =='rouge'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#FF0000]">Rouge</div>
+        <p class="mt-2 text-center">. Rapide; décidé; énergique</p>
+        <p class="mt-2 text-center">. Directe et pragmatique</p>
+        <p class="mt-2 text-center">. Sens du résultat</p>
+        <p class="mt-2 text-center">. Aime la compétition</p>
+        <p class="mt-2 text-center">. Recherche le maximum d'indépendance</p>
+        <p class="mt-2 text-center">. N'aime pas l'inaction</p>
+        <p class="mt-2 text-center">. Travaille rapidement et seul</p>
+        <p class="mt-2 text-center">. Aime contrôler</p>
+      </div>
+
+      <div *ngIf="test.dominant_color == 'vert'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#008000]">Vert</div>
+        <p class="mt-2 text-center">. Attentioné, stable, coopérant</p>
+        <p class="mt-2 text-center">. Aime les relations personnalisées</p>
+        <p class="mt-2 text-center">. N'aime pas les conflits</p>
+        <p class="mt-2 text-center">. Soutien et écoute activement les autres</p>
+        <p class="mt-2 text-center">. Renforce la cohésion</p>
+        <p class="mt-2 text-center">. Accommodant</p>
+        <p class="mt-2 text-center">. Patient</p>
+        <p class="mt-2 text-center">. Lent à passer à l'acte à décider</p>
+      </div>
+
+      <div *ngIf="test.dominant_color == 'jaune'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#DACF0A]">Jaune</div>
+        <p class="mt-2 text-center">. Optimisme, enthousiasme, communiquant</p>
+        <p class="mt-2 text-center">. Actions et décisions spontanées</p>
+        <p class="mt-2 text-center">. Aime travailler en groupe</p>
+        <p class="mt-2 text-center">. Créatif, tendance à rêver</p>
+        <p class="mt-2 text-center">. Spontané, sens de l'improvisation</p>
+        <p class="mt-2 text-center">. Talents de percussion</p>
+        <p class="mt-2 text-center">. Impulsif</p>
+        <p class="mt-2 text-center">. Saute d'une activité à l'autre</p>
+      </div>
+    </div> -->
+  <!-- </div> -->
+  <!-- <div class="relative w-40 h-40 mt-10">
+    <div class="color-circle w-full h-full rounded-full" [ngStyle]="getCircleStyle(test)"></div>
+
+    <div class="absolute -top-1 left-[95%] translate-x-[-50%] flex flex-col items-center -mt-12">
+      <img src="assets/images/1.jpg" alt="Taureau" class="animal-icon w-12 h-12" />
+      <span>Taureau</span>
+    </div>
+
+    <div class="absolute top-[80%] -right-20 translate-y-[-50%] flex flex-col items-center">
+      <img src="assets/images/33.avif" alt="Singe" class="animal-icon w-12 h-12" />
+      <span>Singe</span>
+    </div>
+
+    <div class="absolute bottom-0 -left-[20%] translate-x-[-50%] flex flex-col items-center mt-12">
+      <img src="assets/images/tortue.png" alt="Tortue" class="animal-icon w-12 h-12" />
+      <span>Tortue</span>
+    </div>
+
+    <div class="absolute -top-1 left-0 translate-y-[-50%] flex flex-col items-center -ml-12">
+      <img src="assets/images/12.jpg" alt="Aigle" class="animal-icon w-12 h-12" />
+      <span>Aigle</span>
+    </div>
+  </div> -->
+<!-- </div> -->
+

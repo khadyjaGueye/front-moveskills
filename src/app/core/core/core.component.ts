@@ -5,7 +5,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-core',
   standalone: true,
-  imports: [RouterOutlet, CommonModule,RouterLink],
+  imports: [RouterOutlet, CommonModule, RouterLink],
   templateUrl: './core.component.html',
   styleUrl: './core.component.css'
 })
@@ -17,7 +17,7 @@ export class CoreComponent implements OnInit {
   prenom!: string;
   email!: string;
   specialite!: string;
-  display:boolean = true
+  display: boolean = true
 
   constructor(private router: Router) { }
 
@@ -45,19 +45,21 @@ export class CoreComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  test(){
+  test() {
     alert("bonjour")
   }
-togle(){
-this.display = false;
-}
+  togle() {
+    this.display = false;
+  }
 
- // Initialisez isNavOpen à false pour que le menu soit caché au démarrage
- isNavOpen = false;
+  // Initialisez isNavOpen à false pour que le menu soit caché au démarrage
+  isNavOpen = false;
 
- // Méthode pour basculer l'affichage du menu
- toggleNav() {
-   this.isNavOpen = !this.isNavOpen;
- }
-
+  // Méthode pour basculer l'affichage du menu
+  toggleNav() {
+    this.isNavOpen = !this.isNavOpen;
+  }
+  closeNav() {
+    this.isNavOpen = false
+  }
 }

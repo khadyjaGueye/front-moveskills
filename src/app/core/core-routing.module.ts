@@ -4,6 +4,7 @@ import { CoreComponent } from './core/core.component';
 import { ApprenantComponent } from './components/apprenant/apprenant/apprenant.component';
 import { FormateurComponent } from './components/formateur/formateur/formateur.component';
 import { SuperviseurComponent } from './components/superviseurs/superviseur/superviseur.component';
+import { AdminComponent } from './components/admin/admin/admin.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
       { path: "apprenant", component: ApprenantComponent, loadChildren: () => import("./components/apprenant/apprenant.module").then(m => m.ApprenantModule)},
       { path: "formateur", component: FormateurComponent, loadChildren: () => import("./components/formateur/formateur.module").then(m => m.FormateurModule) },
       { path: "superviseur", component: SuperviseurComponent, loadChildren: () => import("./components/superviseurs/superviseurs.module").then(m => m.SuperviseursModule) },
+      { path: "admin", component: AdminComponent, loadChildren: () => import("./components/admin/admin.module").then(m => m.AdminModule) },
     ]
   }
 ];

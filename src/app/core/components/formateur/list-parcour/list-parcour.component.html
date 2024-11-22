@@ -76,7 +76,7 @@
                   <svg class="px-1 py-1 w-10 text-[#F9BD4F]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                     fill="currentColor">
                     <path
-                      d="M12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3ZM12.0003 19C16.2359 19 19.8603 16.052 20.7777 12C19.8603 7.94803 16.2359 5 12.0003 5C7.7646 5 4.14022 7.94803 3.22278 12C4.14022 16.052 7.7646 19 12.0003 19ZM12.0003 16.5C9.51498 16.5 7.50026 14.4853 7.50026 12C7.50026 9.51472 9.51498 7.5 12.0003 7.5C14.4855 7.5 16.5003 9.51472 16.5003 12C16.5003 14.4853 14.4855 16.5 12.0003 16.5ZM12.0003 14.5C13.381 14.5 14.5003 13.3807 14.5003 12C14.5003 10.6193 13.381 9.5 12.0003 9.5C10.6196 9.5 9.50026 10.6193 9.50026 12C9.50026 13.3807 10.6196 14.5 12.0003 14.5Z">
+                      d="M16.6256 3.1285L9.29145 10.4626L9.29886 14.7098L13.537 14.7024L20.8682 7.37114C21.5912 8.75438 22 10.3278 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C13.6689 1.9967 15.2423 2.40553 16.6256 3.1285ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
                     </path>
                   </svg>
                 </div>
@@ -118,7 +118,7 @@
           <input formControlName="nom_chapitre"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="nomChapitre" type="text" placeholder="Nom du Chapitre">
-            <button (click)="creatCapitre()"
+          <button (click)="creatCapitre()"
             class="bg-[#114C5A] hover:bg-[#F9BD4F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button">
             Envoyer
@@ -145,7 +145,8 @@
           <td class="py-2 px-4 border-b border-b-gray-50">{{chap.nom_chapitre}}</td>
           <td class="py-2 px-4 border-b border-b-gray-50">{{chap.parcour_id}}</td>
           <td>
-            <a (click)="setChapitreName(chap.nom_chapitre)" routerLink="/core/formateur/contenu" class="bg-[#114C5A] hover:bg-[#F9BD4F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ouvrir</a>
+            <a (click)="setChapitreName(chap.nom_chapitre)" routerLink="/core/formateur/contenu"
+              class="bg-[#114C5A] hover:bg-[#F9BD4F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ouvrir</a>
           </td>
         </tr>
     </table>
@@ -156,7 +157,8 @@
 <!-- !-- Modal 1 pour ajouter un parcours-->
 <div *ngIf="openModal" tabindex="-1" aria-hidden="true" id="createParcoursModal"
   class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto">
-  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg md:max-w-3/4 lg:max-w-1/2 mx-auto overflow-y-auto max-h-[90vh]"
+  <div
+    class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg md:max-w-3/4 lg:max-w-1/2 mx-auto overflow-y-auto max-h-[90vh]"
     *ngIf="currentStep === 1">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-semibold"></h2>
@@ -265,7 +267,7 @@
 </div>
 
 
-<!-- Modal 2 (Step 2) pour ajouter des videos -->
+<!-- Modal 2  pour ajouter des videos -->
 <div class="flex gap-4 mt-4">
   <div *ngIf="displayVideo" tabindex="-1" aria-hidden="true" id="modalStep2"
     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
@@ -294,7 +296,7 @@
       <div class="flex gap-4 mt-5">
         <label class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
           Vidéo
-          <input type="file" [(ngModel)]="formData.content.video" (change)="onFilesSelected($event, 'video')"
+          <input type="file" [(ngModel)]="formData.content.videos" (change)="onFilesSelected($event, 'video')"
             accept="video/*" multiple class="hidden">
         </label>
         <!-- <label class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
@@ -461,11 +463,127 @@
 </div>
 
 
-<!-- <div *ngIf="isLoading" class="absolute w-full h-full bg-[#00000052] top-0 z-50 inset-0 flex justify-center items-center">
-  <div
-  class="w-32 aspect-square rounded-full relative flex justify-center items-center animate-[spin_3s_linear_infinite] z-40 bg-[conic-gradient(white_0deg,white_300deg,transparent_270deg,transparent_360deg)] before:animate-[spin_2s_linear_infinite] before:absolute before:w-[60%] before:aspect-square before:rounded-full before:z-[80] before:bg-[conic-gradient(white_0deg,white_270deg,transparent_180deg,transparent_360deg)] after:absolute after:w-3/4 after:aspect-square after:rounded-full after:z-[60] after:animate-[spin_3s_linear_infinite] after:bg-[conic-gradient(#065f46_0deg,#065f46_180deg,transparent_180deg,transparent_360deg)]">
-  <span
-    class="absolute w-[85%] aspect-square rounded-full z-[60] animate-[spin_5s_linear_infinite] bg-[conic-gradient(#34d399_0deg,#34d399_180deg,transparent_180deg,transparent_360deg)]">
-  </span>
+<!-- <div tabindex="-1" aria-hidden="true" id="createParcoursModal"
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-[80%] h-full ml-5">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold"></h2>
+      <button (click)="closeModals()" class="text-red-400 hover:text-gray-700">x</button>
+    </div>
+    <h1 class="text-center text-xl font-semibold">Informations générales</h1>
+
+    <form>
+      <div class="flex justify-between gap-5 ">
+
+        <div class="max-w-xs mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+          <label for="upload-photo" class="cursor-pointer block">
+            <img src="assets/images/user1.jpg" alt="Image de la carte" class="w-full h-48 object-cover" id="card-image">
+          </label>
+          <input type="file" id="upload-photo" accept="image/*" class="hidden">
+        </div>
+      </div>
+      <div class="flex gap-7 mt-5">
+        <div class="items-center border-b border-gray-400">
+          <label for="" class="uppercase">Description</label>
+          <input [(ngModel)]="formData.info.nom_parcour" name="description"
+            class="appearance-none bg-transparent border-none w-full text-gray-500 leading-tight focus:outline-none"
+            type="text" placeholder="Nom de la formation" aria-label="Description">
+        </div>
+        <div class="items-center border-b border-gray-400">
+          <label for="" class="uppercase">Nom du Parcours De Formation</label>
+          <input [(ngModel)]="formData.info.nom_parcour" name="nom"
+            class="appearance-none bg-transparent border-none w-full text-gray-500 leading-tight focus:outline-none"
+            type="text" placeholder="Nom de la formation" aria-label="Nom">
+        </div>
+      </div>
+
+
+
+      <div class="flex flex-wrap gap-5 mt-5">
+
+        <div class="flex gap-1">
+          <label class="uppercase text-slate-600 font-semibold">Type</label>
+          <div class="inline-flex items-center">
+            <label class="relative flex items-center cursor-pointer">
+              <input type="radio" [(ngModel)]="formData.info.status_type" name="type" value="Gratuit"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
+                checked />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Gratuit</span>
+            </label>
+          </div>
+          <div class="inline-flex items-center">
+            <label class="relative flex items-center cursor-pointer">
+              <input [(ngModel)]="formData.info.status_type" type="radio" name="type" value="Premium"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all" />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Premium</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex gap-1">
+          <label class="uppercase text-slate-600 font-semibold">Audience</label>
+          <div class="inline-flex items-center">
+            <label class="relative flex items-center cursor-pointer">
+              <input [(ngModel)]="formData.info.status_audiance" type="radio" name="audience" value="Public"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all"
+                checked />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Public</span>
+            </label>
+          </div>
+          <div class="inline-flex items-center">
+            <label class="relative flex items-center cursor-pointer">
+              <input [(ngModel)]="formData.info.status_audiance" type="radio" name="audience" value="Privée"
+                class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-800 transition-all" />
+              <span class="ml-2 text-slate-600 text-sm cursor-pointer">Privée</span>
+            </label>
+          </div>
+        </div>
+
+
+        <div class="items-center border-b border-gray-400 py-2 mt-5">
+          <label for="" class="uppercase">Durée (jours)</label>
+          <input [(ngModel)]="formData.info.duree" name="duree"
+            class="appearance-none bg-transparent border-none w-full text-gray-500 leading-tight focus:outline-none"
+            type="number" placeholder="10" aria-label="Full name">
+        </div>
+
+        <div class="items-center border-b border-gray-400 py-2 mt-5">
+          <label for="" class="uppercase">Prix</label>
+          <input [(ngModel)]="formData.info.prix" name="prix"
+            class="appearance-none bg-transparent border-none w-full text-gray-500 leading-tight focus:outline-none"
+            type="number" placeholder="10" aria-label="Full name">
+        </div>
+      </div>
+
+
+      <div class="items-center border-b border-gray-400 py-2 mt-5">
+        <label for="" class="uppercase">Objectif de la formation</label>
+        <input [(ngModel)]="formData.info.objectif" name="objectif"
+          class="appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 px-2 leading-tight focus:outline-none"
+          type="text" placeholder="Renseigner l'objectif de la formation" aria-label="Objectif">
+      </div>
+
+
+      <h2 class="mt-8 text-lg font-bold">Compétences sélectionnées</h2>
+      <div class="flex flex-wrap gap-4 mt-4">
+        <div *ngFor="let selected of selectedSkills"
+          class="card w-full sm:w-40 bg-blue-100 p-4 text-center shadow-md rounded-md relative">
+          <p>{{ selected.nom }}</p>
+          <button class="absolute top-1 right-1 text-red-500" (click)="removeSkill(selected)">✕</button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-4 mt-5">
+        <div *ngFor="let skill of skills" class="card w-full sm:w-40 bg-gray-100 p-4 text-center shadow-md rounded-md">
+          <p (click)="selectSkill(skill)">{{ skill.nom}}</p>
+        </div>
+      </div>
+
+
+      <div class="flex justify-center mt-5">
+        <button (click)="submitParcours();closeModal()" type="submit"
+          class="px-4 py-2 bg-[#F9BD4F] text-white rounded-md">Suivant</button>
+      </div>
+    </form>
   </div>
 </div> -->

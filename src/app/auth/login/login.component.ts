@@ -51,6 +51,8 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl("core/superviseur/listApprenant");
           } if (user.role == "formateur") {
             this.router.navigateByUrl("core/formateur/listParcours");
+          }if (user.role=="admin") {
+            this.router.navigateByUrl("core/admin/utilisateur");
           }
           // Réinitialisation du formulaire après succès
           this.loginForm.reset();

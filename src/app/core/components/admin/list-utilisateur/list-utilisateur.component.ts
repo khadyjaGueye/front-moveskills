@@ -1,41 +1,59 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { environment } from '../../../environments/environment.development';
-import { tap } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import Swal from 'sweetalert2';
-import { Data, Model } from '../../interfaces/model';
-import { ApprenantService } from '../../core/components/apprenant/service/apprenant.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ApprenantService } from '../../apprenant/service/apprenant.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { environment } from '../../../../../environments/environment.development';
+import { tap } from 'rxjs';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-list-utilisateur',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  templateUrl: './list-utilisateur.component.html',
+  styleUrl: './list-utilisateur.component.css'
 })
-export class RegisterComponent implements OnInit {
+export class ListUtilisateurComponent implements OnInit {
 
+  display: boolean = false;
+  displayEdit: boolean = false;
   inscriptionForm: FormGroup;
-  message: string = ""
+  isApprenantSelected: boolean = false; // Gère l'affichage conditionnel du champ
 
-  constructor(private fb: FormBuilder, private service: ApprenantService, private router: Router) {
-    // Initialiser le formulaire avec des validators pour chaque champ
+  constructor(private fb: FormBuilder, private service: ApprenantService) {
     this.inscriptionForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       password_confirmation: ['', [Validators.required]],
-      code_invitaion: ['', [Validators.required]],
+      code_invitaion: ['', []],
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       role: ['', Validators.required]
+    });
+    // Surveille les changements de rôle
+    this.inscriptionForm.get('role')?.valueChanges.subscribe((role) => {
+      this.isApprenantSelected = role === 'apprenant';
     });
   }
 
   ngOnInit(): void {
 
+  }
+  openModalAjout() {
+    this.display = true;
+  }
+
+  openModalEdit() {
+    this.displayEdit = true
+  }
+
+  close() {
+    this.display = false;
+  }
+
+  onRoleChange(event: Event) {
+    const selectedRole = (event.target as HTMLSelectElement).value;
+    this.isApprenantSelected = selectedRole === 'apprenant';
   }
 
   // Fonction pour soumettre le formulaire
@@ -46,8 +64,6 @@ export class RegisterComponent implements OnInit {
     this.service.store(data).pipe(tap({
       next: (resp) => {
         this.service.handleResponse(resp);
-        // Redirection vers la page de connexion après le succès
-        this.router.navigate(['']);
       }, complete: () => {
         // console.log("Observable Termite");
       }, error: (error) => {
@@ -64,9 +80,9 @@ export class RegisterComponent implements OnInit {
     // }
   }
 
-  // Fonction pour vérifier si les deux mots de passe sont identiques
-  checkPasswords(): boolean {
-    return this.inscriptionForm.get('password')?.value === this.inscriptionForm.get('confirmPassword')?.value;
+   // Fonction pour vérifier si les deux mots de passe sont identiques
+   checkPasswords(): boolean {
+    return this.inscriptionForm.get('password')?.value === this.inscriptionForm.get('password_confirmation')?.value;
   }
 
 }

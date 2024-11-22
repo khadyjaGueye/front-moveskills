@@ -26,6 +26,7 @@ export interface Data {
   competences: Competence[];
   skills: Skill[];
   userDetails: UserDetail[];
+
   report: Report;
 }
 export interface Question {
@@ -59,11 +60,12 @@ export interface InfoData {
   duree: number;
   competences: string[];
   status_disponibilite: number
-  prix: number
+  prix: number;
+
 }
 
 export interface ContentData {
-  video: File[] | null;
+  videos: File[] | null;
   document: File[] | null;
 }
 
@@ -80,6 +82,13 @@ export interface FormDataT {
   chapitre_id: number
 }
 
+//Definir l'interface pour ajouter des videos
+
+export interface FormDataVideo {
+  content: ContentData;
+  libelle: string;
+  chapitre_id: number
+}
 export interface Document {
   name: string;
   url: string;
@@ -181,6 +190,7 @@ export interface Test {
   dominant_color: string
   timestamp: string
 }
+
 export interface Competence {
   id: number;
   nom: string;
@@ -220,3 +230,5 @@ export interface Item{
   target:number;
   counter:number;
 }
+
+

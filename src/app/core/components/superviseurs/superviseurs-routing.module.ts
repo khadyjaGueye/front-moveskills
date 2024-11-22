@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'resultat', component: ResultatComponent },
       { path: 'color', component: ColorDetailsModalComponent },
       { path: 'participant', component: ListeTestComponent },
+      // { path: 'list-utilisateur', component: ColorDetailsModalComponent }
 
     ]
   }

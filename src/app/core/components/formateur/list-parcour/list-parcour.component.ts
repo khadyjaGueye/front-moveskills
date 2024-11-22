@@ -64,7 +64,7 @@ export class ListParcourComponent implements OnInit {
       prix: 0
     },
     content: {
-      video: [],
+      videos: [],
       document: [],
     },
     summary: {
@@ -168,6 +168,8 @@ export class ListParcourComponent implements OnInit {
       status_disponibilite: 20, // Valeur d'exemple, ajustez selon vos besoins
       competences: this.selectedSkills.map(skill => skill.id)
     };
+    //console.log(this.savedData);
+
     // Appeler le service pour envoyer les données
     this.service.store(this.savedData).subscribe({
       next: (response) => {

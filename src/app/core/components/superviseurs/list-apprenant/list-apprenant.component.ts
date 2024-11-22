@@ -10,6 +10,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-list-apprenant',
@@ -73,52 +74,31 @@ export class ListApprenantComponent implements OnInit {
       default: return '#FFFFFF';
     }
   }
+  // Fonction pour générer le PDF avec la liste des utilisateurs
+  generatePDF() {
+    const doc = new jsPDF();
+    // Titre du document PDF
+    doc.setFontSize(16);
+    doc.text('Liste des Participants', 10, 10);
 
+    // Créer un tableau avec les données des utilisateurs
+    const userHeaders = [['ID', 'Nom', 'Email',]];
+    const userData = this.apprenants.map((user, index) => [
+      index + 1,       // L'ID sera l'index + 1 pour commencer à 1
+      user.name,       // Nom de l'utilisateur
+      user.email,      // Email de l'utilisateur
+    ]);
 
-  async generatePDF() {
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const originalPage = this.page; // Sauvegarde de la page actuelle
-    const totalPages = Math.ceil(this.apprenants.length / this.itemsPerPage); // Calcul du nombre total de pages
-
-    // Capture l'en-tête de la table
-    const headerElement = document.getElementById('tableHeader');
-    if (headerElement) {
-      const canvas = await html2canvas(headerElement);
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = 190; // Largeur de l'image dans le PDF
-      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Calcul de la hauteur pour garder les proportions
-      pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight); // Ajouter l'en-tête au PDF
-    }
-
-    // Capture des pages de données
-    for (let i = 1; i <= totalPages; i++) {
-      this.page = i; // Définit la page actuelle
-      await this.capturePage(pdf, i > 1); // Capture la page et ajoute une nouvelle page si ce n'est pas la première
-    }
-
-    pdf.save('liste_complete_apprenants.pdf');
-    this.page = originalPage; // Restaure la page initiale
-  }
-
-  private async capturePage(pdf: jsPDF, addNewPage: boolean) {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => { // Temps pour recharger les données de la page
-        const element = document.getElementById('listToConvert');
-        if (element) {
-          html2canvas(element).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const imgWidth = 190; // Largeur en mm
-            const pageHeight = pdf.internal.pageSize.height;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            const position = 10;
-
-            if (addNewPage) pdf.addPage(); // Ajoute une nouvelle page dans le PDF si ce n'est pas la première
-            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-            resolve(); // Indique que la capture de la page est terminée
-          });
-        }
-      }, 500); // Délai pour s'assurer que le contenu de la page est rendu
+    // Utilisation de autoTable pour insérer le tableau des utilisateurs
+    autoTable(doc, {
+      head: userHeaders,
+      body: userData,
+      startY: 30,  // Position du tableau (à ajuster selon votre mise en page)
+      theme: 'grid', // Style du tableau
     });
+
+    // Sauvegarder le fichier PDF
+    doc.save('rapport_utilisateurs.pdf');
   }
 
 }

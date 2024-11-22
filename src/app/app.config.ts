@@ -22,6 +22,6 @@ export const appConfig: ApplicationConfig = {
   provideAnimations(),
   provideAnimationsAsync(),
   importProvidersFrom(NgModule), provideAnimationsAsync(),
-  // provideRouter(routes, withHashLocation()),
+  //provideRouter(routes, withHashLocation()),
   ]
 };

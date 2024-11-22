@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../../../shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Chapitre, Contenu, FormDataT } from '../../../../interfaces/model';
+import { Chapitre, Contenu, FormDataT, FormDataVideo } from '../../../../interfaces/model';
 import { FormateurService } from '../service/formateur.service';
 import { environment } from '../../../../../environments/environment.development';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-contenu',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, NgxPaginationModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule,],
   templateUrl: './contenu.component.html',
   styleUrl: './contenu.component.css'
 })
@@ -32,27 +32,15 @@ export class ContenuComponent implements OnInit {
   url: string = "https://moovskil.tucamarketing.com/storage/";
   displayVideo: boolean = false;
   selectedFiles: { url: any; name: string; type: string, rawFile: any }[] = []; // Contient les fichiers sélectionnés
-  formData: FormDataT = {
-    info: {
-      nom_parcour: '',
-      objectif: '',
-      status_type: 1,
-      status_audiance: 1,
-      duree: 0,
-      competences: [], // Modifié pour stocker les compétences sélectionnées
-      status_disponibilite: 20,
-      prix: 0
-    },
+  formData: FormDataVideo = {
     content: {
-      video: [],
+      videos: [],
       document: [],
-    },
-    summary: {
-      confirmation: false
     },
     libelle: "",
     chapitre_id: 1,
   };
+
 
   constructor(private service: FormateurService, private sanitizer: DomSanitizer) {
 
@@ -74,7 +62,7 @@ export class ContenuComponent implements OnInit {
       }, error: (error) => {
         // Gestion des erreurs et affichage du message d'erreur provenant du backend
         const errorMessage = error.error.data?.message || 'Échec.';
-        // Swal.fire('Erreur', errorMessage, 'error');
+       // Swal.fire('Erreur', errorMessage, 'error');
       }
     })
   }
@@ -121,36 +109,36 @@ export class ContenuComponent implements OnInit {
   }
 
   submitVideo() {
+    
     this.service.url = environment.apiBaseUrl + "ajouter-video";
-    const videoFiles = this.selectedFiles.filter(file => file.type.startsWith('video/'));
-
     const videoFormData = new FormData();
+    const videoFiles = this.selectedFiles.filter(file => file.type.startsWith('video/'));
+    // Ajout des fichiers vidéos au FormData
+    videoFiles.forEach(video => {
+      videoFormData.append('videos[]', video.rawFile); // Utiliser "videos[]" pour un tableau de fichiers
+    });
+    console.log(videoFiles);
     // Ajout du libellé au FormData
     videoFormData.append('libelle', this.libelle);
     // Ajout de l'ID du chapitre au FormData
     videoFormData.append('chapitre_id', this.selectedChapitreId.toString());
-    console.log(videoFormData);
-    // Ajout des fichiers vidéos au FormData
-    videoFiles.forEach(video => {
-      videoFormData.append('video[]', video.rawFile);
-    });
 
-    // if (this.idParcour && this.selectedChapitreId) {
-    //   // Ajout de l'ID du parcours
-    //   videoFormData.append('parcour_id', this.idParcour.toString());
-    //   // Envoi des vidéos via le service
-    //   this.service.store(videoFormData).subscribe({
-    //     next: (response) => {
-    //       const messageFromBackend = response.data.message;
-    //       Swal.fire('Succès', messageFromBackend, 'success');
-    //       this.selectedFiles = this.selectedFiles.filter(file => !file.type.startsWith('video/'));
-    //     },
-    //     error: (error) => {
-    //       const errorMessage = error.error.data?.message || 'Échec de l\'envoi des vidéos.';
-    //       Swal.fire('Erreur', errorMessage, 'error');
-    //     }
-    //   });
-    // }
+      if (this.idParcour && this.selectedChapitreId) {
+        // Ajout de l'ID du parcours
+        videoFormData.append('parcour_id', this.idParcour.toString());
+        // Envoi des vidéos via le service
+        this.service.store(videoFormData).subscribe({
+          next: (response) => {
+            const messageFromBackend = response.data.message;
+            Swal.fire('Succès', messageFromBackend, 'success');
+            this.selectedFiles = this.selectedFiles.filter(file => !file.type.startsWith('video/'));
+          },
+          error: (error) => {
+            const errorMessage = error.error.data?.message || 'Échec de l\'envoi des vidéos.';
+            Swal.fire('Erreur', errorMessage, 'error');
+          }
+        });
+      }
   }
 
 
@@ -166,7 +154,7 @@ export class ContenuComponent implements OnInit {
         rawFile: file
       });
     }
-    console.log("Fichiers sélectionnés :", this.selectedFiles);
+    //console.log("Fichiers sélectionnés :", this.selectedFiles);
   }
 
   getDataChapitre() {

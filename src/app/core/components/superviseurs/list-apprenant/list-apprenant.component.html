@@ -3,7 +3,8 @@
     <h3 class="text-xl font-semibold text-slate-800">Liste total des participants</h3>
     <!-- <p class="text-slate-500">Overview of the invoices.</p> -->
   </div>
-  <button (click)="generatePDF()" class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+  <button (click)="generatePDF()"
+    class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
     Imprimer la liste
   </button>
   <div class="mr-5">
@@ -26,7 +27,7 @@
 
 <div
   class="relative mt-10 ml-5 flex flex-col h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-  <table id="listToConvert"  class="w-full text-left table-auto min-w-max">
+  <table id="listToConvert" class="w-full text-left table-auto min-w-max">
     <thead id="tableHeader">
       <tr>
         <th class="p-4 border-b border-slate-300 bg-slate-50">
@@ -36,7 +37,7 @@
         </th>
         <th class="p-4 border-b border-slate-300 bg-slate-50">
           <p class="block text-xl font-normal leading-none text-slate-500">
-            Name
+            Nom
           </p>
         </th>
         <th class="p-4 border-b border-slate-300 bg-slate-50">
@@ -52,11 +53,10 @@
       </tr>
     </thead>
     <tbody id="listToConvert">
-
       <tr class="hover:bg-slate-50"
-        *ngFor="let apprenant of apprenants | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+        *ngFor="let apprenant of apprenants | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ;let i= index">
         <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block  text-sm text-slate-800">{{apprenant.id}}</p>
+          <p class="block  text-sm text-slate-800">{{ (page - 1) * itemsPerPage + i + 1 }}</p>
         </td>
         <td class="p-4 border-b border-slate-200 py-5">
           <p class="block  text-sm text-slate-800">{{apprenant.name}}</p>
@@ -109,6 +109,6 @@
   </div>
 </div>
 
-<div *ngIf="isLoading">
+<!-- <div *ngIf="isLoading">
   <app-loarder></app-loarder>
-</div>
+</div> -->

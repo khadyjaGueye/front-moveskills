@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ContentItem, Data } from '../../../../interfaces/model';
-import { AppService } from '../service/app.service';
+import { Chapitre, ContentItem, Contenu, Data } from '../../../../interfaces/model';
 import { ApprenantService } from '../service/apprenant.service';
 import { environment } from '../../../../../environments/environment.development';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list',
@@ -17,41 +17,32 @@ import { ActivatedRoute } from '@angular/router';
 export class ListComponent implements OnInit {
   url: string = "https://moovskil.tucamarketing.com/storage/"
 
-  //url:string = environment.apiUrlpathvideos;
-  // videos = [
-  //   { name: 'Introduction à Angular', url: 'assets/videos/angular-intro.mp4' },
-  //   { name: 'Tutoriel TypeScript', url: 'assets/videos/typescript-tutorial.mp4' },
-  //   { name: 'Programmation en JavaScript', url: 'assets/videos/javascript.mp4' }
-  // ];
-  // documents = [
-  //   { name: 'Cours de JavaScript', url: 'assets/documents/js-course.pdf', type: 'PDF' },
-  //   { name: 'Tutoriel Angular', url: 'assets/documents/angular-guide.docx', type: 'Word' },
-  //   { name: 'Référence TypeScript', url: 'assets/documents/typescript-reference.pdf', type: 'PDF' }
-  // ];
-  externalLinks = [
-    { name: 'Documentation Angular', url: 'https://angular.io/docs' },
-    { name: 'Documentation TypeScript', url: 'https://www.typescriptlang.org/docs/' }
-  ];
-
   videos: ContentItem[] = [];
   idParcour?: number
   documents: ContentItem[] = [];
+  chapitres: Chapitre[] = [];
+  contenus: Contenu[] = [];
   role: string = "";
   userId!: number;
   nom!: string;
   prenom!: string;
   email!: string;
-   storedId = localStorage.getItem('idParcour');
+  storedId = localStorage.getItem('idParcour');
+  nomChap: string | null = null;
+  nomParcour: string | null = null;
+  selectedChapitre: any = null;
+  contenuAffiche: any = null;
 
-  constructor(private service: AppService, private appService: ApprenantService, private route: ActivatedRoute) { }
+  constructor(private sanitizer: DomSanitizer, private appService: ApprenantService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // Récupère l'ID du parcours à partir d'un service
-    const idParcour = this.appService.getSelectedParcourId();
-    this.getVideoData();
+    // this.getVideoData();
     this.getDataDocument();
+    this.getDataChapitre();
     // Récupérer l'utilisateur JSON
     const userJson = localStorage.getItem('user');
+    this.nomChap = localStorage.getItem('nomChapitre');
+    this.nomParcour = localStorage.getItem('nomParcour');
     if (userJson != null) {
       // Parse seulement si non null
       const user = JSON.parse(userJson);
@@ -66,24 +57,21 @@ export class ListComponent implements OnInit {
     }
   }
 
-  getVideoData() {
-    if (this.storedId) {
-      this.idParcour = parseInt(this.storedId, 10);
-      this.appService.url = `${environment.apiBaseUrl}parcour-by-id/${this.idParcour}`;
-      this.appService.all().subscribe({
-        next: (response: { data: Data }) => {
-          const parcour = response.data.parcour;
-          this.videos = response.data.videos;
-          this.idParcour = parcour.id;
-          console.log("ID du parcours:", parcour.id);
-        },
-        error: (err) => {
-          console.error("Erreur lors de la récupération des données du parcours : ", err);
-          return null; // Gestion des erreurs
-        }
-      });
-    }
+  // Afficher un contenu (vidéo ou document)
+  afficherContenu(contenu: any) {
+    this.contenuAffiche = contenu;
+  }
 
+  // Déterminer si le fichier est une vidéo ou un document
+  estVideo(filePath: string): boolean {
+    const extensionsVideo = ['mp4', 'avi', 'mov'];
+    const extension = filePath.split('.').pop()?.toLowerCase();
+    return extensionsVideo.includes(extension || '');
+  }
+
+  // Retourne une URL sécurisée
+  getSafeUrl(filePath: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.url + filePath);
   }
 
   getDataDocument() {
@@ -95,12 +83,69 @@ export class ListComponent implements OnInit {
           this.documents = resp.data.documents
         }
       })
-
     }
-
   }
 
-  // getVideoDocument() {
+  getDataChapitre() {
+    if (this.storedId) {
+      this.idParcour = parseInt(this.storedId, 10);
+      this.appService.url = `${environment.apiBaseUrl}chapitre-by-parcour/${this.idParcour}`;
+      this.appService.all().subscribe({
+        next: (rep) => {
+          this.chapitres = rep.data.chapitres;
+        }, error: (error) => {
+          console.log('Error');
+        }
+      })
+    }
+  }
+
+  displayContenu(chapitreId: number) {
+    this.selectedChapitre = this.chapitres.find(chap => chap.id === chapitreId);
+    this.getDataContenu(chapitreId)
+  }
+  closeModal() {
+    this.selectedChapitre = null;
+  }
+
+  getDataContenu(idChapitre: number) {
+    this.appService.url = `${environment.apiBaseUrl}chapitre-contenue/${idChapitre}`;
+    this.appService.all().subscribe({
+      next: (rep) => {
+        this.contenus = rep.data.contenu;
+        console.log(this.contenus);
+      }, error: (error) => {
+        this.appService.handleResponse(error);
+      }
+    })
+  }
+
+  isVideo(filePath: string): boolean {
+    return filePath.endsWith('.mp4');
+  }
+
+  isDocument(filePath: string): boolean {
+    return filePath.endsWith('.pdf');
+  }
+  getVideoData() {
+    if (this.storedId) {
+      this.idParcour = parseInt(this.storedId, 10);
+      this.appService.url = `${environment.apiBaseUrl}parcour-by-id/${this.idParcour}`;
+      this.appService.all().subscribe({
+        next: (response: { data: Data }) => {
+          const parcour = response.data.parcour;
+          this.videos = response.data.videos;
+          this.idParcour = parcour.id;
+        },
+        error: (err) => {
+          console.error("Erreur lors de la récupération des données du parcours : ", err);
+          return null; // Gestion des erreurs
+        }
+      });
+    }
+  }
+
+   // getVideoDocument() {
   //   //Récupérer les contenus (vidéos et documents) depuis l'API
   //   this.service.getContenus().subscribe(
   //     (data: ContentItem[]) => {

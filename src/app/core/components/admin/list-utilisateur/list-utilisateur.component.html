@@ -110,8 +110,8 @@
           </p>
         </td>
         <td class="p-4 border-b border-slate-200 py-5 flex items-center space-x-2">
-          <svg (click)="openModalEdit()" class="w-10 h-10 text-[#DACF0A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-            fill="currentColor">
+          <svg (click)="openModalEdit()" class="w-10 h-10 text-[#DACF0A]" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M16.6256 3.1285L9.29145 10.4626L9.29886 14.7098L13.537 14.7024L20.8682 7.37114C21.5912 8.75438 22 10.3278 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C13.6689 1.9967 15.2423 2.40553 16.6256 3.1285ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
             </path>
@@ -144,35 +144,81 @@
       <h1 class="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">
         Enter les informations d'un utilisateur
       </h1>
-      <form action="">
+      <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()">
         <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Nom Complet</label>
-        <input type="text" id="name"
+        <input type="text" id="name" formControlName="name"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-          placeholder="James" />
+          placeholder="Entrez votre nom complet" />
+        <div *ngIf="inscriptionForm.get('name')?.invalid && inscriptionForm.get('name')?.touched"
+          class="text-red-500 text-sm">
+          Nom est requis et doit comporter au moins 3 caractères.
+        </div>
 
         <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Email</label>
-        <input type="email" id="name"
+        <input type="email" id="name" formControlName="email"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
           placeholder="exemple@gmail.com" />
+        <div *ngIf="inscriptionForm.get('email')?.invalid && inscriptionForm.get('email')?.touched"
+          class="text-red-500 text-sm">
+          Veuillez entrer un email valide.
+        </div>
 
-        <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Telephone</label>
-        <input type="number" id="name"
+        <label for="phoneNumber" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Telephone</label>
+        <input type="text" id="phoneNumber" formControlName="phoneNumber"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
           placeholder="XX XXX XX XX" />
+        <div *ngIf="inscriptionForm.get('phoneNumber')?.invalid && inscriptionForm.get('phoneNumber')?.touched"
+          class="text-red-500 text-sm">
+          Veuillez entrer un numéro de téléphone valide.
+        </div>
 
-        <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Role</label>
-        <select name="" id=""
-          class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border">
-          <option value="" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Role</option>
+        <label for="password" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Mot de passe</label>
+        <input type="password" id="password" formControlName="password"
+          class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+          placeholder="Entrez un mot de passe" />
+        <div *ngIf="inscriptionForm.get('password')?.invalid && inscriptionForm.get('password')?.touched"
+          class="text-red-500 text-sm">
+          Le mot de passe doit comporter au moins 6 caractères.
+        </div>
+
+        <label for="password_confirmation" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Confirmez le
+          mot de passe</label>
+        <input type="password" id="password_confirmation" formControlName="password_confirmation"
+          class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+          placeholder="Confirmez votre mot de passe" />
+        <div *ngIf="!checkPasswords() && inscriptionForm.get('password_confirmation')?.touched" class="text-red-500 text-sm">
+          Les mots de passe ne correspondent pas.
+        </div>
+
+        <label for="role" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Role</label>
+        <select name="role" id="role" formControlName="role"
+          class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+          (change)="onRoleChange($event)">
+          <option value="apprenant" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Apprenant</option>
+          <option value="superviseur" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Superviseur</option>
+          <option value="formateur" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Formateur</option>
         </select>
+
+        <!-- Champ Code d'invitation conditionnel -->
+        <div *ngIf="isApprenantSelected">
+          <label for="code_invitaion" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Code
+            d'invitation</label>
+          <input type="text" id="code_invitaion" formControlName="code_invitaion"
+            class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+            placeholder="Entrez votre code d'invitation" />
+          <div *ngIf="inscriptionForm.get('code_invitaion')?.invalid && inscriptionForm.get('code_invitaion')?.touched"
+            class="text-red-500 text-sm">
+            Le code d'invitation est requis et doit comporter au moins 3 caractères.
+          </div>
+        </div>
 
         <!-- Buttons -->
         <div class="flex items-center justify-start w-full">
           <button
-            class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">
+            class="bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition duration-150 ease-in-out   px-8 py-2 text-sm">
             Enregistrer
           </button>
-          <button
+          <button (click)="close()"
             class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">
             Annuler
           </button>
@@ -195,20 +241,20 @@
         <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Nom Complet</label>
         <input type="text" id="name"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-          placeholder="James" />
+          placeholder="" />
 
-        <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Email</label>
-        <input type="email" id="name"
+        <label for="Email" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Email</label>
+        <input type="email" id="email"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-          placeholder="exemple@gmail.com" />
+          placeholder="" />
 
-        <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Telephone</label>
-        <input type="number" id="name"
+        <label for="phone" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Telephone</label>
+        <input type="number" id="phone"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
-          placeholder="XX XXX XX XX" />
+          placeholder="" />
 
-        <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Role</label>
-        <select name="" id=""
+        <label for="role" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Role</label>
+        <select name="role" id="role"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border">
           <option value="" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Role</option>
         </select>
@@ -216,7 +262,7 @@
         <!-- Buttons -->
         <div class="flex items-center justify-start w-full">
           <button
-            class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 text-sm">
+            class="bg-[#114C5A] hover:bg-[#EF7743] rounded text-white px-8 py-2 text-sm">
             Enregistrer
           </button>
           <button

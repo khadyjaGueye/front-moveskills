@@ -7,6 +7,7 @@ import { authGuard } from '../../../shared/guard/auth.guard';
 import { ParcoursComponent } from './parcours/parcours.component';
 import { CaracteriseComponent } from './caracterise/caracterise.component';
 import { CommuquerComponent } from './commuquer/commuquer.component';
+import { ResultatComponent } from './resultat/resultat.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,9 @@ const routes: Routes = [
       { path: 'list', component: ListComponent, canActivate: [authGuard] },
       { path: 'form', component: FormComponent, canActivate: [authGuard] },
       { path: 'parcour', component: ParcoursComponent, canActivate: [authGuard] },
-      { path: 'caracterise', component: CaracteriseComponent,canActivate: [authGuard] },
-      {path:'comminuque',component:CommuquerComponent,canActivate: [authGuard]}
+      { path: 'caracterise', component: CaracteriseComponent, canActivate: [authGuard] },
+      { path: 'comminuque', component: CommuquerComponent, canActivate: [authGuard] },
+      { path: 'resultat', component: ResultatComponent },
     ]
   }
 ];

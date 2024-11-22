@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Answer, Data, Model, Question } from '../../../../interfaces/model';
+import { Answer, Question } from '../../../../interfaces/model';
 import { ApprenantService } from '../service/apprenant.service';
 import { TestService } from '../../../../shared/services/test.service';
 import { tap } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import Swal from 'sweetalert2';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
@@ -26,13 +23,13 @@ export class FormComponent implements OnInit {
         { text: "Des buts et de l\'action, se dépasser soi-meme", points: 6, color: 'red' },
         { text: "Des relations profondes et harmonieuses avec les autres", points: 3, color: 'yellow' },
         { text: "La stabilité et le sentiment de maîtriser son existence", points: 1, color: 'green' },
-        { text: "Participer dans l\'enthousiasme et découvrir et apprendre", points: 0, color: 'blue' }
+        { text: "Participer dans l\'enthousiasme , découvrir et apprendre", points: 0, color: 'blue' }
       ]
     },
     {
       text: "Face au changement, j'anticipe d'abord les...",
       answers: [
-        { text: "Chances et opprtunités", points: 6, color: 'red' },
+        { text: "Chances et opportunités", points: 6, color: 'red' },
         { text: "Processus et stratégie", points: 3, color: 'yellow' },
         { text: "Risques et difficultés", points: 1, color: 'green' },
         { text: "Enjeux et gains", points: 0, color: 'blue' }
@@ -66,12 +63,12 @@ export class FormComponent implements OnInit {
       ]
     },
     {
-      text: "Pour etre efficase au travail, je préfére surtout disposer de...",
+      text: "Pour etre efficace au travail, je préfère surtout disposer de...",
       answers: [
-        { text: "Regles et consignes claires, et cotoyer des gens compétents", points: 6, color: 'red' },
+        { text: "Régles et consignes claires, et cotoyer des gens compétents", points: 6, color: 'red' },
         { text: "Variété; changement et ne pas devoir trop se prendre au sérieux", points: 3, color: 'yellow' },
         { text: "Action, mouvement,risque, ambition et sentir que je peux décider", points: 1, color: 'green' },
-        { text: "Harmonie avec mes collégues, et pouvoir avancer à mon rythme", points: 0, color: 'blue' }
+        { text: "Harmonie avec mes collègues, et pouvoir avancer à mon rythme", points: 0, color: 'blue' }
       ]
     },
     {
@@ -84,10 +81,10 @@ export class FormComponent implements OnInit {
       ]
     },
     {
-      text: "Dans les réuinion, je fais preuve de...",
+      text: "Dans les réunion, je fais preuve de...",
       answers: [
         { text: "Optimisme et sens de l'humour", points: 6, color: 'red' },
-        { text: "Flexibité et bonne volonté", points: 3, color: 'yellow' },
+        { text: "Flexibilité et bonne volonté", points: 3, color: 'yellow' },
         { text: "Réflexion et analyse", points: 1, color: 'green' },
         { text: "Esprit de décision et d'organisation", points: 0, color: 'blue' }
       ]
@@ -133,6 +130,8 @@ export class FormComponent implements OnInit {
   diplayButton: boolean = true;
   dominantColor: string = ''; // Variable pour stocker la couleur dominante
   answerSelected = false;
+  answersPerBatch = 4; // Nombre de questions affichées par groupe
+  completedAnswers = new Set<number>(); // Questions complétées
   // Scores pour chaque couleur
   scores: { [key: string]: number } = {
     red: 0,
@@ -164,9 +163,6 @@ export class FormComponent implements OnInit {
     } else {
       // Gérer le cas où pas d'utilisateur authentifié
     }
-
-
-
   }
 
   openModal() {
@@ -273,24 +269,6 @@ export class FormComponent implements OnInit {
     };
   }
 
-  // getCircleStyle() {
-  //   const totalPoints = this.scores['red'] + this.scores['yellow'] + this.scores['green'] + this.scores['blue'];
-  //   // Calcule les pourcentages basés sur les scores respectifs
-  //   const redPercentage = (this.scores['red'] / totalPoints) * 100;
-  //   const yellowPercentage = (this.scores['yellow'] / totalPoints) * 100;
-  //   const greenPercentage = (this.scores['green'] / totalPoints) * 100;
-  //   const bluePercentage = (this.scores['blue'] / totalPoints) * 100;
-  //   // Retourne les styles pour `conic-gradient`
-  //   return {
-  //     'background': `conic-gradient(
-  //     red 0% ${redPercentage}%,
-  //     yellow ${redPercentage}% ${redPercentage + yellowPercentage}%,
-  //     green ${redPercentage + yellowPercentage}% ${redPercentage + yellowPercentage + greenPercentage}%,
-  //     blue ${redPercentage + yellowPercentage + greenPercentage}% 100%
-  //   )`
-  //   };
-  // }
-
   // Style pour afficher le nom de la couleur sur le disque
   getColorLabelStyle(color: string, label: string) {
     return {
@@ -324,7 +302,7 @@ export class FormComponent implements OnInit {
       jaune: percentages.yellow,
       vert: percentages.green,
       bleu: percentages.blue,
-      user_id:this.userId
+      user_id: this.userId
     };
     // console.log(data);
 
@@ -337,23 +315,41 @@ export class FormComponent implements OnInit {
         // console.log("Observable Termite");
       }, error: (error) => {
         // console.log(error);
-       //this.service.handleResponse(error);
+        //this.service.handleResponse(error);
       }
     })).subscribe();
   }
 
+  // Vérifie si toutes les réponses du groupe courant sont données
+  isBatchCompleted(): boolean {
+    const startIndex = Math.floor(this.currentQuestionIndex / this.answersPerBatch) * this.answersPerBatch;
+    const endIndex = startIndex + this.answersPerBatch;
+    return this.questions.slice(startIndex, endIndex).every((_, i) => this.completedAnswers.has(startIndex + i));
+  }
 
-
-  // Méthode pour aller à la question suivante
-  nextQuestion() {
-    if (this.currentQuestionIndex < this.questions.length - 1) {
+   // Méthode pour aller à la question suivante
+   nextQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1 && this.isBatchCompleted()) {
       this.currentQuestionIndex++;
+      this.updateRemainingAnswers();
+      this.answerSelected = this.isBatchCompleted(); // Mettre à jour l'état du bouton Suivant
     }
   }
+
   // Méthode pour revenir à la question précédente
-  previousQuestion() {
-    if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
+previousQuestion() {
+  if (this.currentQuestionIndex > 0) {
+    this.currentQuestionIndex--; // Aller à la question précédente
+    this.updateRemainingAnswers(); // Mettre à jour les réponses restantes
+    this.answerSelected = this.isBatchCompleted(); // Mettre à jour l'état du bouton Suivant
+  }
+}
+
+  // Met à jour les réponses restantes pour la question actuelle
+  updateRemainingAnswers() {
+    if (this.currentQuestionIndex < this.questions.length) {
+      this.remainingAnswers = [...this.questions[this.currentQuestionIndex].answers];
+      this.remainingPoints = [6, 3, 1, 0];
     }
   }
 
@@ -366,5 +362,14 @@ export class FormComponent implements OnInit {
       blue: 'bleu'
     };
     return colorMap[this.dominantColor] || this.dominantColor;
+  }
+
+  showToast: boolean = false;
+  // Methode pour afficher les notifications
+  launchToast() {
+    this.showToast = true;
+    setTimeout(() => {
+      this.showToast = false;
+    }, 5000); // 5 secondes
   }
 }

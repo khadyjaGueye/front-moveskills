@@ -116,13 +116,22 @@ export class ResultatComponent implements OnInit {
 
   getDataResultatTest(colorId: number) {
     this.service.url = `${environment.apiBaseUrl}couleur-dominante/${colorId}`;
+
     this.service.all().subscribe(resp => {
-      //console.log(resp);
-      this.dataColor = resp.data.users;
+      
+
+      if (Array.isArray(resp.data.users)) {
+        this.dataColor = resp.data.users;
+      } else {
+
+        this.dataColor = []; // Initialiser à un tableau vide pour éviter les erreurs
+      }
+
       this.selectedColorDetails = this.dataColor;
       this.isModalOpen = true;
     });
   }
+
 
   get filteredApprenant() {
     return this.dataColor.filter(appreant =>

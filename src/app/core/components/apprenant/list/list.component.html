@@ -1,63 +1,90 @@
-<!-- Section Vidéos -->
-<div class="container mx-auto mt-10">
-  <h1 class="text-3xl font-bold mb-8 text-[#114C5A] text-center">Mes Contenus</h1>
 
-  <!-- Section Vidéos -->
-  <div class="mb-10">
-    <div *ngIf="videos && videos.length > 0; else noVideo">
-      <h2 class="text-2xl font-semibold text-[#EF7743] mb-4">Vidéos</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let video of videos; let i = index">
-          <div *ngIf="idParcour == video.parcour_id">
-            <!-- Titre ou URL de la vidéo (facultatif) -->
-            <h3 class="font-bold mb-2 text-center">Chapitre {{ i + 1 }}</h3>
-            <!-- Vidéo player -->
-            <video [src]="url + video.file_path" controls class="w-full h-48 bg-black"></video>
-          </div>
+<div class="flex justify-center text-[#114C5A]">
+  <h1>La liste des chapitres du parcour {{nomParcour}}</h1>
+</div>
+<div class="grid gap-4 w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-4 mt-5">
+  <div *ngFor="let chap of chapitres" class="bg-[#D9E8E3] rounded-lg shadow-lg p-6 cursor-pointer flex items-center">
+    <div class="flex" (click)="displayContenu(chap.id)">
+      <span class="w-10 h-10 rounded-full bg-[#114C5A] flex items-center justify-center mr-2">
+        <svg class="w-3 h-3 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M6 8V7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7V8H20C20.5523 8 21 8.44772 21 9V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V9C3 8.44772 3.44772 8 4 8H6ZM19 10H5V20H19V10ZM11 15.7324C10.4022 15.3866 10 14.7403 10 14C10 12.8954 10.8954 12 12 12C13.1046 12 14 12.8954 14 14C14 14.7403 13.5978 15.3866 13 15.7324V18H11V15.7324ZM8 8H16V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V8Z">
+          </path>
+        </svg>
+      </span>
+      <span class="mt-2">{{chap.nom_chapitre}}</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal pour afficher les contenus d'un chapitre -->
+<div *ngIf="selectedChapitre" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl">
+    <!-- Header -->
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h2 class="text-2xl font-bold text-gray-800">Contenus de : {{ selectedChapitre.nom_chapitre }}</h2>
+      <button (click)="closeModal()" class="text-gray-500 hover:text-red-500 transition">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M6.225 4.811a.75.75 0 1 1 1.06 1.061L7.06 6.06 12 11l4.94-4.94a.75.75 0 1 1 1.06 1.06L13.06 12l4.94 4.94a.75.75 0 0 1-1.06 1.06L12 13.06l-4.94 4.94a.75.75 0 1 1-1.06-1.06L10.94 12 6 7.06a.75.75 0 0 1 0-1.06Z">
+          </path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Liste des contenus -->
+    <div class="px-6 py-4 space-y-4">
+      <div *ngFor="let contenu of contenus"
+        class="flex items-center gap-4 p-4 bg-gray-100 rounded-lg shadow-sm hover:bg-gray-200 transition">
+        <ng-container *ngIf="isVideo(contenu.file_path); else documentIcon">
+          <!-- Icône Vidéo -->
+          <svg class="w-12 h-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            fill="currentColor">
+            <path d="M9 6v12l10.5-6L9 6zm1.5 3.87l5.19 3.33-5.19 3.33V9.87z">
+            </path>
+          </svg>
+        </ng-container>
+        <ng-template #documentIcon>
+          <!-- Icône Document -->
+          <svg class="w-12 h-12 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            fill="currentColor">
+            <path
+              d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.828a2 2 0 0 0-.586-1.414l-4.828-4.828A2 2 0 0 0 13.172 2H6zm0 2h7v3a2 2 0 0 0 2 2h3v11H6V4zm9 3h2.172L15 4.828V7z">
+            </path>
+          </svg>
+        </ng-template>
+
+        <div>
+          <h3 (click)="afficherContenu(contenu)" class="text-lg font-medium text-gray-800">{{ contenu.libelle }}</h3>
+          <!-- <button (click)="afficherContenu(contenu)" class="text-blue-600 hover:underline">Voir contenu</button> -->
         </div>
       </div>
     </div>
-    <!-- Template pour le cas où il n'y a pas de vidéos -->
-    <ng-template #noVideo>
-      <div class="text-center text-white bg-[#114C5A] p-4 rounded-md ">
-        Aucun Vidéos disponible pour ce parcours.
-      </div>
-    </ng-template>
   </div>
+</div>
 
+<!-- Zone d'affichage dynamique -->
+<div *ngIf="contenuAffiche" class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 max-w-3xl w-full relative">
+    <button (click)="contenuAffiche = null" class="absolute top-4 right-4 text-gray-500 hover:text-red-500">
+      <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M6.225 4.811a.75.75 0 1 1 1.06 1.061L7.06 6.06 12 11l4.94-4.94a.75.75 0 1 1 1.06 1.06L13.06 12l4.94 4.94a.75.75 0 0 1-1.06 1.06L12 13.06l-4.94 4.94a.75.75 0 1 1-1.06-1.06L10.94 12 6 7.06a.75.75 0 0 1 0-1.06Z">
+        </path>
+      </svg>
+    </button>
 
-
-  <!-- Section Documents -->
-  <div class="mb-10">
-    <div *ngIf="documents && documents.length > 0; else noDocument">
-      <h2 class="text-2xl font-semibold text-[#EF7743] mb-4">Documents</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div *ngFor="let document of documents">
-          <div class="p-4 border rounded-lg shadow-lg bg-white">
-            <h3 class="font-bold mb-2">{{ document.name }}</h3>
-            <p class="text-gray-600">Format : {{ document.file_path.split('.').pop() }}</p>
-            <a [href]="url + document.file_path" target="_blank" class="text-blue-500 underline">Ouvrir le document</a>
-          </div>
-        </div>
-      </div>
+    <div *ngIf="estVideo(contenuAffiche.file_path)" class="aspect-video">
+      <video [src]="getSafeUrl(contenuAffiche.file_path)" controls autoplay class="w-full h-full rounded-lg"></video>
     </div>
+    <div *ngIf="!estVideo(contenuAffiche.file_path)">
+      <iframe
+      *ngIf="!estVideo(contenuAffiche.file_path)"
+      [src]="getSafeUrl(contenuAffiche.file_path)"
+      class="w-full h-[600px] rounded-lg">
+    </iframe>
 
-    <!-- Template si aucun document n'existe -->
-    <ng-template #noDocument>
-      <div class="text-center text-white bg-[#114C5A] p-4 rounded-md ">
-        Aucun Document disponible pour ce parcours.
-      </div>
-    </ng-template>
-  </div>
-
-
-  <!-- Section Articles et Liens externes -->
-  <div>
-    <h2 class="text-2xl font-semibold text-[#EF7743] mb-4">Liens Externes et Articles</h2>
-    <ul class="list-disc pl-5">
-      <li *ngFor="let link of externalLinks" class="mb-2">
-        <a [href]="link.url" target="_blank" class="text-blue-500 underline">{{ link.name }}</a>
-      </li>
-    </ul>
+    </div>
   </div>
 </div>

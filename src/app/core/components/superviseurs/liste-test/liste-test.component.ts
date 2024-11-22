@@ -40,6 +40,9 @@ export class ListeTestComponent implements OnInit {
   public itemsPerPage: number = 5; // Nombre d'éléments par page
   public isLoading: boolean = true;
   public items: Item[] = [];
+   // Définir l'ordre des couleurs
+   colorOrder = ['rouge', 'vert', 'jaune', 'bleu'];
+
 
   constructor(private service: SuperviseurService) { }
 
@@ -57,7 +60,7 @@ export class ListeTestComponent implements OnInit {
         this.initItems();
         this.startCounters();
         // Appel à generatePDF après avoir récupéré les données
-        this.generatePDF();  // Appel de la fonction pour générer le PDF
+       // this.generatePDF();  // Appel de la fonction pour générer le PDF
       }
     })
   }
@@ -121,7 +124,7 @@ export class ListeTestComponent implements OnInit {
     doc.text(`Total Participants: ${this.report.total_participants}`, 10, 20);
 
     // Créer un tableau avec les données de `report.color_distribution` et `report.percentage_distribution`
-    const headers = [['Couleur', 'Distribution', 'Pourcentage']];
+    const headers = [['Couleur', 'Répartition', 'Pourcentage']];
     const data = [
       ['Vert', this.report.color_distribution.vert, `${this.report.percentage_distribution.vert}%`],
       ['Jaune', this.report.color_distribution.jaune, `${this.report.percentage_distribution.jaune}%`],
@@ -163,6 +166,13 @@ export class ListeTestComponent implements OnInit {
 
     // Sauvegarder le fichier PDF
     doc.save('rapport_couleur_dominante_et_utilisateurs.pdf');
+  }
+
+   // Méthode pour trier les utilisateurs par couleur
+   getSortedUsers() {
+    return this.userDetails.sort((a, b) => {
+      return this.colorOrder.indexOf(a.couleur_dominante) - this.colorOrder.indexOf(b.couleur_dominante);
+    });
   }
 
 }
