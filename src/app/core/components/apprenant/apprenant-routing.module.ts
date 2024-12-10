@@ -8,6 +8,7 @@ import { ParcoursComponent } from './parcours/parcours.component';
 import { CaracteriseComponent } from './caracterise/caracterise.component';
 import { CommuquerComponent } from './commuquer/commuquer.component';
 import { ResultatComponent } from './resultat/resultat.component';
+import { LoisComponent } from './lois/lois.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
       { path: 'parcour', component: ParcoursComponent, canActivate: [authGuard] },
       { path: 'caracterise', component: CaracteriseComponent, canActivate: [authGuard] },
       { path: 'comminuque', component: CommuquerComponent, canActivate: [authGuard] },
-      { path: 'resultat', component: ResultatComponent },
+      { path: 'resultat', component: ResultatComponent ,canActivate: [authGuard]},
+      { path: 'lois', component: LoisComponent ,canActivate: [authGuard]},
     ]
   }
 ];

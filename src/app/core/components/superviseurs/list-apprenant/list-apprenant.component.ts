@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { SuperviseurService } from '../services/superviseur.service';
-
 import { CommonModule } from '@angular/common';
-import { Apprenant } from '../../apprenant/interface/apprenant';
 import { Test, User } from '../../../../interfaces/model';
 import { environment } from '../../../../../environments/environment.development';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../../../shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import html2canvas from 'html2canvas';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import Swal from 'sweetalert2';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-list-apprenant',
@@ -23,6 +23,7 @@ export class ListApprenantComponent implements OnInit {
 
   apprenants: User[] = [];
   display: boolean = false;
+  showModal: boolean = false;
   idApprenant: number = 1;
   isLoading: boolean = true;
   public searchTerm: string = ''; // Variable pour stocker la valeur de la recherche
@@ -31,25 +32,61 @@ export class ListApprenantComponent implements OnInit {
   public idApp: number = 1;
   public tests: Test[] = [];
   public couleurDominant: string = "";
+  user_id!: number;
+  codeForm: FormGroup;
+  data: { name: string; email: string; password: string; code_invitatin: string }[] = []; // Contient les données extraites
 
-
-  constructor(private service: SuperviseurService) { }
+  constructor(private service: SuperviseurService, private fb: FormBuilder) {
+    this.codeForm = fb.group({
+      user_id: ['', Validators.required],
+    })
+  }
 
   ngOnInit(): void {
     this.getDataUser();
+
+    // Récupérer l'utilisateur depuis le localStorage
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      try {
+        const user = JSON.parse(userJson);
+        if (user && user.id) {
+          this.user_id = user.id;
+        } else {
+          console.error('Erreur : utilisateur invalide dans le localStorage.');
+        }
+      } catch (error) {
+        console.error('Erreur lors du parsing de l\'utilisateur JSON :', error);
+      }
+    } else {
+      console.error('Aucun utilisateur authentifié trouvé dans le localStorage.');
+    }
+
+
   }
   openModal(id: number) {
     this.display = true;
     this.getInfoUser(id);
   }
+
   closeModal() {
     this.display = false;
   }
+
+  openTab() {
+    this.showModal = true;
+  }
+
+  closeTab() {
+    this.showModal = false;
+  }
+
+
   getDataUser() {
     this.service.url = environment.apiBaseUrl + "my-users";
     this.service.all().subscribe(resp => {
-      //console.log(resp);
       this.apprenants = resp.data.users
+
       this.isLoading = false; // Données chargées, on masque le spinner
     })
   }
@@ -101,4 +138,135 @@ export class ListApprenantComponent implements OnInit {
     doc.save('rapport_utilisateurs.pdf');
   }
 
+  showFields: boolean = false; // Contrôle de l'affichage des champs dynamiques
+  generatedCode: string = ''; // Contenu du champ input
+
+  // Affiche les champs dynamiques
+  generateCode(): void {
+    // this.showFields = true;
+    this.service.url = environment.apiBaseUrl + 'entreprise-code';
+    this.service.store(this.user_id).subscribe({
+      next: (resp) => {
+        this.service.handleResponse(resp);
+      },
+      error: (err) => {
+        switch (err.status) {
+          case 409:
+            Swal.fire({
+              icon: 'warning',
+              title: 'Ousp',
+              text: 'Vous avez deja une code d\'invitation',
+              confirmButtonText: 'OK',
+              timer: 5000, // Optionnel : ferme automatiquement l'alerte après 5 secondes
+            });
+            break;
+          case 400:
+            Swal.fire({
+              icon: 'error',
+              title: 'Requête invalide',
+              text: err.error.message || 'Veuillez vérifier les données envoyées.',
+              confirmButtonText: 'OK',
+            });
+            break;
+          case 500:
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur serveur',
+              text: 'Une erreur interne est survenue. Veuillez réessayer plus tard.',
+              confirmButtonText: 'OK',
+            });
+            break;
+          default:
+            Swal.fire({
+              icon: 'info',
+              title: 'Erreur inconnue',
+              text: err.error.message || 'Une erreur inattendue est survenue.',
+              confirmButtonText: 'OK',
+            });
+        }
+        // console.error('Erreur API :', err);
+      },
+
+    });
+
+  }
+
+  // Action lors du clic sur "Envoyer"
+  sendCode() {
+    this.service.url = environment.apiBaseUrl + 'entreprise-code';
+    const data = this.codeForm.value;
+    this.service.store(data).subscribe({
+      next: (resp) => {
+        this.service.handleResponse(resp);
+        this.codeForm.reset();
+        this.showFields = false;
+      }, error: (err) => {
+        this.service.handleResponse(err);
+        this.codeForm.reset();
+        this.showFields = false;
+      },
+    })
+  }
+
+  onFileChange(event: any): void {
+    const target: DataTransfer = <DataTransfer>(event.target);
+
+    if (target.files.length !== 1) {
+      console.error('Vous ne pouvez importer qu\'un seul fichier à la fois.');
+      return;
+    }
+
+    const reader: FileReader = new FileReader();
+
+    reader.onload = (e: any) => {
+      const binaryData = e.target.result;
+
+      // Lire le fichier Excel
+      const workbook: XLSX.WorkBook = XLSX.read(binaryData, { type: 'binary' });
+
+      // Supposons que les données se trouvent dans la première feuille
+      const sheetName: string = workbook.SheetNames[0];
+      const sheetData: XLSX.WorkSheet = workbook.Sheets[sheetName];
+
+      // Convertir en tableau JSON
+      const jsonData = XLSX.utils.sheet_to_json(sheetData, { header: 1 }) as string[][];
+
+      // Mapper les données (en supposant que le fichier contient trois colonnes : nom, email, mot de passe)
+      this.data = jsonData
+        .slice(1) // Ignorer l'en-tête
+        .map(row => ({
+          name: row[0],
+          email: row[1],
+          password: row[2],
+          code_invitatin: row[3],
+        }));
+
+      console.log(this.data); // Affichez les données dans la console
+    };
+
+    reader.readAsBinaryString(target.files[0]);
+    this.showModal = false;
+  }
+
+  // Soumettre les données
+  submitData(): void {
+    this.service.url = environment.apiBaseUrl + "users";
+    if (this.data.length === 0) {
+      console.error('Aucune donnée à soumettre');
+      return;
+    }
+    this.service.store(this.data).pipe(
+      tap({
+        next: (resp) => {
+          this.service.handleResponse(resp);
+        }, error: (error) => {
+          console.error("Erreur lors de l'envoi des données :", error);
+          this.service.handleResponse(error); // Gérer les erreurs
+        }
+      })
+    )
+
+    // Remplacez par une requête HTTP réelle
+    //console.log('Envoi des données à la base de données...', this.data);
+  }
 }

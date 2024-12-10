@@ -89,7 +89,8 @@ export class ListComponent implements OnInit {
   getDataChapitre() {
     if (this.storedId) {
       this.idParcour = parseInt(this.storedId, 10);
-      this.appService.url = `${environment.apiBaseUrl}chapitre-by-parcour/${this.idParcour}`;
+      this.appService.url = `${environment.apiBaseUrl}chapitre-by-parcour/${1}`;
+      //this.appService.url = environment.apiBaseUrl + ""
       this.appService.all().subscribe({
         next: (rep) => {
           this.chapitres = rep.data.chapitres;

@@ -18,7 +18,9 @@ export class ListUtilisateurComponent implements OnInit {
   display: boolean = false;
   displayEdit: boolean = false;
   inscriptionForm: FormGroup;
+
   isApprenantSelected: boolean = false; // Gère l'affichage conditionnel du champ
+
 
   constructor(private fb: FormBuilder, private service: ApprenantService) {
     this.inscriptionForm = this.fb.group({
@@ -30,6 +32,7 @@ export class ListUtilisateurComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
       role: ['', Validators.required]
     });
+
     // Surveille les changements de rôle
     this.inscriptionForm.get('role')?.valueChanges.subscribe((role) => {
       this.isApprenantSelected = role === 'apprenant';
@@ -80,9 +83,10 @@ export class ListUtilisateurComponent implements OnInit {
     // }
   }
 
-   // Fonction pour vérifier si les deux mots de passe sont identiques
-   checkPasswords(): boolean {
+  // Fonction pour vérifier si les deux mots de passe sont identiques
+  checkPasswords(): boolean {
     return this.inscriptionForm.get('password')?.value === this.inscriptionForm.get('password_confirmation')?.value;
   }
+
 
 }

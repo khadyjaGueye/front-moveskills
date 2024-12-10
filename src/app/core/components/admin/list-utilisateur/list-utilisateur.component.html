@@ -59,6 +59,9 @@
 
 
 
+
+
+
 <div
   class="relative mt-10 ml-5 flex flex-col h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
   <table id="listToConvert" class="w-full text-left table-auto min-w-max">
@@ -181,12 +184,14 @@
           Le mot de passe doit comporter au moins 6 caractères.
         </div>
 
-        <label for="password_confirmation" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Confirmez le
+        <label for="password_confirmation"
+          class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Confirmez le
           mot de passe</label>
         <input type="password" id="password_confirmation" formControlName="password_confirmation"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
           placeholder="Confirmez votre mot de passe" />
-        <div *ngIf="!checkPasswords() && inscriptionForm.get('password_confirmation')?.touched" class="text-red-500 text-sm">
+        <div *ngIf="!checkPasswords() && inscriptionForm.get('password_confirmation')?.touched"
+          class="text-red-500 text-sm">
           Les mots de passe ne correspondent pas.
         </div>
 
@@ -194,9 +199,12 @@
         <select name="role" id="role" formControlName="role"
           class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
           (change)="onRoleChange($event)">
-          <option value="apprenant" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Apprenant</option>
-          <option value="superviseur" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Superviseur</option>
-          <option value="formateur" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Formateur</option>
+          <option value="apprenant" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Apprenant
+          </option>
+          <option value="superviseur" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Superviseur
+          </option>
+          <option value="formateur" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Formateur
+          </option>
         </select>
 
         <!-- Champ Code d'invitation conditionnel -->
@@ -261,8 +269,7 @@
 
         <!-- Buttons -->
         <div class="flex items-center justify-start w-full">
-          <button
-            class="bg-[#114C5A] hover:bg-[#EF7743] rounded text-white px-8 py-2 text-sm">
+          <button class="bg-[#114C5A] hover:bg-[#EF7743] rounded text-white px-8 py-2 text-sm">
             Enregistrer
           </button>
           <button

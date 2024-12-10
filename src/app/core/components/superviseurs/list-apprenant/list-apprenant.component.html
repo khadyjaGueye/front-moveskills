@@ -1,12 +1,9 @@
 <div class="w-full flex justify-between items-center ">
   <div class="ml-5">
-    <h3 class="text-xl font-semibold text-slate-800">Liste total des participants</h3>
+    <h3 class="text-xl font-semibold text-slate-800">Liste total des participants {{apprenants.length}}</h3>
     <!-- <p class="text-slate-500">Overview of the invoices.</p> -->
   </div>
-  <button (click)="generatePDF()"
-    class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-    Imprimer la liste
-  </button>
+
   <div class="mr-5">
     <div class="w-full max-w-sm min-w-[200px] relative">
       <div class="relative">
@@ -23,6 +20,63 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="mt-5 ml-2 flex justify-between">
+  <!-- Bouton Générer -->
+  <button (click)="generateCode()"
+    class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100">
+    Générer code
+  </button>
+  <!-- Zone dynamique -->
+  <div *ngIf="showFields" class="inline-flex items-center gap-2 ml-4">
+    <form [formGroup]="codeForm">
+      <input type="text" placeholder="Entrez le code" formControlName="user_id"
+        class="py-2 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#EF7743]">
+      <button (click)="sendCode()"
+        class="py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400">
+        Envoyer
+      </button>
+    </form>
+  </div>
+
+  <button (click)="generatePDF()"
+    class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+    Imprimer la liste
+  </button>
+
+  <!-- Bouton pour ouvrir le modal -->
+  <button (click)="openTab()"  class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+    Exporter
+  </button>
+
+  <button
+    class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+    (click)="submitData()">
+    Soumetre
+  </button>
+</div>
+
+<!-- Tableau des données importées -->
+<div *ngIf="data.length > 0" class="overflow-x-auto mt-5">
+  <table class="table-auto w-full text-left border-collapse border border-gray-200">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="border border-gray-300 px-4 py-2">Nom</th>
+        <th class="border border-gray-300 px-4 py-2">Email</th>
+        <th class="border border-gray-300 px-4 py-2">Mot de passe</th>
+        <th class="border border-gray-300 px-4 py-2">Code d'invitation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td class="border border-gray-300 px-4 py-2">{{ item.name }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ item.email }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ item.password }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ item.code_invitatin }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div
@@ -54,7 +108,7 @@
     </thead>
     <tbody id="listToConvert">
       <tr class="hover:bg-slate-50"
-        *ngFor="let apprenant of apprenants | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ;let i= index">
+        *ngFor="let apprenant of filteredApprenant | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ;let i= index">
         <td class="p-4 border-b border-slate-200 py-5">
           <p class="block  text-sm text-slate-800">{{ (page - 1) * itemsPerPage + i + 1 }}</p>
         </td>
@@ -109,6 +163,39 @@
   </div>
 </div>
 
-<!-- <div *ngIf="isLoading">
+<div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50" *ngIf="showModal">
+  <div class="bg-white rounded-lg shadow-lg w-1/3">
+    <div class="p-4 border-b border-gray-300">
+      <h3 class="text-lg font-semibold">Format de données attendu</h3>
+    </div>
+    <div class="p-4">
+      <table class="table-auto w-full border border-gray-300">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="border border-gray-300 px-4 py-2">Nom</th>
+            <th class="border border-gray-300 px-4 py-2">Email</th>
+            <th class="border border-gray-300 px-4 py-2">Mot de passe</th>
+            <th class="border border-gray-300 px-4 py-2">Code d'invitation</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="p-4 flex justify-between">
+      <!-- Bouton Importer une liste -->
+      <label
+        class="inline-block py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer">
+        Importer
+        <input type="file" accept=".xlsx, .xls" (change)="onFileChange($event)" class="hidden">
+      </label>
+      <button  class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" (click)="closeTab()">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<div *ngIf="isLoading">
   <app-loarder></app-loarder>
 </div> -->

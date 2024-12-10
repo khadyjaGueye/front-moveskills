@@ -40,9 +40,14 @@ export class ListeTestComponent implements OnInit {
   public itemsPerPage: number = 5; // Nombre d'éléments par page
   public isLoading: boolean = true;
   public items: Item[] = [];
-   // Définir l'ordre des couleurs
-   colorOrder = ['rouge', 'vert', 'jaune', 'bleu'];
-
+  // Définir l'ordre des couleurs
+  colorOrder = ['rouge', 'vert', 'jaune', 'bleu'];
+  defaultItems = [
+    { name: 'Vert', color: '#008000', counter: 0 },
+    { name: 'Jaune', color: '#DACF0A', counter: 0 },
+    { name: 'Rouge', color: '#FF0000', counter: 0 },
+    { name: 'Bleu', color: '#0000FF', counter: 0 }
+  ]; // Tableau par défaut
 
   constructor(private service: SuperviseurService) { }
 
@@ -56,11 +61,11 @@ export class ListeTestComponent implements OnInit {
     this.service.all().subscribe({
       next: (resp) => {
         this.userDetails = resp.data.userDetails;
+        console.log(this.userDetails);
         this.report = resp.data.report;
+        this.isLoading = false; // Le chargement est terminé
         this.initItems();
         this.startCounters();
-        // Appel à generatePDF après avoir récupéré les données
-       // this.generatePDF();  // Appel de la fonction pour générer le PDF
       }
     })
   }
@@ -136,8 +141,8 @@ export class ListeTestComponent implements OnInit {
     autoTable(doc, {
       head: headers,
       body: data,
-      startY: 30,  // Définir la position de départ du tableau
-      theme: 'grid',  // Vous pouvez personnaliser le style du tableau
+      startY: 30, // Définir la position de départ du tableau
+      theme: 'grid', // Vous pouvez personnaliser le style du tableau
     });
 
     // Ajouter une nouvelle page pour afficher les détails des utilisateurs
@@ -147,30 +152,43 @@ export class ListeTestComponent implements OnInit {
     doc.setFontSize(16);
     doc.text('Liste des Utilisateurs', 10, 10);
 
-    // Créer un tableau avec les données des utilisateurs (userDetails)
+    // Trier les utilisateurs par ordre des couleurs dominantes
+    const colorOrder = ['vert', 'jaune', 'rouge', 'bleu']; // Définir l'ordre des couleurs
+    const sortedUsers = [...this.userDetails].sort((a, b) => {
+      return colorOrder.indexOf(a.couleur_dominante) - colorOrder.indexOf(b.couleur_dominante);
+    });
+
+    // Créer un tableau avec les données des utilisateurs triés
     const userHeaders = [['ID', 'Nom', 'Email', 'Couleur Dominante']];
-    const userData = this.userDetails.map((user,index) => [
-      index + 1,  // L'ID sera l'index + 1 pour que l'index commence à 1
+    const userData = sortedUsers.map((user, index) => [
+      index + 1, // L'ID sera l'index + 1 pour que l'index commence à 1
       user.name,
       user.email,
       user.couleur_dominante
     ]);
 
-    // Utilisation de autoTable pour insérer le tableau des utilisateurs
+    // Utilisation de autoTable pour insérer le tableau des utilisateurs triés
     autoTable(doc, {
       head: userHeaders,
       body: userData,
-      startY: 30,  // Position de départ du tableau des utilisateurs
-      theme: 'grid',  // Style du tableau
+      startY: 30, // Position de départ du tableau des utilisateurs
+      theme: 'grid', // Style du tableau
     });
 
     // Sauvegarder le fichier PDF
     doc.save('rapport_couleur_dominante_et_utilisateurs.pdf');
   }
 
-   // Méthode pour trier les utilisateurs par couleur
-   getSortedUsers() {
-    return this.userDetails.sort((a, b) => {
+
+  // Méthode pour trier les utilisateurs par couleur
+  getSortedUsers() {
+    // Filtrer les utilisateurs en fonction du terme de recherche
+    const filteredUsers = this.userDetails.filter(user =>
+      user.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+
+    // Trier les utilisateurs filtrés en fonction de l'ordre des couleurs
+    return filteredUsers.sort((a, b) => {
       return this.colorOrder.indexOf(a.couleur_dominante) - this.colorOrder.indexOf(b.couleur_dominante);
     });
   }

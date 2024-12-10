@@ -15,10 +15,11 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
   login(user: UserInfo): Observable<Model<Data>> {
-    // const url = `${environment.apiBaseUrl}/login`;
-    //https://moovskil.tucamarketing.com/api/register
+
     const url = "https://moovskil.tucamarketing.com/api/login";
-    //const url= "https://prod-moveskills.dev-illimitis.com/api/login";
+    // const url = "https://moveskills.dev-illimitis.com/api/login";
+    //const url= "https://backend-moveskills.dev-illimitis.com/"
+
     return this.http.post<Model<Data>>(url, user);
   }
 

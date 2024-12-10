@@ -5,77 +5,90 @@
   </div>
 
   <!-- Conteneur principal -->
-  <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-full sm:max-w-7xl w-full">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-      <!-- Carte Bleu -->
-      <div class="bg-blue-50 border border-blue-300 rounded-lg shadow-md p-6">
-        <div class="text-white bg-blue-500 text-center uppercase py-2 font-semibold rounded-t-lg">
-          Bleu
-        </div>
-        <div class="space-y-2 mt-4 text-center text-gray-700">
-          <p>. Rechercher des faits et des explications logiques</p>
-          <p>. Actions et prise de décision prudentes</p>
-          <p>. Aime l'organisation et les structures</p>
-          <p>. N'aime pas être brusqué</p>
-          <p>. S'intéresse aux détails</p>
-          <p>. Objectif, analytique et orienté vers les tâches</p>
-          <p>. Travail seul et avec précision</p>
-          <p>. Froid et distant; peu ouvert aux sentiments</p>
-        </div>
+  <div *ngIf="dernierTest" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Carte Bleu -->
+    <div class="bg-blue-50 border border-blue-300 rounded-lg shadow-md p-6">
+      <div class="text-white bg-blue-500 text-center uppercase py-2 font-semibold rounded-t-lg">
+        Bleu
       </div>
-
-      <!-- Carte Vert -->
-      <div class="bg-green-50 border border-green-300 rounded-lg shadow-md p-6">
-        <div class="text-white bg-green-500 text-center uppercase py-2 font-semibold rounded-t-lg">
-          Vert
-        </div>
-        <div class="space-y-2 mt-4 text-center text-gray-700">
-          <p>. Attentionné, stable, coopérant</p>
-          <p>. Aime les relations personnalisées</p>
-          <p>. N'aime pas les conflits</p>
-          <p>. Soutient et écoute activement les autres</p>
-          <p>. Renforce la cohésion</p>
-          <p>. Accommodant</p>
-          <p>. Patient</p>
-          <p>. Lent à passer à l'acte ou à décider</p>
-        </div>
+      <div class="space-y-2 mt-4 text-center text-gray-700">
+        <p>. Rechercher des faits et des explications logiques</p>
+        <p>. Actions et prise de décision prudentes</p>
+        <p>. Aime l'organisation et les structures</p>
+        <p>. N'aime pas être brusqué</p>
+        <p>. S'intéresse aux détails</p>
+        <p>. Objectif, analytique et orienté vers les tâches</p>
+        <p>. Travail seul et avec précision</p>
+        <p>. Froid et distant; peu ouvert aux sentiments</p>
       </div>
-
-      <!-- Carte Rouge -->
-      <div class="bg-red-50 border border-red-300 rounded-lg shadow-md p-6">
-        <div class="text-white bg-red-500 text-center uppercase py-2 font-semibold rounded-t-lg">
-          Rouge
-        </div>
-        <div class="space-y-2 mt-4 text-center text-gray-700">
-          <p>. Rapide; décidé; énergique</p>
-          <p>. Directe et pragmatique</p>
-          <p>. Sens du résultat</p>
-          <p>. Aime la compétition</p>
-          <p>. Recherche le maximum d'indépendance</p>
-          <p>. N'aime pas l'inaction</p>
-          <p>. Travaille rapidement et seul</p>
-          <p>. Aime contrôler</p>
-        </div>
+      <div *ngIf="dernierTest.dominant_color === 'bleu'"
+           class="text-blue-500 font-bold mt-4 text-center">
+           Votre Couleur Dominante !
       </div>
+    </div>
 
-      <!-- Carte Jaune -->
-      <div class="bg-yellow-50 border border-yellow-300 rounded-lg shadow-md p-6">
-        <div class="text-white bg-yellow-500 text-center uppercase py-2 font-semibold rounded-t-lg">
-          Jaune
-        </div>
-        <div class="space-y-2 mt-4 text-center text-gray-700">
-          <p>. Optimisme, enthousiasme, communicant</p>
-          <p>. Actions et décisions spontanées</p>
-          <p>. Aime travailler en groupe</p>
-          <p>. Créatif, tendance à rêver</p>
-          <p>. Spontané, sens de l'improvisation</p>
-          <p>. Talent de persuasion</p>
-          <p>. Impulsif</p>
-          <p>. Saute d'une activité à l'autre</p>
-        </div>
+    <!-- Carte Vert -->
+    <div class="bg-green-50 border border-green-300 rounded-lg shadow-md p-6">
+      <div class="text-white bg-green-500 text-center uppercase py-2 font-semibold rounded-t-lg">
+        Vert
       </div>
+      <div class="space-y-2 mt-4 text-center text-gray-700">
+        <p>. Attentionné, stable, coopérant</p>
+        <p>. Aime les relations personnalisées</p>
+        <p>. N'aime pas les conflits</p>
+        <p>. Soutient et écoute activement les autres</p>
+        <p>. Renforce la cohésion</p>
+        <p>. Accommodant</p>
+        <p>. Patient</p>
+        <p>. Lent à passer à l'acte ou à décider</p>
+      </div>
+      <div *ngIf="dernierTest.dominant_color === 'vert'"
+           class="text-green-500 font-bold mt-4 text-center">
+           Votre Couleur Dominante !
+      </div>
+    </div>
 
+    <!-- Carte Rouge -->
+    <div class="bg-red-50 border border-red-300 rounded-lg shadow-md p-6">
+      <div class="text-white bg-red-500 text-center uppercase py-2 font-semibold rounded-t-lg">
+        Rouge
+      </div>
+      <div class="space-y-2 mt-4 text-center text-gray-700">
+        <p>. Rapide; décidé; énergique</p>
+        <p>. Directe et pragmatique</p>
+        <p>. Sens du résultat</p>
+        <p>. Aime la compétition</p>
+        <p>. Recherche le maximum d'indépendance</p>
+        <p>. N'aime pas l'inaction</p>
+        <p>. Travaille rapidement et seul</p>
+        <p>. Aime contrôler</p>
+      </div>
+      <div *ngIf="dernierTest.dominant_color === 'rouge'"
+           class="text-red-500 font-bold mt-4 text-center">
+           Votre Couleur Dominante !
+      </div>
+    </div>
+
+    <!-- Carte Jaune -->
+    <div class="bg-yellow-50 border border-yellow-300 rounded-lg shadow-md p-6">
+      <div class="text-white bg-yellow-500 text-center uppercase py-2 font-semibold rounded-t-lg">
+        Jaune
+      </div>
+      <div class="space-y-2 mt-4 text-center text-gray-700">
+        <p>. Optimisme, enthousiasme, communicant</p>
+        <p>. Actions et décisions spontanées</p>
+        <p>. Aime travailler en groupe</p>
+        <p>. Créatif, tendance à rêver</p>
+        <p>. Spontané, sens de l'improvisation</p>
+        <p>. Talent de persuasion</p>
+        <p>. Impulsif</p>
+        <p>. Saute d'une activité à l'autre</p>
+      </div>
+      <div *ngIf="dernierTest.dominant_color === 'jaune'"
+           class="text-yellow-500 font-bold mt-4 text-center">
+        Votre Couleur Dominante !
+      </div>
     </div>
   </div>
+
 </div>

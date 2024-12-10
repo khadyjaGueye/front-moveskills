@@ -1,0 +1,45 @@
+CREATE TABLE discipline (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    libelle VARCHAR(255) NOT NULL,
+    titre VARCHAR(255) NULL
+);
+
+CREATE TABLE lois (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    libelle VARCHAR(255) NOT NULL,
+    id_discipline INT NOT NULL,
+    CONSTRAINT fk_discipline FOREIGN KEY (id_discipline) REFERENCES discipline(id) ON DELETE CASCADE
+);
+
+CREATE TABLE question (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    libelle VARCHAR(255) NOT NULL,
+    id_lois INT NOT NULL,
+    CONSTRAINT fk_lois FOREIGN KEY (id_lois) REFERENCES lois(id) ON DELETE CASCADE
+);
+
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_test (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    test_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    score_total INT NULL,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);
+
+CREATE TABLE user_test_question (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_test_id INT NOT NULL,
+    question_id INT NOT NULL,
+    score INT CHECK (score >= 0 AND score <= 3),
+    CONSTRAINT fk_user_test FOREIGN KEY (user_test_id) REFERENCES user_test(id) ON DELETE CASCADE,
+    CONSTRAINT fk_question FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE
+);
+

@@ -23,6 +23,7 @@ export class ResultatComponent implements OnInit {
   isModalOpen = false;
   selectedColorDetails: any;
   dataColor: User[] = [];
+
   pieChart: any;
   isTableVisible = false;
   public searchTerm: string = ''; // Variable pour stocker la valeur de la recherche
@@ -118,12 +119,9 @@ export class ResultatComponent implements OnInit {
     this.service.url = `${environment.apiBaseUrl}couleur-dominante/${colorId}`;
 
     this.service.all().subscribe(resp => {
-      
-
       if (Array.isArray(resp.data.users)) {
         this.dataColor = resp.data.users;
       } else {
-
         this.dataColor = []; // Initialiser à un tableau vide pour éviter les erreurs
       }
 
@@ -134,8 +132,8 @@ export class ResultatComponent implements OnInit {
 
 
   get filteredApprenant() {
-    return this.dataColor.filter(appreant =>
-      appreant.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    return this.dataColor.filter(user =>
+      user.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Answer, Question } from '../../../../interfaces/model';
 import { ApprenantService } from '../service/apprenant.service';
 import { TestService } from '../../../../shared/services/test.service';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -18,7 +18,7 @@ export class FormComponent implements OnInit {
   // Tableau de questions
   questions: Question[] = [
     {
-      text: "Dans la vie en générale, ce qui me motive c'est...",
+      text: "Dans la vie en général, ce qui me motive c'est...",
       answers: [
         { text: "Des buts et de l\'action, se dépasser soi-meme", points: 6, color: 'red' },
         { text: "Des relations profondes et harmonieuses avec les autres", points: 3, color: 'yellow' },
@@ -50,7 +50,7 @@ export class FormComponent implements OnInit {
         { text: "Impatient, colérique", points: 6, color: 'red' },
         { text: "Désordonné, chaotique", points: 3, color: 'yellow' },
         { text: "Lent, borné", points: 1, color: 'green' },
-        { text: "Tatillon, pinailleur", points: 0, color: 'blue' }
+        { text: "Tatillon, taquin", points: 0, color: 'blue' }
       ]
     },
     {
@@ -63,14 +63,15 @@ export class FormComponent implements OnInit {
       ]
     },
     {
-      text: "Pour etre efficace au travail, je préfère surtout disposer de...",
+      text: "Pour être efficace au travail, je préfère surtout disposer de...",
       answers: [
-        { text: "Régles et consignes claires, et cotoyer des gens compétents", points: 6, color: 'red' },
+        { text: "Régles et consignes claires, et côtoyer des gens compétents", points: 6, color: 'red' },
         { text: "Variété; changement et ne pas devoir trop se prendre au sérieux", points: 3, color: 'yellow' },
         { text: "Action, mouvement,risque, ambition et sentir que je peux décider", points: 1, color: 'green' },
         { text: "Harmonie avec mes collègues, et pouvoir avancer à mon rythme", points: 0, color: 'blue' }
       ]
     },
+
     {
       text: "Ce que j'apprécie dans une équipe,...",
       answers: [
@@ -81,7 +82,7 @@ export class FormComponent implements OnInit {
       ]
     },
     {
-      text: "Dans les réunion, je fais preuve de...",
+      text: "Dans les réunions, je fais preuve de...",
       answers: [
         { text: "Optimisme et sens de l'humour", points: 6, color: 'red' },
         { text: "Flexibilité et bonne volonté", points: 3, color: 'yellow' },
@@ -93,7 +94,7 @@ export class FormComponent implements OnInit {
       text: "Je contribue à resoudre les conflits en...",
       answers: [
         { text: "Etant patient tolérant, et flexible", points: 6, color: 'red' },
-        { text: "Impliquant tous les acteurs autour de solution originales", points: 3, color: 'yellow' },
+        { text: "Impliquant tous les acteurs autour de solutions originales", points: 3, color: 'yellow' },
         { text: "Me montrant proactif, direct, concret", points: 1, color: 'green' },
         { text: "Faisant preuve d'objectivité, de rationalité, de recul", points: 0, color: 'blue' }
       ]
@@ -111,8 +112,8 @@ export class FormComponent implements OnInit {
   role: string = "";
   userId!: number;
   nom!: string;
-  prenom!: string;
   email!: string;
+  code!: string;
 
   currentIndex: number = 1;
   totalColors: { [key: string]: number } = { red: 0, green: 0, blue: 0, yellow: 0 };
@@ -156,7 +157,7 @@ export class FormComponent implements OnInit {
       const user = JSON.parse(userJson);
       this.userId = user.id;
       this.nom = user.name;
-      this.prenom = user.prenom;
+      this.code = user.code_invitaion;
       this.email = user.email;
       this.role = user.role;
       this
@@ -195,6 +196,7 @@ export class FormComponent implements OnInit {
   closeTest() {
     this.testStarted = false;
     this.displayColorCharacteristics = true;
+
   }
 
   // Fonction pour soumettre la réponse sélectionnée
@@ -289,46 +291,96 @@ export class FormComponent implements OnInit {
     };
   }
 
+  testInProgress = false; // Indique si les résultats sont en cours d'envoi
+
   sendResults() {
     const percentages = this.calculatePercentages();
-    // Déterminer la couleur dominante en utilisant `keyof typeof percentages` pour le typage
-    const dominantColor = (Object.keys(percentages) as Array<keyof typeof percentages>).reduce((a, b) =>
-      percentages[a] > percentages[b] ? a : b
-    );
-    // Enregistrer la couleur dominante dans le localStorage
-    localStorage.setItem("dominantColor", dominantColor);
-    const data = {
-      rouge: percentages.red,
-      jaune: percentages.yellow,
-      vert: percentages.green,
-      bleu: percentages.blue,
-      user_id: this.userId
-    };
-    // console.log(data);
 
-    // Envoyer les données avec le token
-    this.test.store(data, this.token).pipe(tap({
-      next: (resp) => {
-        this.service.handleResponse(resp)
-        //this.testStarted = false;
-      }, complete: () => {
-        // console.log("Observable Termite");
-      }, error: (error) => {
-        // console.log(error);
-        //this.service.handleResponse(error);
+    // Conversion en entier pour chaque pourcentage
+    const data = {
+      rouge: Math.round(percentages.red),
+      jaune: Math.round(percentages.yellow),
+      vert: Math.round(percentages.green),
+      bleu: Math.round(percentages.blue),
+      user_id: this.userId,
+    };
+
+    console.log(data);
+
+    this.testInProgress = true; // Indiquer que l'envoi est en cours
+
+    this.test.store(data, this.token).pipe(
+      tap({
+        next: (resp) => {
+          this.service.handleResponse(resp);
+        },
+        error: (error) => {
+          console.error("Erreur lors de l'envoi des données :", error);
+          this.service.handleResponse(error); // Gérer les erreurs
+          this.testInProgress = false; // Arrêter le chargement si une erreur survient
+        }
+      }), finalize(() => {
+        this.displayColorCharacteristics = true;
+      })
+    ).subscribe({
+      complete: () => {
+        this.testInProgress = false; // L'envoi est terminé
+        this.displayColorCharacteristics = true; // Les résultats peuvent être affichés
       }
-    })).subscribe();
+    });
   }
 
+  // sendResults() {
+  //   const percentages = this.calculatePercentages();
+  //   const dominantColor = (Object.keys(percentages) as Array<keyof typeof percentages>).reduce((a, b) =>
+  //     percentages[a] > percentages[b] ? a : b
+  //   );
+
+  //   // Enregistrer la couleur dominante dans le localStorage
+  //   localStorage.setItem("dominantColor", dominantColor);
+
+  //   const data = {
+  //     rouge: percentages.red,
+  //     jaune: percentages.yellow,
+  //     vert: percentages.green,
+  //     bleu: percentages.blue,
+  //     user_id: this.userId
+  //   };
+
+  //   console.log(data);
+
+
+  //   this.testInProgress = true; // Indiquer que l'envoi est en cours
+
+  //   this.test.store(data, this.token).pipe(
+  //     tap({
+  //       next: (resp) => {
+  //         this.service.handleResponse(resp);
+  //       },
+  //       error: (error) => {
+  //         console.error("Erreur lors de l'envoi des données :", error);
+  //         this.service.handleResponse(error); // Gérer les erreurs
+  //         this.testInProgress = false; // Arrêter le chargement si une erreur survient
+  //       }
+  //     })
+  //   ).subscribe({
+  //     complete: () => {
+  //       this.testInProgress = false; // L'envoi est terminé
+  //       this.displayColorCharacteristics = true; // Les résultats peuvent être affichés
+  //     }
+  //   });
+  // }
+
   // Vérifie si toutes les réponses du groupe courant sont données
+
   isBatchCompleted(): boolean {
     const startIndex = Math.floor(this.currentQuestionIndex / this.answersPerBatch) * this.answersPerBatch;
     const endIndex = startIndex + this.answersPerBatch;
     return this.questions.slice(startIndex, endIndex).every((_, i) => this.completedAnswers.has(startIndex + i));
   }
 
-   // Méthode pour aller à la question suivante
-   nextQuestion() {
+  // Méthode pour aller à la question suivante
+  nextQuestion() {
     if (this.currentQuestionIndex < this.questions.length - 1 && this.isBatchCompleted()) {
       this.currentQuestionIndex++;
       this.updateRemainingAnswers();
@@ -337,13 +389,13 @@ export class FormComponent implements OnInit {
   }
 
   // Méthode pour revenir à la question précédente
-previousQuestion() {
-  if (this.currentQuestionIndex > 0) {
-    this.currentQuestionIndex--; // Aller à la question précédente
-    this.updateRemainingAnswers(); // Mettre à jour les réponses restantes
-    this.answerSelected = this.isBatchCompleted(); // Mettre à jour l'état du bouton Suivant
+  previousQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--; // Aller à la question précédente
+      this.updateRemainingAnswers(); // Mettre à jour les réponses restantes
+      this.answerSelected = this.isBatchCompleted(); // Mettre à jour l'état du bouton Suivant
+    }
   }
-}
 
   // Met à jour les réponses restantes pour la question actuelle
   updateRemainingAnswers() {
@@ -364,6 +416,40 @@ previousQuestion() {
     return colorMap[this.dominantColor] || this.dominantColor;
   }
 
+  // Méthode pour obtenir l'image de l'animal correspondant
+  getAnimalImage(): string {
+    const animalImages: { [key: string]: string } = {
+      red: 'assets/images/1.jpg', // Chemin vers l'image du taureau
+      yellow: 'assets/images/33.avif', // Chemin vers l'image du singe
+      green: 'assets/images/tortue.png', // Chemin vers l'image de la tortue
+      blue: 'assets/images/12.jpg' // Chemin vers l'image de l'aigle
+    };
+    return animalImages[this.dominantColor] || 'assets/images/default.png'; // Image par défaut
+  }
+
+  // Méthode pour obtenir le nom de l'animal correspondant
+  getAnimalName(): string {
+    const animalNames: { [key: string]: string } = {
+      red: 'Taureau',
+      yellow: 'Singe',
+      green: 'Tortue',
+      blue: 'Aigle'
+    };
+    return animalNames[this.dominantColor] || 'Animal inconnu';
+  }
+
+  // Méthode pour obtenir la couleur en hexadécimal
+getDominantColorHex(): string {
+  const colorHexMap: { [key: string]: string } = {
+    red: '#FF0000',    // Rouge
+    yellow: '#FFD700', // Jaune
+    green: '#008000',  // Vert
+    blue: '#0000FF'    // Bleu
+  };
+  return colorHexMap[this.dominantColor] || '#000000'; // Noir par défaut
+}
+
+
   showToast: boolean = false;
   // Methode pour afficher les notifications
   launchToast() {
@@ -371,5 +457,22 @@ previousQuestion() {
     setTimeout(() => {
       this.showToast = false;
     }, 5000); // 5 secondes
+  }
+
+  getOrganizationName(code: string): string {
+    switch (code) {
+      case 'GRACE7440WN':
+        return 'Illimitis';
+      case 'PNUD6639JZ':
+        return 'Pnud';
+      case 'CBAO5645PT':
+        return 'CBAO';
+      case 'NRC7470JF':
+        return 'NCR';
+         case 'PNUD BURUNDI2084JV':
+        return 'PNUD'
+      default:
+        return 'Code inconnu';
+    }
   }
 }

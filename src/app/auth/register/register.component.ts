@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -29,8 +29,8 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       password_confirmation: ['', [Validators.required]],
       code_invitaion: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-      role: ['', Validators.required]
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+      role: ['apprenant', Validators.required]
     });
   }
 

@@ -48,11 +48,11 @@ export class LoginComponent implements OnInit {
           if (user.role == "apprenant") {
             this.router.navigateByUrl("core/apprenant/form");
           } if (user.role == "superviseur") {
-            this.router.navigateByUrl("core/superviseur/listApprenant");
+            this.router.navigateByUrl("core/superviseur/participant");
           } if (user.role == "formateur") {
             this.router.navigateByUrl("core/formateur/listParcours");
           }if (user.role=="admin") {
-            this.router.navigateByUrl("core/admin/utilisateur");
+            this.router.navigateByUrl("/core/admin/tableau");
           }
           // Réinitialisation du formulaire après succès
           this.loginForm.reset();

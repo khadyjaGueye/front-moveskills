@@ -1,0 +1,574 @@
+<!-- Notification -->
+<div
+  *ngIf="showToast"
+  class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white rounded-lg shadow-lg flex items-center max-w-xs min-w-[50px] animate-toast">
+  <div class=" h-12 bg-white flex items-center justify-center rounded-l-lg">
+    <span class="text-white text-2xl">🎉🎉</span>
+  </div>
+  <div class="px-4 py-2 text-sm whitespace-nowrap overflow-hidden">
+    Félicitations ! Vous avez réussi !
+  </div>
+</div>
+
+<!-- start: Main -->
+<div class="">
+  <div class="bg-gray-200 p-4 rounded-md m-5">
+    <span class="text-neutral-800 text-xl">Bonjour chère équipe CBAO,</span>
+    <span class="text-neutral-800 text-xl">Bienvenue sur le test du Mini DISC Comportemental. C’est un outil simple et
+      efficace
+      permettant de mieux comprendre les comportements individuels et d'améliorer les interactions au sein des
+      équipes.</span>
+    <span class="text-neutral-800 text-xl">Pour chaque ligne, identifiez la case qui vous :</span>
+    <p class="text-neutral-800 font-bold text-center">Correspond le plus</p>
+    <p class="text-neutral-800 font-bold text-center">Correspond assez</p>
+    <p class="text-neutral-800 font-bold text-center">Correspond assez peu</p>
+    <p class="text-neutral-800 font-bold text-center">Correspond pas du tout</p>
+    <p class="text-neutral-800 font-bold text-center">Bon test!</p>
+    <div class="flex justify-center">
+      <button *ngIf="!testStarted" (click)="startTest()"
+        class="bg-[#114C5A] hover:bg-[#EF7743] text-white font-bold py-2 px-4 rounded">
+        Démarrer le test
+      </button>
+    </div>
+  </div>
+  <!-- Afficher les couleurs et leurs caracteristiques -->
+  <div *ngIf="displayColorCharacteristics" class="flex flex-col items-center">
+    <span class="uppercase text-2xl font-bold mb-6 text-center">
+      Bravo, la couleur qui vous caractérise c'est le {{ getDominantColorInFrench() }}
+    </span>
+
+    <div class="flex flex-col md:flex-row justify-center gap-10">
+      <div *ngIf="dominantColor === 'blue'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#0000FF]">Bleu</div>
+        <p class="mt-2 text-center">. Rechercher des faits et des explications logiques</p>
+        <p class="mt-2 text-center">. Actions et prise de décision prudentes</p>
+        <p class="mt-2 text-center">. Aime l'organisation et les structures</p>
+        <p class="mt-2 text-center">. N'aime pas être brusqué</p>
+        <p class="mt-2 text-center">. S'intéresse aux détails</p>
+        <p class="mt-2 text-center">. Objectif, analytique et orienté vers les tâches</p>
+        <p class="mt-2 text-center">. Travaille seul et avec précision</p>
+        <p class="mt-2 text-center">. Froid et distant; peu ouvert aux sentiments</p>
+      </div>
+
+      <div *ngIf="dominantColor === 'red'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#FF0000]">Rouge</div>
+        <p class="mt-2 text-center">. Rapide; décidé; énergique</p>
+        <p class="mt-2 text-center">. Directe et pragmatique</p>
+        <p class="mt-2 text-center">. Sens du résultat</p>
+        <p class="mt-2 text-center">. Aime la compétition</p>
+        <p class="mt-2 text-center">. Recherche le maximum d'indépendance</p>
+        <p class="mt-2 text-center">. N'aime pas l'inaction</p>
+        <p class="mt-2 text-center">. Travaille rapidement et seul</p>
+        <p class="mt-2 text-center">. Aime contrôler</p>
+      </div>
+
+      <div *ngIf="dominantColor === 'green'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#008000]">Vert</div>
+        <p class="mt-2 text-center">. Attentioné, stable, coopérant</p>
+        <p class="mt-2 text-center">. Aime les relations personnalisées</p>
+        <p class="mt-2 text-center">. N'aime pas les conflits</p>
+        <p class="mt-2 text-center">. Soutien et écoute activement les autres</p>
+        <p class="mt-2 text-center">. Renforce la cohésion</p>
+        <p class="mt-2 text-center">. Accommodant</p>
+        <p class="mt-2 text-center">. Patient</p>
+        <p class="mt-2 text-center">. Lent à passer à l'acte à décider</p>
+      </div>
+
+      <div *ngIf="dominantColor === 'yellow'" class="flex flex-col items-center">
+        <div class="text-white w-96 text-center h-10 uppercase bg-[#FFFF00]">Jaune</div>
+        <p class="mt-2 text-center">. Optimisme, enthousiasme, communiquant</p>
+        <p class="mt-2 text-center">. Actions et décisions spontanées</p>
+        <p class="mt-2 text-center">. Aime travailler en groupe</p>
+        <p class="mt-2 text-center">. Créatif, tendance à rêver</p>
+        <p class="mt-2 text-center">. Spontané, sens de l'improvisation</p>
+        <p class="mt-2 text-center">. Talents de percussion</p>
+        <p class="mt-2 text-center">. Impulsif</p>
+        <p class="mt-2 text-center">. Saute d'une activité à l'autre</p>
+      </div>
+    </div>
+
+     <div class="relative w-64 h-64 mt-10">
+      <div class="color-circle w-full h-full rounded-full" [ngStyle]="getCircleStyle()"></div>
+
+      <div class="absolute -top-1 left-[95%] translate-x-[-50%] flex flex-col items-center -mt-12">
+        <img src="assets/images/1.jpg" alt="Taureau" class="animal-icon w-12 h-12" />
+        <span>Taureau</span>
+      </div>
+
+      <div class="absolute top-[80%] -right-20 translate-y-[-50%] flex flex-col items-center">
+        <img src="assets/images/33.avif" alt="Singe" class="animal-icon w-12 h-12" />
+        <span>Singe</span>
+      </div>
+
+      <div class="absolute bottom-0 -left-[10%] translate-x-[-50%] flex flex-col items-center mt-12">
+        <img src="assets/images/tortue.png" alt="Tortue" class="animal-icon w-12 h-12" />
+        <span>Tortue</span>
+      </div>
+
+      <div class="absolute -top-1 left-0 translate-y-[-50%] flex flex-col items-center -ml-12">
+        <img src="assets/images/12.jpg" alt="Aigle" class="animal-icon w-12 h-12" />
+        <span>Aigle</span>
+      </div>
+    </div>
+
+    <!-- <div class="flex gap-10 justify-center mt-6">
+      <button (click)="openModal()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Caractéristique des autres
+        couleurs</button>
+      <button (click)="openModalComm()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Comment
+        communiquer avec les autres couleurs</button>
+    </div> -->
+  </div>
+
+  <!-- après avoir cliqué sur le bouton "Démarrer le test" -->
+  <div class="flex justify-center">
+    <!-- Le contenu à centrer -->
+    <div *ngIf="testStarted" class="border border-gray-400 w-full sm:w-11/12 md:w-10/12 lg:w-8/12 rounded-md shadow-l">
+      <!-- Section Question -->
+      <div *ngIf="currentQuestionIndex < questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20">
+        <h2 class="text-[#114C5A]">{{ currentQuestionIndex + 1 }}.{{ questions[currentQuestionIndex].text }}</h2>
+
+        <!-- Liste des réponses -->
+        <div *ngFor="let answer of remainingAnswers; let i = index" class="mt-5">
+          <p class="text-[#EF7743]">{{ answer.text }}</p>
+          <div>
+            <label *ngIf="remainingPoints.includes(6)">
+              <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, answer); answerSelected = true">
+              Me correspond le plus
+            </label>
+            <label *ngIf="remainingPoints.includes(3)">
+              <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, answer); answerSelected = true">
+              Me correspond assez
+            </label>
+            <label *ngIf="remainingPoints.includes(1)">
+              <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, answer); answerSelected = true">
+              Me correspond peu
+            </label>
+            <label *ngIf="remainingPoints.includes(0)">
+              <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, answer); answerSelected = true">
+              Ne me correspond pas du tout
+            </label>
+          </div>
+        </div>
+
+        <!-- Boutons pour naviguer entre les questions -->
+        <div class="mt-4">
+          <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()"
+            class="bg-[#EF7743] text-white px-4 py-2 rounded-md mr-2">
+            Précédent
+          </button>
+          <!-- <button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion(); answerSelected = false"
+            class="bg-[#114C5A] text-white px-4 py-2 rounded-md" [disabled]="!answerSelected">
+            Suivant
+          </button> -->
+          <button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()"
+            class="bg-[#114C5A] text-white px-4 py-2 rounded-md" [disabled]="!answerSelected">
+            Suivant
+          </button>
+        </div>
+      </div>
+
+      <!-- Si toutes les questions sont terminées, afficher le bouton Envoyer -->
+      <div *ngIf="currentQuestionIndex == questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20 flex justify-center">
+        <button (click)="sendResults(); closeTest(); launchToast()"
+          class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">
+          Voir mes résultats
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- Apres avoir fait le test on affiche le couleur ce qui conrrond le plus avec le cercle de ces couleurs-->
+
+  <!-- Modal pour afficher les résultats -->
+  <!-- <div *ngIf="showResultsModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-xl font-bold mb-4">Résultats du test</h2>
+        <p class="text-red-500">Rouge: {{ scores['red'] }} points</p>
+        <p class="text-yellow-500">Jaune: {{ scores['yellow'] }} points</p>
+        <p class="text-green-500">Vert: {{ scores['green'] }} points</p>
+        <p class="text-blue-500">Bleu: {{ scores['blue'] }} points</p> -->
+  <!-- Affichage du texte avec la couleur du score le plus élevé -->
+  <!-- <p [ngStyle]="{'color': getHighestScoreColor()}">
+          Couleur avec le plus de points : {{ getHighestScoreColor() | titlecase }}
+        </p>
+        <p class="font-bold">Somme totale des points est : {{ calculateTotalColorScore() }} points</p> -->
+  <!-- Bouton pour fermer la modal -->
+  <!-- <button (click)="closeModal(); sendResults()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">Fermer</button>
+      </div>
+    </div> -->
+</div>
+<!-- modal pour bien communiquer avec.... -->
+<div *ngIf="open" class="fixed inset-0 z-60 flex items-center justify-center bg-gray-900 bg-opacity-50">
+  <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-lg max-w-full sm:max-w-7xl w-full h-[80vh] overflow-y-auto">
+    <div class="flex justify-between items-center mb-4">
+      <span class="uppercase text-lg sm:text-xl md:text-2xl font-bold">Pour bien communiquer avec...</span>
+      <button class="text-red-400 hover:text-gray-700" (click)="closeModal()">x</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- Section Bleue -->
+      <div class="flex flex-col items-center">
+        <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#0000FF]">Bleu</div>
+        <p class="mt-2 text-center">. Soyez précis, factuel, structuré</p>
+        <p class="mt-2 text-center">. Préparez vos entretiens</p>
+        <p class="mt-2 text-center">. Soutenez une approche réaliste et mesurée</p>
+        <p class="mt-2 text-center">. Prenez le temps d'aller dans les détails</p>
+        <p class="mt-2 text-center">. Ne le brusquez pas</p>
+        <p class="mt-2 text-center">. Ne cherchez pas à réchauffer l'ambiance</p>
+        <p class="mt-2 text-center">. Restez distant, ne le touchez pas</p>
+        <p class="mt-2 text-center">. Soyez prêt qu'il contienne les faits</p>
+      </div>
+
+      <!-- Section Rouge -->
+      <div class="flex flex-col items-center">
+        <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#FF0000]">Rouge</div>
+        <p class="mt-2 text-center">. Soyez concis et affirmé</p>
+        <p class="mt-2 text-center">. Allez droit au but</p>
+        <p class="mt-2 text-center">. Les questionnaires sur leurs objectifs</p>
+        <p class="mt-2 text-center">. Amenez-les à être moteurs et décider</p>
+        <p class="mt-2 text-center">. Valorisez leur sens au défi et de la réactivité</p>
+        <p class="mt-2 text-center">. Évitez trop factuel</p>
+        <p class="mt-2 text-center">. Restez factuel</p>
+        <p class="mt-2 text-center">. Préparez-vous à défendre vos arguments</p>
+      </div>
+
+      <!-- Section Verte -->
+      <div class="flex flex-col items-center">
+        <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#008000]">Vert</div>
+        <p class="mt-2 text-center">. Soyez empathique, relationnel et animal</p>
+        <p class="mt-2 text-center">. Créez des relations partenaires et solides</p>
+        <p class="mt-2 text-center">. Donnez-vous du temps pour construire la confiance</p>
+        <p class="mt-2 text-center">. Accompagnez et aidez-les à décider</p>
+        <p class="mt-2 text-center">. Respectez leurs idées</p>
+        <p class="mt-2 text-center">. N'ayez pas peur de leurs moments de silence</p>
+        <p class="mt-2 text-center">. Ne critiquez pas de tierces personnes</p>
+        <p class="mt-2 text-center">. Soyez patients</p>
+      </div>
+
+      <!-- Section Jaune -->
+      <div class="flex flex-col items-center">
+        <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#DACF0A]">Jaune</div>
+        <p class="mt-2 text-center">. Montrez-vous relationnel</p>
+        <p class="mt-2 text-center">. Soyez créatif et informel</p>
+        <p class="mt-2 text-center">. Partagez leur plaisir et laissez-les s'exprimer</p>
+        <p class="mt-2 text-center">. Rêvez avec eux</p>
+        <p class="mt-2 text-center">. Aidez-les à canaliser leur énergie</p>
+        <p class="mt-2 text-center">. Restez dynamique et engageant</p>
+        <p class="mt-2 text-center">. Valorisez leur sens de créativité</p>
+        <p class="mt-2 text-center">. Soyez prêt à dévier du sujet</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal pour ce qui me caraterise... -->
+<div>
+  <div *ngIf="displayCom" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+    <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-full sm:max-w-7xl w-full h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <span class="uppercase text-2xl font-bold">Ce qui me caractérise...</span>
+        <button class="text-red-400 hover:text-gray-700" (click)="closeCom()">x</button>
+      </div>
+      <div class="flex flex-col md:flex-row gap-10">
+        <div class="flex flex-col gap-6 w-full md:w-1/2">
+          <div class="flex flex-col items-center">
+            <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#0000FF]">Bleu</div>
+            <p class="mt-2 text-center">. Rechercher des frais et des explications logiques</p>
+            <p class="mt-2 text-center">. Actions et prise de décision prudentes</p>
+            <p class="mt-2 text-center">. Aime l'organisation et les structures</p>
+            <p class="mt-2 text-center">. N'aime pas être brusqué</p>
+            <p class="mt-2 text-center">. S'intéresse aux détails</p>
+            <p class="mt-2 text-center">. Objectif, analytique et orienté vers les tâches</p>
+            <p class="mt-2 text-center">. Travail seul et avec précision</p>
+            <p class="mt-2 text-center">. Froid et distant; peu ouvert aux sentiments</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#FF0000]">Rouge</div>
+            <p class="mt-2 text-center">. Rapide; décidé; énergique</p>
+            <p class="mt-2 text-center">. Directe et pragmatique</p>
+            <p class="mt-2 text-center">. Sens du résultat</p>
+            <p class="mt-2 text-center">. Aime la compétition</p>
+            <p class="mt-2 text-center">. Recherche le maximum d'indépendance</p>
+            <p class="mt-2 text-center">. N'aime pas l'inaction</p>
+            <p class="mt-2 text-center">. Travaille rapidement et seul</p>
+            <p class="mt-2 text-center">. Aime contrôler</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-6 w-full md:w-1/2">
+          <div class="flex flex-col items-center">
+            <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#008000]">Vert</div>
+            <p class="mt-2 text-center">. Attentionné, stable, coopérant</p>
+            <p class="mt-2 text-center">. Aime les relations personnalisées</p>
+            <p class="mt-2 text-center">. N'aime pas les conflits</p>
+            <p class="mt-2 text-center">. Soutient et écoute activement les autres</p>
+            <p class="mt-2 text-center">. Renforce la cohésion</p>
+            <p class="mt-2 text-center">. Accommodant</p>
+            <p class="mt-2 text-center">. Patient</p>
+            <p class="mt-2 text-center">. Lent à passer à l'acte à décider</p>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-white w-full max-w-xs text-center h-10 uppercase bg-[#DACF0A]">Jaune</div>
+            <p class="mt-2 text-center">. Optimisme, enthousiasme, communicant</p>
+            <p class="mt-2 text-center">. Actions et décisions spontanées</p>
+            <p class="mt-2 text-center">. Aime travailler en groupe</p>
+            <p class="mt-2 text-center">. Créatif, tendance à rêver</p>
+            <p class="mt-2 text-center">. Spontané, sens de l'improvisation</p>
+            <p class="mt-2 text-center">. Talents de percussion</p>
+            <p class="mt-2 text-center">. Impulsif</p>
+            <p class="mt-2 text-center">. Saute d'une activité à l'autre</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Le premier test -->
+<div class="flex justify-center">
+  <!-- Le contenu à centrer -->
+  <div *ngIf="testStarted"  class="border border-gray-300 rounded-lg shadow-md p-6 space-y-6">
+    <!-- Section Question -->
+    <div *ngIf="currentQuestionIndex < questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20">
+      <h2 class="text-[#114C5A]">{{ currentQuestionIndex + 1 }}.{{ questions[currentQuestionIndex].text }}</h2>
+
+      <!-- Liste des réponses -->
+      <div *ngFor="let answer of remainingAnswers; let i = index" class="mt-5">
+        <p class="text-[#EF7743] text-lg">{{ answer.text }}</p>
+        <div>
+          <label *ngIf="remainingPoints.includes(6)">
+            <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, answer); answerSelected = true">
+            Me correspond le plus
+          </label>
+          <label *ngIf="remainingPoints.includes(3)">
+            <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, answer); answerSelected = true">
+            Me correspond assez
+          </label>
+          <label *ngIf="remainingPoints.includes(1)">
+            <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, answer); answerSelected = true">
+            Me correspond assez peu
+          </label>
+          <label *ngIf="remainingPoints.includes(0)">
+            <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, answer); answerSelected = true">
+            Ne me correspond pas du tout
+          </label>
+        </div>
+      </div>
+
+      <!-- Boutons pour naviguer entre les questions -->
+      <div class="mt-4">
+        <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()"
+          class="bg-[#EF7743] text-white px-4 py-2 rounded-md mr-2">
+          Précédent
+        </button>
+        <button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()"
+          class="bg-[#114C5A] text-white px-4 py-2 rounded-md" [disabled]="!answerSelected">
+          Suivant
+        </button>
+      </div>
+    </div>
+
+    <!-- Si toutes les questions sont terminées, afficher le bouton Envoyer -->
+    <div *ngIf="currentQuestionIndex == questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20 flex justify-center">
+      <button (click)="sendResults(); closeTest(); launchToast()"
+        class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">
+        Voir mes résultats
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Dernier mis a jours -->
+
+<div class="flex justify-center">
+  <!-- Contenu centré -->
+  <div *ngIf="testStarted" class="border border-gray-300 rounded-lg shadow-md p-6 space-y-6">
+    <!-- Section Question -->
+    <div *ngIf="currentQuestionIndex < questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20">
+      <!-- Affichage de la question -->
+      <h2 class="text-[#114C5A] text-xl font-semibold mb-4">
+        {{ currentQuestionIndex + 1 }}. {{ questions[currentQuestionIndex].text }}
+      </h2>
+
+      <!-- Réponse associée à la question -->
+      <p class="text-[#EF7743] text-lg font-medium mb-4">{{ remainingAnswers[0]?.text }}</p>
+
+      <!-- Options de réponse -->
+      <div class="space-y-3">
+        <label *ngIf="remainingPoints.includes(6)" class="flex items-center space-x-2">
+          <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, remainingAnswers[0]); answerSelected = true">
+          <span>Correspond le plus</span>
+        </label>
+        <label *ngIf="remainingPoints.includes(3)" class="flex items-center space-x-2">
+          <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, remainingAnswers[0]); answerSelected = true">
+          <span>Correspond assez</span>
+        </label>
+        <label *ngIf="remainingPoints.includes(1)" class="flex items-center space-x-2">
+          <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, remainingAnswers[0]); answerSelected = true">
+          <span>Correspond assez peu</span>
+        </label>
+        <label *ngIf="remainingPoints.includes(0)" class="flex items-center space-x-2">
+          <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, remainingAnswers[0]); answerSelected = true">
+          <span>Correspond pas du tout</span>
+        </label>
+      </div>
+
+      <!-- Navigation entre les questions -->
+      <div class="mt-8 flex justify-between">
+        <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()"
+          class="bg-[#EF7743] text-white px-4 py-2 rounded-md">
+          Précédent
+        </button>
+        <button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()"
+          class="bg-[#114C5A] text-white px-4 py-2 rounded-md" [disabled]="!answerSelected">
+          Suivant
+        </button>
+      </div>
+    </div>
+
+    <!-- Si toutes les questions sont terminées, afficher le bouton Envoyer -->
+    <div *ngIf="currentQuestionIndex == questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20 flex justify-center">
+      <button (click)="sendResults(); closeTest(); launchToast()"
+        class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">
+        Voir mes résultats
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mx-auto mt-10 p-8 bg-white rounded-lg shadow-lg max-w-2xl">
+  <h2 class="text-3xl font-bold text-center text-[#114C5A] mb-6">Inscription Apprenant</h2>
+
+  <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()" class="space-y-6">
+    <!-- Champ Nom -->
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700">Nom complet</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez votre nom complet"
+      />
+      <div *ngIf="inscriptionForm.get('name')?.invalid && inscriptionForm.get('name')?.touched" class="text-red-500 text-sm mt-1">
+        Le nom est requis et doit comporter au moins 3 caractères.
+      </div>
+    </div>
+
+    <!-- Champ Email -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez votre email"
+      />
+      <div *ngIf="inscriptionForm.get('email')?.invalid && inscriptionForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+        Veuillez entrer un email valide.
+      </div>
+    </div>
+
+    <!-- Champ Mot de Passe -->
+    <div>
+      <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez un mot de passe"
+      />
+      <div *ngIf="inscriptionForm.get('password')?.invalid && inscriptionForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+        Le mot de passe doit comporter au moins 6 caractères.
+      </div>
+    </div>
+
+    <!-- Champ Confirmation du Mot de Passe -->
+    <div>
+      <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirmez le mot de passe</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="password_confirmation"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Confirmez votre mot de passe"
+      />
+      <!-- <div *ngIf="!checkPasswords() && inscriptionForm.get('password_confirmation')?.touched" class="text-red-500 text-sm mt-1">
+        Les mots de passe ne correspondent pas.
+      </div> -->
+    </div>
+
+    <!-- Champ Code d'invitation -->
+    <div *ngIf="inscriptionForm.get('role')?.value === 'apprenant'">
+      <label for="code_invitation" class="block text-sm font-medium text-gray-700">Code d'invitation</label>
+      <input
+        id="code_invitation"
+        type="text"
+        formControlName="code_invitaion"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entre votre code d'invitation"
+      />
+      <div *ngIf="inscriptionForm.get('code_invitaion')?.invalid && inscriptionForm.get('code_invitaion')?.touched" class="text-red-500 text-sm mt-1">
+        Le code est requis et doit comporter au moins 3 caractères.
+      </div>
+    </div>
+
+    <!-- Champ Téléphone -->
+    <div>
+      <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
+      <input
+        id="phone"
+        type="text"
+        formControlName="phoneNumber"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+        placeholder="Entrez votre numéro de téléphone"
+      />
+      <div *ngIf="inscriptionForm.get('phoneNumber')?.invalid && inscriptionForm.get('phoneNumber')?.touched" class="text-red-500 text-sm mt-1">
+        Veuillez entrer un numéro de téléphone valide (9 chiffres).
+      </div>
+    </div>
+
+    <!-- Champ Rôle -->
+    <!-- <div>
+      <label for="role" class="block text-sm font-medium text-gray-700">Rôle</label>
+      <select
+        id="role"
+        formControlName="role"
+        class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
+      >
+        <option value="">Sélectionnez votre rôle</option>
+        <option value="apprenant">Apprenant</option>
+        <option value="formateur">Formateur</option>
+        <option value="superviseur">Superviseur</option>
+      </select>
+      <div *ngIf="inscriptionForm.get('role')?.invalid && inscriptionForm.get('role')?.touched" class="text-red-500 text-sm mt-1">
+        Veuillez sélectionner un rôle.
+      </div>
+    </div> -->
+
+    <!-- Bouton d'inscription -->
+    <div class="flex justify-center">
+      <button
+        type="submit"
+        class="px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition-all duration-300 focus:ring-4 focus:ring-blue-300"
+      >
+        S'inscrire
+      </button>
+    </div>
+  </form>
+</div>

@@ -18,7 +18,7 @@ export class ResultatComponent implements OnInit {
   colorDominant: string | null = null;
   email!: string;
   id!: number;
-//https://web.moveskills.xyz/
+  //https://web.moveskills.xyz/
 
   constructor(private service: ApprenantService) { }
 
@@ -42,6 +42,8 @@ export class ResultatComponent implements OnInit {
 
   openModal(test: Test) {
     this.selectedTest = test;
+    console.log(this.selectedTest);
+
   }
   // Fonction pour fermer le modal
   closeModal() {
@@ -69,7 +71,7 @@ export class ResultatComponent implements OnInit {
     };
     return animalMap[color] || 'Inconnu';
   }
-
+  p: number = 0;
   // Fonction pour obtenir les autres couleurs avec leurs pourcentages
   getOtherColors(test: any): { name: string; percentage: number }[] {
     return Object.keys(test)
@@ -109,7 +111,7 @@ export class ResultatComponent implements OnInit {
     this.service.all().subscribe({
       next: (rep) => {
         this.tests = rep.data.tests;
-        console.log(this.tests);
+        console.log( this.tests);
 
       }
     })
@@ -149,5 +151,9 @@ export class ResultatComponent implements OnInit {
       blue 75% 100%
     )`
     };
+  }
+
+  getPercentage(test: any): number {
+    return test[test.dominant_color] || 0;
   }
 }

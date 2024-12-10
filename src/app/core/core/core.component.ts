@@ -18,6 +18,7 @@ export class CoreComponent implements OnInit {
   email!: string;
   specialite!: string;
   display: boolean = true
+  isMenuOpen = false;
 
   constructor(private router: Router) { }
 
@@ -61,5 +62,11 @@ export class CoreComponent implements OnInit {
   }
   closeNav() {
     this.isNavOpen = false
+  }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  closeMenu(){
+    this.isMenuOpen = false;
   }
 }
