@@ -5,11 +5,13 @@ import { Answer, Question } from '../../../../interfaces/model';
 import { ApprenantService } from '../service/apprenant.service';
 import { TestService } from '../../../../shared/services/test.service';
 import { finalize, tap } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { environment } from '../../../../../environments/environment.development';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterLink],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
@@ -143,7 +145,7 @@ export class FormComponent implements OnInit {
   open: boolean = false;
   testStarted: boolean = false; // Nouvelle variable pour gérer l'affichage du test
   token: string = "";
-
+  showAnimation: boolean = true;
 
   constructor(private service: ApprenantService, private test: TestService) { }
 
@@ -164,6 +166,7 @@ export class FormComponent implements OnInit {
     } else {
       // Gérer le cas où pas d'utilisateur authentifié
     }
+
   }
 
   openModal() {
@@ -194,8 +197,8 @@ export class FormComponent implements OnInit {
   testTerminer: boolean = true; // La variable qui contrôle l'affichage du test
   // Méthode pour fermer le test
   closeTest() {
-    this.testStarted = false;
-    this.displayColorCharacteristics = true;
+    //this.testStarted = false;
+    //this.displayColorCharacteristics = true;
 
   }
 
@@ -263,11 +266,11 @@ export class FormComponent implements OnInit {
   getCircleStyle() {
     return {
       'background': `conic-gradient(
-        red 0% 25%,
-        yellow 25% 50%,
-        green 50% 75%,
-        blue 75% 100%
-      )`
+          red 0% 25%,
+          yellow 25% 50%,
+          green 50% 75%,
+          blue 75% 100%
+        )`
     };
   }
 
@@ -294,6 +297,9 @@ export class FormComponent implements OnInit {
   testInProgress = false; // Indique si les résultats sont en cours d'envoi
 
   sendResults() {
+    // console.log(environment.apiBaseUrl + "question1");
+
+    // this.service.url = environment.apiBaseUrl + "question1";
     const percentages = this.calculatePercentages();
 
     // Conversion en entier pour chaque pourcentage
@@ -305,14 +311,14 @@ export class FormComponent implements OnInit {
       user_id: this.userId,
     };
 
-    console.log(data);
+    //console.log(data);
 
     this.testInProgress = true; // Indiquer que l'envoi est en cours
 
     this.test.store(data, this.token).pipe(
       tap({
         next: (resp) => {
-          this.service.handleResponse(resp);
+          //this.service.handleResponse(resp);
         },
         error: (error) => {
           console.error("Erreur lors de l'envoi des données :", error);
@@ -320,56 +326,16 @@ export class FormComponent implements OnInit {
           this.testInProgress = false; // Arrêter le chargement si une erreur survient
         }
       }), finalize(() => {
-        this.displayColorCharacteristics = true;
+        // this.displayColorCharacteristics = true;
       })
     ).subscribe({
       complete: () => {
         this.testInProgress = false; // L'envoi est terminé
-        this.displayColorCharacteristics = true; // Les résultats peuvent être affichés
+        // this.displayColorCharacteristics = true; // Les résultats peuvent être affichés
       }
     });
   }
 
-  // sendResults() {
-  //   const percentages = this.calculatePercentages();
-  //   const dominantColor = (Object.keys(percentages) as Array<keyof typeof percentages>).reduce((a, b) =>
-  //     percentages[a] > percentages[b] ? a : b
-  //   );
-
-  //   // Enregistrer la couleur dominante dans le localStorage
-  //   localStorage.setItem("dominantColor", dominantColor);
-
-  //   const data = {
-  //     rouge: percentages.red,
-  //     jaune: percentages.yellow,
-  //     vert: percentages.green,
-  //     bleu: percentages.blue,
-  //     user_id: this.userId
-  //   };
-
-  //   console.log(data);
-
-
-  //   this.testInProgress = true; // Indiquer que l'envoi est en cours
-
-  //   this.test.store(data, this.token).pipe(
-  //     tap({
-  //       next: (resp) => {
-  //         this.service.handleResponse(resp);
-  //       },
-  //       error: (error) => {
-  //         console.error("Erreur lors de l'envoi des données :", error);
-  //         this.service.handleResponse(error); // Gérer les erreurs
-  //         this.testInProgress = false; // Arrêter le chargement si une erreur survient
-  //       }
-  //     })
-  //   ).subscribe({
-  //     complete: () => {
-  //       this.testInProgress = false; // L'envoi est terminé
-  //       this.displayColorCharacteristics = true; // Les résultats peuvent être affichés
-  //     }
-  //   });
-  // }
 
   // Vérifie si toutes les réponses du groupe courant sont données
 
@@ -439,15 +405,15 @@ export class FormComponent implements OnInit {
   }
 
   // Méthode pour obtenir la couleur en hexadécimal
-getDominantColorHex(): string {
-  const colorHexMap: { [key: string]: string } = {
-    red: '#FF0000',    // Rouge
-    yellow: '#FFD700', // Jaune
-    green: '#008000',  // Vert
-    blue: '#0000FF'    // Bleu
-  };
-  return colorHexMap[this.dominantColor] || '#000000'; // Noir par défaut
-}
+  getDominantColorHex(): string {
+    const colorHexMap: { [key: string]: string } = {
+      red: '#FF0000',    // Rouge
+      yellow: '#FFD700', // Jaune
+      green: '#008000',  // Vert
+      blue: '#0000FF'    // Bleu
+    };
+    return colorHexMap[this.dominantColor] || '#000000'; // Noir par défaut
+  }
 
 
   showToast: boolean = false;
@@ -461,7 +427,7 @@ getDominantColorHex(): string {
 
   getOrganizationName(code: string): string {
     switch (code) {
-      case 'GRACE7440WN':
+      case 'ILLIMITIS6497KO':
         return 'Illimitis';
       case 'PNUD6639JZ':
         return 'Pnud';
@@ -469,10 +435,19 @@ getDominantColorHex(): string {
         return 'CBAO';
       case 'NRC7470JF':
         return 'NCR';
-         case 'PNUD BURUNDI2084JV':
+      case 'PNUD BURUNDI2084JV':
         return 'PNUD'
       default:
         return 'Code inconnu';
     }
+  }
+
+
+  // Afficher le GIF pendant 5 secondes
+  displayGIF(): void {
+    this.showAnimation = true;
+    setTimeout(() => {
+      this.showAnimation = false;
+    }, 5000); // 5000 ms = 5 secondes
   }
 }

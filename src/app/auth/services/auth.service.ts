@@ -15,11 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
   login(user: UserInfo): Observable<Model<Data>> {
-
-    const url = "https://moovskil.tucamarketing.com/api/login";
-    // const url = "https://moveskills.dev-illimitis.com/api/login";
-    //const url= "https://backend-moveskills.dev-illimitis.com/"
-
+    const url = "https://backend-moveskills.dev-illimitis.com/api/login"
     return this.http.post<Model<Data>>(url, user);
   }
 
@@ -33,5 +29,10 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('token', token)
     return of(true);
+  }
+
+  // Exemple : vérification d'un token dans localStorage
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token'); // Adaptez selon votre logique
   }
 }

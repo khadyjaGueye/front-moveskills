@@ -9,6 +9,9 @@ import { CaracteriseComponent } from './caracterise/caracterise.component';
 import { CommuquerComponent } from './commuquer/commuquer.component';
 import { ResultatComponent } from './resultat/resultat.component';
 import { LoisComponent } from './lois/lois.component';
+import { DernierTestComponent } from './dernier-test/dernier-test.component';
+import { ResultatLoisComponent } from './resultat-lois/resultat-lois.component';
+import { ParcourAcheterComponent } from './parcour-acheter/parcour-acheter.component';
 
 const routes: Routes = [
   {
@@ -18,8 +21,11 @@ const routes: Routes = [
       { path: 'parcour', component: ParcoursComponent, canActivate: [authGuard] },
       { path: 'caracterise', component: CaracteriseComponent, canActivate: [authGuard] },
       { path: 'comminuque', component: CommuquerComponent, canActivate: [authGuard] },
-      { path: 'resultat', component: ResultatComponent ,canActivate: [authGuard]},
-      { path: 'lois', component: LoisComponent ,canActivate: [authGuard]},
+      { path: 'resultat', component: ResultatComponent, canActivate: [authGuard] },
+      { path: 'lois', component: LoisComponent, canActivate: [authGuard] },
+      { path: 'test', component: DernierTestComponent, canActivate: [authGuard] },
+      { path: 'resultatLois', component: ResultatLoisComponent, canActivate: [authGuard] },
+      { path: '', component: ParcourAcheterComponent, canActivate: [authGuard] },
     ]
   }
 ];

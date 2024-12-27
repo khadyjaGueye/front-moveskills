@@ -4,16 +4,17 @@ import { Apprenant } from "../core/components/apprenant/interface/apprenant"
 
 export interface Model<T> {
   data: T
+  status: string
 }
 
 export interface Data {
   userInfo: UserInfo
+  token: string
+  status_code: number
   message: string
   apprenants: Apprenant[]
   videos: ContentItem[]
   documents: ContentItem[]
-  token: string
-  status_code: number
   parcour: InfoData
   parcours: Parcour[]
   statusCode: boolean
@@ -26,8 +27,10 @@ export interface Data {
   competences: Competence[];
   skills: Skill[];
   userDetails: UserDetail[];
-
+  lois: Lois[];
   report: Report;
+  resultats: ResultatLois[]
+  affiliations:Affiliation[]
 }
 export interface Question {
   text: string;
@@ -55,18 +58,20 @@ export interface InfoData {
   id?: number
   nom_parcour: string;
   objectif: string;
-  status_type: number;
-  status_audiance: number;
+  status_type: string;
+  status_audiance: string;
   duree: number;
   competences: string[];
   status_disponibilite: number
   prix: number;
+  image: string;
+  description: string;
 
 }
 
 export interface ContentData {
   videos: File[] | null;
-  document: File[] | null;
+  documents: File[] | null;
 }
 
 export interface SummaryData {
@@ -131,6 +136,8 @@ export interface Parcour {
   user: User
   nombre_videos: number
   nombre_documents: number
+  image: string;
+  description:string
 }
 export interface ContentItem {
   id: number
@@ -173,7 +180,7 @@ export interface User {
   code_invitaion: string;
   role: string
   question1: Question1[];
-  created_at:string
+  created_at: string
 }
 export interface Question1 {
   id: number;
@@ -200,7 +207,7 @@ export interface Competence {
 }
 
 export interface UserDetail {
-  id:number
+  id: number
   name: string
   email: string
   couleur_dominante: string
@@ -225,11 +232,54 @@ export interface PercentageDistribution {
   rouge: number
   bleu: number
 }
-export interface Item{
-  name:string;
-  color:string;
-  target:number;
-  counter:number;
+export interface Item {
+  name: string;
+  color: string;
+  target: number;
+  counter: number;
+  startAngle?: number;
 }
 
+export interface Lois {
+  id: number
+  title: string
+  description: string
+  questions: Question1[]
+  scores: number[]
+  total: number
+}
+
+export interface Question1 {
+  id: number
+  question: string
+}
+
+export interface AutoEvaluation {
+  loi: string;
+  description: string
+  total: number
+  evaluation: string
+}
+
+export interface ResultatLois {
+  id: number
+  user: User
+  description: string
+  lois: Lois
+  auto_evaluation: AutoEvaluation
+}
+
+export interface Affiliation {
+  id: number
+  nom: string
+  prenom: string
+  email: string
+  password: string
+  role: string
+  numero: number
+  password_confirmation: string
+  code: string
+  isInscrit:number
+  created_at:string
+}
 

@@ -10,3 +10,10 @@ export interface UserInfo {
   password_confirmation: string
   Code_invitaion:string
 }
+
+export interface ResetPassword {
+  email: string
+  token: string
+  password: string
+  password_confirmation: string
+}

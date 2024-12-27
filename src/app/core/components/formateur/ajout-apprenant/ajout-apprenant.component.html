@@ -1,0 +1,92 @@
+<div class="container mx-auto p-4">
+  <!-- Section Ajouter un Apprenant -->
+  <div class="bg-[#114C5A] shadow-md rounded-lg p-6 mb-6">
+    <h2 class="text-xl font-inter text-white mb-4">Ajouter les informations d'un partisant</h2>
+    <form [formGroup]="apprenantForm" (ngSubmit)="addApprenant()">
+      <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+        <!-- Section Input -->
+        <div class="w-full lg:w-2/3 border-4 border-dashed border-gray-400 bg-white rounded-md shadow-md p-4 flex flex-col justify-between">
+          <!-- Champ "Nom" -->
+          <div>
+            <label class="text-gray-700 block font-medium mb-1" for="nom">Nom</label>
+            <input formControlName="nom" id="nom" type="text" name="nom" placeholder="Entrer un nom"
+              class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-[#114C5A] focus:ring focus:ring-[#114C5A] focus:outline-none" />
+            <!-- Message d'erreur -->
+            <p *ngIf="apprenantForm.get('nom')?.invalid && apprenantForm.get('nom')?.touched"
+              class="text-red-500 text-sm mt-1">
+              Le nom est requis.
+            </p>
+          </div>
+          <div>
+            <label class="text-gray-700 block font-medium mb-1" for="prenom">Prénom</label>
+            <input formControlName="prenom" id="prenom" type="text" name="prenom" placeholder="Entrer un prénom"
+              class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-[#114C5A] focus:ring focus:ring-[#114C5A] focus:outline-none" />
+            <!-- Message d'erreur -->
+            <p *ngIf="apprenantForm.get('prenom')?.invalid && apprenantForm.get('prenom')?.touched"
+              class="text-red-500 text-sm mt-1">
+              Le prénom est requis.
+            </p>
+          </div>
+
+          <!-- Champ "Email" -->
+          <div>
+            <label class="text-gray-700 block font-medium mb-1" for="email">Email</label>
+            <input formControlName="email" id="email" type="email" name="email" placeholder="Enter un email"
+              class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-[#114C5A] focus:ring focus:ring-[#114C5A] focus:outline-none" />
+              <div *ngIf="apprenantForm.get('email')?.invalid && apprenantForm.get('email')?.touched"
+              class="text-red-500 text-sm mt-1">
+              Veuillez entrer un email valide.
+            </div>
+          </div>
+          <div>
+            <label class="text-gray-700 block font-medium mb-1" for="nom">Téléphone</label>
+            <input formControlName="numero" id="numero" type="number" name="numero" placeholder="Enter votre numéro de téléphone"
+              class="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-[#114C5A] focus:outline-none" />
+          </div>
+          <!-- Bouton "Envoyer" -->
+          <div class="mt-6">
+            <button
+              type="submit"
+              [disabled]="apprenantForm.invalid"
+              [ngClass]="{
+                'bg-gray-400 cursor-not-allowed': apprenantForm.invalid,
+                'bg-[#114C5A] hover:bg-[#0d3b47]': !apprenantForm.invalid
+              }"
+              class="text-white py-2 px-4 rounded-md shadow-md focus:outline-none focus:ring focus:ring-[#114C5A]"
+            >
+              Envoyer
+            </button>
+          </div>
+        </div>
+
+        <!-- Section Image -->
+        <div class="w-full lg:w-1/3 flex items-center justify-center">
+          <div
+            class="border-4 border-dashed border-gray-400 rounded-lg overflow-hidden shadow-lg bg-gray-100 p-4 h-full flex items-center justify-center">
+            <img src="assets/images/chapitre.jpg" alt="Aperçu de l'image"
+              class="w-full h-auto object-cover rounded-md" />
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+
+  <!-- Section Liste des Chapitres -->
+  <!-- <div class="bg-white shadow-md rounded-lg p-6">
+    <h2 class="text-xl font-bold mb-4">Liste des Chapitres</h2>
+    <div *ngFor="let chapitre of chapitres" class="border-b pb-4 mb-4">
+      <h3 class="text-lg font-semibold">{{ chapitre.nom_chapitre }}</h3>
+      <p class="text-gray-600">Parcours : {{ chapitre.parcour_id }}</p>
+      <div class="flex gap-2 mt-2">
+        <button (click)="editChapitre(chapitre)" class="text-blue-500 hover:underline">
+          Éditer
+        </button>
+        <button (click)="deleteChapitre(chapitre.id)" class="text-red-500 hover:underline">
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div> -->
+</div>

@@ -1,0 +1,88 @@
+<!-- Affichage des résultats -->
+
+
+
+
+<div class="flex flex-col items-center mt-8 font-inter">
+  <h2 class="uppercase text-3xl font-bold text-center mb-6">
+    Bravo, votre couleur dominante est
+    <span [ngStyle]="{ 'color': getDominantColorHex() }" class="">{{ getDominantColorInFrench() }}</span>
+  </h2>
+
+  <!-- Image dans une card stylisée -->
+  <div class="flex rounded-lg shadow-xl p-4 border-4" [ngStyle]="{ 'border-color': getDominantColorHex() }">
+    <div [ngStyle]="{'background-color': getColorCode(dominantColor || 'default')}"
+      class="w-16 h-16 rounded-full border-2 border-gray-300 flex items-center justify-center">
+    </div>
+    <img [src]="getAnimalImage()" loading="lazy" [alt]="getAnimalName()"
+      class="mx-auto w-40 h-40 object-cover rounded-full shadow-lg">
+  </div>
+
+  <p class="mt-6 text-xl font-semibold text-gray-700 text-center">
+    L'animal qui me correspond est un :
+    <span [ngStyle]="{ 'color': getDominantColorHex() }" class="font-bold">{{ getAnimalName() }}</span>
+  </p>
+
+  <!-- Conteneur des cartes pour les caractéristiques -->
+  <div class="flex flex-col md:flex-row justify-center gap-6 mt-8">
+    <!-- Couleur dominante BLEU -->
+    <div class="grid grid-cols-1 gap-2 mt-4">
+      <div *ngFor="let color of getOtherColors(dernierTest)"
+        [ngStyle]="{ 'background-color': getColorBackground(color.name) }"
+        class="border border-gray-300 rounded-lg p-4 flex justify-between items-center">
+        <span class="text-white font-semibold">{{ color.name }}</span>
+        <span class="text-white font-bold">{{ color.percentage }}%</span>
+      </div>
+    </div>
+    <div *ngIf="dominantColor === 'bleu'"
+      class="w-96 p-6 bg-blue-50 rounded-lg shadow-md border-l-8 border-blue-500 hover:shadow-lg transition-transform transform hover:scale-105">
+      <h3 class="text-xl font-bold uppercase text-center bg-blue-500 text-white py-2 rounded-md">Bleu</h3>
+      <ul class="mt-4 space-y-2 text-gray-800">
+        <li>🔹 Recherche des faits et explications logiques</li>
+        <li>🔹 Actions prudentes et décisions réfléchies</li>
+        <li>🔹 Organisation et structures appréciées</li>
+        <li>🔹 Intérêt pour les détails</li>
+        <li>🔹 Travail précis, souvent en solitaire</li>
+      </ul>
+    </div>
+
+    <!-- Couleur dominante ROUGE -->
+    <div *ngIf="dominantColor === 'rouge'"
+      class="w-96 p-6 bg-red-50 rounded-lg shadow-md border-l-8 border-red-500 hover:shadow-lg transition-transform transform hover:scale-105">
+      <h3 class="text-xl font-bold uppercase text-center bg-red-500 text-white py-2 rounded-md">Rouge</h3>
+      <ul class="mt-4 space-y-2 text-gray-800">
+        <li>🔺 Rapide, énergique et décidé</li>
+        <li>🔺 Aime la compétition</li>
+        <li>🔺 Résultats orientés, pragmatique</li>
+        <li>🔺 Recherche l'indépendance</li>
+        <li>🔺 Contrôle et prise d'initiatives</li>
+      </ul>
+    </div>
+
+    <!-- Couleur dominante VERT -->
+    <div *ngIf="dominantColor === 'vert'"
+      class="w-96 p-6 bg-green-50 rounded-lg shadow-md border-l-8 border-green-500 hover:shadow-lg transition-transform transform hover:scale-105">
+      <h3 class="text-xl font-bold uppercase text-center bg-green-500 text-white py-2 rounded-md">Vert</h3>
+      <ul class="mt-4 space-y-2 text-gray-800">
+        <li>🔹 Attentionné, stable et coopérant</li>
+        <li>🔹 Apprécie les relations personnalisées</li>
+        <li>🔹 Évite les conflits</li>
+        <li>🔹 Patient et accommodant</li>
+        <li>🔹 Renforce la cohésion</li>
+      </ul>
+    </div>
+
+    <!-- Couleur dominante JAUNE -->
+    <div *ngIf="dominantColor === 'jaune'"
+      class="w-96 p-6 bg-yellow-50 rounded-lg shadow-md border-l-8 border-yellow-500 hover:shadow-lg transition-transform transform hover:scale-105">
+      <h3 class="text-xl font-bold uppercase text-center bg-yellow-500 text-white py-2 rounded-md">Jaune</h3>
+      <ul class="mt-4 space-y-2 text-gray-800">
+        <li>🔸 Enthousiaste et optimiste</li>
+        <li>🔸 Aime travailler en groupe</li>
+        <li>🔸 Créatif et spontané</li>
+        <li>🔸 Sens de l'improvisation</li>
+        <li>🔸 Impulsif et communicatif</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,8 @@ import { Data, Model } from '../../interfaces/model';
 })
 export class TestService {
 
-  url: string = "https://moovskil.tucamarketing.com/api/question1";
+  url: string = "https://backend-moveskills.dev-illimitis.com/api/question1";
+
   constructor(private http: HttpClient) { }
 
   store(data: any, token: string | null): Observable<Model<Data>> {

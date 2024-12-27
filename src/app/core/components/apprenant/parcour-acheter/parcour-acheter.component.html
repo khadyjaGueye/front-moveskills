@@ -1,0 +1,21 @@
+
+<div class="flex items-center bg-gray-100">
+  <div class="max-w-sm w-full bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="px-6 py-4">
+      <h2 class="text-xl font-semibold text-gray-800">Détails du parcours</h2>
+      <p class="text-gray-600 mt-2">
+        Nom du parcours :
+        <span class="text-[#EF7743] font-bold">
+          {{ parcourName || 'Non défini' }}
+        </span>
+      </p>
+    </div>
+    <div class="px-6 py-4 flex justify-end">
+      <button
+        class="bg-[#EF7743] text-white px-4 py-2 rounded-md shadow hover:bg-[#d46438] transition"
+      >
+        Voir plus
+      </button>
+    </div>
+  </div>
+</div>

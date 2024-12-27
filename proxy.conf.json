@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://backend-moveskills.dev-illimitis.com/api",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

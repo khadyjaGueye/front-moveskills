@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListUtilisateurComponent } from './list-utilisateur/list-utilisateur.component';
 import { TableauComponent } from './tableau/tableau.component';
+import { authGuard } from '../../../shared/guard/auth.guard';
+import { ParcourComponent } from './parcour/parcour.component';
 
 const routes: Routes = [
-  { path: "utilisateur", component: ListUtilisateurComponent },
-  { path: "tableau", component: TableauComponent },
+  { path: "utilisateur", component: ListUtilisateurComponent, canActivate: [authGuard] },
+  { path: "tableau", component: TableauComponent, canActivate: [authGuard] },
+  { path: "parcour", component: ParcourComponent, canActivate: [authGuard] },
 ];
 
 @NgModule({

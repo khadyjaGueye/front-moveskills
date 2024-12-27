@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
+import { ApprenantService } from '../../core/components/apprenant/service/apprenant.service';
+import { environment } from '../../../environments/environment.development';
 
 
 @Component({
@@ -15,15 +17,21 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
+  sendMailUser: FormGroup = new FormGroup({});
   showPassword: boolean = false; // Variable pour gérer la visibilité du mot de passe
   message: string = "";
   loginForm: FormGroup;
+  isModalOpen = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private service: ApprenantService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+
+    this.sendMailUser = this.fb.group({
+      "email": ["", [Validators.required, Validators.email]]
+    })
   }
   ngOnInit(): void {
 
@@ -51,7 +59,7 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl("core/superviseur/participant");
           } if (user.role == "formateur") {
             this.router.navigateByUrl("core/formateur/listParcours");
-          }if (user.role=="admin") {
+          } if (user.role == "admin") {
             this.router.navigateByUrl("/core/admin/tableau");
           }
           // Réinitialisation du formulaire après succès
@@ -76,6 +84,36 @@ export class LoginComponent implements OnInit {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword; // Bascule la visibilité du mot de passe
+  }
+
+  openForgotPasswordModal() {
+    this.isModalOpen = true;
+  }
+
+  closeForgotPasswordModal() {
+    this.isModalOpen = false;
+  }
+
+  sendMail() {
+    this.service.url = environment.apiBaseUrl + "user/password/email"
+    this.service.store(this.sendMailUser.value).subscribe(
+      {
+        next: (response) => {
+          this.service.handleResponse(response);
+          this.sendMailUser.reset();
+          this.closeForgotPasswordModal();
+        },
+        error: (err) => {
+          // this.openAncloseModal();
+          // this.sendMailLoader = false;
+          this.service.handleResponse(err);
+        },
+        complete: () => {
+          // this.openAncloseModal();
+          // this.sendMailLoader = false
+        }
+      }
+    )
   }
 
 }

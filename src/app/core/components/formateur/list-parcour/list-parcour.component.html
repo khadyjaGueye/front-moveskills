@@ -1,5 +1,21 @@
 <div class="p-6 mt-10">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 font-inter">
+    <button type="button" data-modal-target="authentication-modal"
+      class="w-3/4 py-2 px-2 me-2 mb-1 bg-[#114C5A] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:z-10 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+      <a routerLink="/core/formateur/chapitre">+Chapitre</a>
+    </button>
+    <button type="button" data-modal-target="authentication-modal"
+      class="w-3/4 py-2 px-2 me-2 mb-1 bg-[#114C5A] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:z-10 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+      <a routerLink="/core/formateur/parcour">+Parcours</a>
+    </button>
+    <button type="button" data-modal-target="authentication-modal"
+      class="w-3/4 py-2 px-2 me-2 mb-1 bg-[#114C5A] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:z-10 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+      <a routerLink="/core/formateur/contenu">+Contenu</a>
+    </button>
+  </div>
+
+
+  <div>
     <span>Les parcours</span>
     <form class="max-w-md mx-auto mb-4">
       <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -16,10 +32,6 @@
           placeholder="Rechercher un parcours" required />
       </div>
     </form>
-
-    <button type="button" (click)="openModalParcour()" data-modal-target="authentication-modal"
-      class="py-2.5 px-1 me-2 mb-1 bg-[#114C5A] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">+
-      Créer parcours</button>
   </div>
 
 
@@ -29,11 +41,14 @@
         <table class="w-full min-w-[540px]" data-tab-for="order" data-page="active">
           <thead>
             <tr>
+              <!-- <th
+                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
+                Images</th> -->
               <th
                 class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
-                Parcours formation</th>
+                Parcours</th>
               <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
-                Audience</th>
+                Type</th>
               <th
                 class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
                 Prix(fcfa)</th>
@@ -43,16 +58,26 @@
               <th
                 class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
                 Durée</th>
+                <th
+                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
+                Status</th>
               <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let parcour of filteredParcours | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+              <!-- <td class="py-2 px-4 border-b border-b-gray-50">
+                <img [src]="url+parcour.image" alt="{{ parcour.nom_parcour }}"
+                  class="w-16 h-16 object-cover rounded-md">
+              </td> -->
               <td class="py-2 px-4 border-b border-b-gray-50">{{parcour.nom_parcour}}</td>
               <td class="py-2 px-4 border-b border-b-gray-50">
-                <span class="text-[13px] font-medium text-gray-400">Graduit</span>
+                <span class="text-[13px] font-medium text-gray-400">
+                  {{ parcour.status_audiance === 0 ? 'Gratuit' : 'Premium' }}
+                </span>
               </td>
+
               <td class="py-2 px-4 border-b border-b-gray-50">
                 <span
                   class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.prix}}</span>
@@ -66,6 +91,10 @@
                   class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.duree}}jours</span>
               </td>
               <td class="py-2 px-4 border-b border-b-gray-50">
+                <span
+                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.status_disponibilite}}</span>
+              </td>
+              <td class="py-2 px-4 border-b border-b-gray-50">
                 <div class="flex items-center space-x-2">
                   <svg (click)="openModalChapitre(parcour.id,parcour.nom_parcour)" class="px-1 py-1 w-10 text-[#F9BD4F]"
                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -73,12 +102,14 @@
                       d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z">
                     </path>
                   </svg>
-                  <svg class="px-1 py-1 w-10 text-[#F9BD4F]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                    fill="currentColor">
-                    <path
-                      d="M16.6256 3.1285L9.29145 10.4626L9.29886 14.7098L13.537 14.7024L20.8682 7.37114C21.5912 8.75438 22 10.3278 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C13.6689 1.9967 15.2423 2.40553 16.6256 3.1285ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
-                    </path>
-                  </svg>
+                  <a href="">
+                    <svg (click)="openUpdate(parcour)" class="px-1 py-1 w-10 text-[#F9BD4F]"
+                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M16.6256 3.1285L9.29145 10.4626L9.29886 14.7098L13.537 14.7024L20.8682 7.37114C21.5912 8.75438 22 10.3278 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C13.6689 1.9967 15.2423 2.40553 16.6256 3.1285ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
+                      </path>
+                    </svg>
+                  </a>
                 </div>
               </td>
             </tr>
@@ -168,6 +199,17 @@
 
     <!-- Form for creating parcours -->
     <form>
+      <div class="items-center border-b border-gray-400 py-2 mt-5">
+        <label for="photo" class="uppercase">Photo</label>
+        <input type="file" id="photo" (change)="onPhotoSelected($event)"
+          class="appearance-none bg-transparent border-none w-full text-gray-500 leading-tight focus:outline-none"
+          accept="image/*" />
+      </div>
+      <!-- Aperçu de l'image -->
+      <div *ngIf="formData.info.image" class="mt-4">
+        <h3 class="text-sm font-semibold">Aperçu :</h3>
+        <img [src]="formData.info.image" alt="Aperçu de l'image" class="w-full max-w-xs rounded shadow-md" />
+      </div>
       <div class="items-center border-b border-gray-400 py-2">
         <label for="" class="uppercase">Nom du Parcours De Formation</label>
         <input [(ngModel)]="formData.info.nom_parcour" name="nom"
@@ -349,7 +391,7 @@
         </label> -->
         <label class="bg-[#2C7C7933] #2C7C79 py-2 px-4 rounded hover:bg-[#F9BD4F] text-[#2C7C79] cursor-pointer">
           Document
-          <input type="file" [(ngModel)]="formData.content.document" (change)="onFilesSelected($event, 'document')"
+          <input type="file" [(ngModel)]="formData.content.documents" (change)="onFilesSelected($event, 'document')"
             accept=".pdf,.doc,.docx" multiple class="hidden">
         </label>
       </div>

@@ -9,7 +9,7 @@ Login Illimitis : illimitis@illimitis.com et mot de passe : password
 Login formateur : roland.k@illimitis.com et mot de passe : password
 
 Code d'invitation NRC : NRC7470JF
-Login NRC : nrc@crc.com et mot de passe : password
+Login NRC : nrc@nrc.com et mot de passe : password
 
 Code d'invitation Pnud B : PNUD BURUNDI2084JV
 Login Pnud B : pnud@burundi.or et  mot de passe : password

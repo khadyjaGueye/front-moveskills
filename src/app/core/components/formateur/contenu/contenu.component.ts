@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../../../shared/shared.module';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Chapitre, Contenu, FormDataT, FormDataVideo } from '../../../../interfaces/model';
+import { Chapitre, Contenu, FormDataT, FormDataVideo, Parcour } from '../../../../interfaces/model';
 import { FormateurService } from '../service/formateur.service';
 import { environment } from '../../../../../environments/environment.development';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -21,9 +21,10 @@ export class ContenuComponent implements OnInit {
 
   nomParcour = localStorage.getItem('nomParcour');
   nomChap = localStorage.getItem('nomChapitre');
-  idParcour = localStorage.getItem('idParcour')
+  idParcour: number = 0; // ID du parcours sélectionné
   contenus: Contenu[] = [];
   chapitres: Chapitre[] = [];
+  parcours: Parcour[] = [];
   message: string = "";
   libelle: string = "";
   nom_chapitre: string = "";
@@ -31,48 +32,43 @@ export class ContenuComponent implements OnInit {
   sanitizedUrl: SafeResourceUrl | undefined; // Propriété pour stocker l'URL sécurisée
   url: string = "https://moovskil.tucamarketing.com/storage/";
   displayVideo: boolean = false;
+  // État pour savoir si le formulaire vidéo est visible
+  isVideoFormVisible: boolean = false;
+  // État pour savoir si le formulaire document est visible
+  isDocumentFormVisible: boolean = false;
+  isFormVisible: boolean = false;  // Pour contrôler l'affichage des boutons
   selectedFiles: { url: any; name: string; type: string, rawFile: any }[] = []; // Contient les fichiers sélectionnés
   formData: FormDataVideo = {
     content: {
       videos: [],
-      document: [],
+      documents: [],
     },
     libelle: "",
     chapitre_id: 1,
+
   };
+  videoForm: FormGroup;
+  documentForm: FormGroup;
 
-
-  constructor(private service: FormateurService, private sanitizer: DomSanitizer) {
-
+  constructor(private service: FormateurService, private sanitizer: DomSanitizer, private fb: FormBuilder) {
+    this.videoForm = this.fb.group({
+      idParcour: ['', Validators.required],
+      chapitre_id: ['', Validators.required],
+      libelle: ['', [Validators.required, Validators.minLength(3)]],
+      videos: ['', Validators.required] // Pour gérer les fichiers
+    });
+    this.documentForm = this.fb.group({
+      idParcour: ['', Validators.required],
+      chapitre_id: ['', Validators.required],
+      libelle: ['', [Validators.required, Validators.minLength(3)]],
+      documents: ['', Validators.required] // Pour gérer les fichiers
+    })
   }
 
   ngOnInit(): void {
-    this.getDataContenu();
-    this.getDataChapitre();
+    this.getParcours();
   }
 
-  getDataContenu() {
-    this.service.url = `${environment.apiBaseUrl}chapitre-contenue/${this.idParcour}`;
-    this.service.all().subscribe({
-      next: (resp) => {
-        this.contenus = resp.data.contenu;
-        const messageFromBackend = resp.data.message;
-        //  Swal.fire('Succès', messageFromBackend, 'success');  // Utiliser le message du backend
-        // console.log(resp);
-      }, error: (error) => {
-        // Gestion des erreurs et affichage du message d'erreur provenant du backend
-        const errorMessage = error.error.data?.message || 'Échec.';
-       // Swal.fire('Erreur', errorMessage, 'error');
-      }
-    })
-  }
-  //displayContenu: number | null = null; // Stocke l'index du contenu cliqué
-
-  // Méthode pour afficher le contenu
-  // afficheContenu(index: number): void {
-  //   // Si le contenu est déjà ouvert, le refermer ; sinon, ouvrir le nouveau contenu
-  //   this.displayContenu = this.displayContenu === index ? null : index;
-  // }
   displayContenu = false;
   contenuAffiche: string = '';
 
@@ -108,37 +104,39 @@ export class ContenuComponent implements OnInit {
     this.displayVideo = false;
   }
 
-  submitVideo() {
-    
-    this.service.url = environment.apiBaseUrl + "ajouter-video";
-    const videoFormData = new FormData();
-    const videoFiles = this.selectedFiles.filter(file => file.type.startsWith('video/'));
-    // Ajout des fichiers vidéos au FormData
-    videoFiles.forEach(video => {
-      videoFormData.append('videos[]', video.rawFile); // Utiliser "videos[]" pour un tableau de fichiers
-    });
-    console.log(videoFiles);
-    // Ajout du libellé au FormData
-    videoFormData.append('libelle', this.libelle);
-    // Ajout de l'ID du chapitre au FormData
-    videoFormData.append('chapitre_id', this.selectedChapitreId.toString());
-
-      if (this.idParcour && this.selectedChapitreId) {
-        // Ajout de l'ID du parcours
-        videoFormData.append('parcour_id', this.idParcour.toString());
-        // Envoi des vidéos via le service
-        this.service.store(videoFormData).subscribe({
-          next: (response) => {
-            const messageFromBackend = response.data.message;
-            Swal.fire('Succès', messageFromBackend, 'success');
-            this.selectedFiles = this.selectedFiles.filter(file => !file.type.startsWith('video/'));
-          },
-          error: (error) => {
-            const errorMessage = error.error.data?.message || 'Échec de l\'envoi des vidéos.';
-            Swal.fire('Erreur', errorMessage, 'error');
-          }
-        });
+  getDataChapitre() {
+    this.service.url = `${environment.apiBaseUrl}chapitre-by-parcour/${this.idParcour}`;
+    this.service.all().subscribe({
+      next: (rep) => {
+        this.chapitres = rep.data.chapitres;
       }
+    })
+  }
+
+  toggleForm(type: string) {
+    this.isFormVisible = true;  // Masque les boutons
+    if (type === 'video') {
+      this.isVideoFormVisible = true;
+      this.isDocumentFormVisible = false;  // Cache le formulaire Document
+    } else if (type === 'document') {
+      this.isDocumentFormVisible = true;
+      this.isVideoFormVisible = false;  // Cache le formulaire Vidéo
+    }
+  }
+
+  getParcours() {
+    this.service.url = environment.apiBaseUrl + "parcours";
+    this.service.all().subscribe(resp => {
+      this.parcours = resp.data.parcours;
+      //this.isLoading = false; // Données chargées, on masque le spinner
+      //console.log(this.parcours);
+    })
+  }
+
+  // Méthode pour charger les chapitres du parcours sélectionné
+  loadChapitres(id: number) {
+    this.idParcour = id;
+    this.getDataChapitre(); // Charger les chapitres après avoir sélectionné un parcours
   }
 
 
@@ -157,14 +155,99 @@ export class ContenuComponent implements OnInit {
     //console.log("Fichiers sélectionnés :", this.selectedFiles);
   }
 
-  getDataChapitre() {
-    this.service.url = `${environment.apiBaseUrl}chapitre-by-parcour/${this.idParcour}`;
-    this.service.all().subscribe({
-      next: (rep) => {
-        this.chapitres = rep.data.chapitres;
+
+  submitVideo() {
+    this.service.url = environment.apiBaseUrl + "ajouter-video";
+    if (this.videoForm.invalid) {
+      console.log('Formulaire invalide');
+      return;
+    }
+    const formValue = this.videoForm.value;
+    const videoFormData = new FormData();
+
+    // Ajouter les vidéos sélectionnées
+    this.selectedFiles
+      .filter(file => file.type.startsWith('video/'))
+      .forEach(video => videoFormData.append('videos[]', video.rawFile));
+    console.log(this.selectedFiles);
+
+    // Ajouter les autres données
+    videoFormData.append('libelle', formValue.libelle);
+    videoFormData.append('chapitre_id', formValue.chapitre_id);
+
+    console.log('Données envoyées:', formValue);
+
+    // Appeler le service pour envoyer les données
+    // Appeler le service pour envoyer les données
+    this.service.store(videoFormData).subscribe({
+      next: (response) => {
+        console.log('Vidéo envoyée avec succès!', response);
+        // Afficher un message de succès
+        this.service.handleResponse(response)
+
+        // Réinitialiser le formulaire et les fichiers sélectionnés
+        this.videoForm.reset();
+        this.selectedFiles = [];
+        this.isVideoFormVisible = false;
+        this.isFormVisible = true;
+      },
+      error: (error) => {
+        // Afficher un message d'erreur
+        this.service.handleResponse(error);
       }
-    })
+    });
   }
 
+  submitDocument() {
+    this.service.url = environment.apiBaseUrl + "ajouter-document";
 
+    if (this.documentForm.invalid) {
+      console.log('Formulaire invalide');
+      return;
+    }
+
+    const documentFiles = this.selectedFiles.filter(file =>
+      file.type === 'application/pdf' ||
+      file.type === 'application/msword' ||
+      file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+      file.type === 'application/vnd.ms-excel' ||
+      file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+
+    const formValue = this.documentForm.value;
+    const documentFormData = new FormData();
+
+    // Ajouter les fichiers documents au FormData
+    documentFiles.forEach(document => {
+      documentFormData.append('documents[]', document.rawFile); // Utiliser "documents[]" pour un tableau de fichiers
+    });
+
+    // Ajouter les autres données
+    documentFormData.append('libelle', formValue.libelle);
+    documentFormData.append('chapitre_id', formValue.chapitre_id);
+
+    // Envoi des documents via le service
+    this.service.store(documentFormData).subscribe({
+      next: (response) => {
+        // Afficher le message de succès renvoyé par le backend
+        const messageFromBackend = response.data.message;
+        Swal.fire('Succès', messageFromBackend, 'success'); // Alerte de succès
+        this.selectedFiles = this.selectedFiles.filter(file => !(
+          file.type === 'application/pdf' ||
+          file.type === 'application/msword' ||
+          file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+          file.type === 'application/vnd.ms-excel' ||
+          file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ));
+        this.documentForm.reset();
+        this.isDocumentFormVisible = false;
+        this.isFormVisible = true;
+      },
+      error: (error) => {
+        // Gérer et afficher le message d'erreur renvoyé par le backend
+        const errorMessage = error.error.message || 'Échec de l\'envoi des documents.';
+        Swal.fire('Erreur', errorMessage, 'error');
+      }
+    });
+  }
 }

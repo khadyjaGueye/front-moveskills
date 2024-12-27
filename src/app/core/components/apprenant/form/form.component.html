@@ -1,203 +1,222 @@
-<div *ngIf="showToast"
-  class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white rounded-lg shadow-lg flex items-center max-w-xs min-w-[50px] animate-toast">
-  <div class=" h-12 bg-white flex items-center justify-center rounded-l-lg">
-    <span class="text-white text-2xl font-inter">🎉🎉</span>
-  </div>
-  <div class="px-4 py-2 font-inter text-sm whitespace-nowrap overflow-hidden">
-    Félicitations ! Vous avez réussi !
-  </div>
-</div>
-<div
-  class="flex flex-col font-inter items-center py-8 px-4 bg-gradient-to-r from-blue-100 via-white to-green-100 min-h-screen">
-  <!-- Message de bienvenue -->
-  <div *ngIf="!testStarted" class="bg-white border border-gray-300 rounded-lg shadow-lg p-6 max-w-2xl text-center">
-    <h1 class="text-2xl font-bold text-[#114C5A] mb-4">
-      Vous êtes membre de la team <span>{{ getOrganizationName(code) }}</span> ,
-    </h1>
-    <p class="text-gray-700 text-lg mb-4">
-      Bienvenue sur le test du Mini DISC Comportemental. C’est un outil simple et efficace pour mieux comprendre les
-      comportements individuels et améliorer les interactions au sein des équipes.
-    </p>
-    <p class="text-gray-700 text-lg">
-      Pour chaque ligne, identifiez la case qui vous :
-    </p>
-    <ul class="text-gray-800 text-lg my-4 space-y-2 font-medium">
-      <li>✔️ Correspond le plus</li>
-      <li>✔️ Correspond assez</li>
-      <li>✔️ Correspond assez peu</li>
-      <li>✔️ Correspond pas du tout</li>
-    </ul>
-    <p class="text-[#EF7743] font-bold text-xl mt-4">
-      Bon test !
-    </p>
-    <!-- Bouton démarrer -->
-    <div class="mt-6">
-      <button *ngIf="!testStarted" (click)="startTest()"
-        class="bg-[#114C5A] hover:bg-[#EF7743] text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300">
-        Démarrer le test
-      </button>
+  <!-- <div *ngIf="showToast"
+    class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white rounded-lg shadow-lg flex items-center max-w-xs min-w-[50px] animate-toast">
+    <div class=" h-12 bg-white flex items-center justify-center rounded-l-lg">
+      <span class="text-white text-2xl font-inter">🎉🎉</span>
     </div>
-  </div>
-
-  <!-- <div  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-    <div class="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full animate-fadeInUp">
-      <h2 class="text-2xl font-bold text-green-600 animate-bounceTwice">
-        Félicitations !
-      </h2>
-       <span class="text-white text-2xl font-inter">🎉🎉</span>
-      <p class="text-gray-700 mt-4">
-        Vous avez fini vos tests. Voici vos résultats.
-      </p>
-      <button
-        class="mt-6 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
-        Voir les résultats
-      </button>
+    <div class="px-4 py-2 font-inter text-sm whitespace-nowrap overflow-hidden">
+      Félicitations ! Vous avez réussi !
     </div>
   </div> -->
-
-
-  <!-- Afficher un message de chargement pendant l'envoi des données -->
-  <div *ngIf="!displayColorCharacteristics && testInProgress" class="text-center text-gray-500 mt-6">
-    Envoi des résultats en cours, veuillez patienter...
-  </div>
-
-
-  <!-- Affichage des résultats -->
-  <div *ngIf="displayColorCharacteristics" class="flex flex-col items-center mt-8 font-inter">
-    <h2 class="uppercase text-2xl font-bold text-center mb-6">
-      Bravo, votre couleur dominante est le <span [ngStyle]="{ 'color': getDominantColorHex() }">{{ getDominantColorInFrench() }}</span>
-    </h2>
-    <!-- Image de l'animal correspondant -->
-    <img [src]="getAnimalImage()" loading="lazy" [alt]="getAnimalName()" class="mx-auto w-40 h-40 object-cover rounded-full shadow-lg"
-      [ngStyle]="{ 'border-color': getDominantColorHex() }" style="border-width: 4px;">
-    <p class="mt-4 text-lg font-semibold">
-      L'animal me correspondant est un : <span [ngStyle]="{ 'color': getDominantColorHex() }">{{ getAnimalName() }}</span>
-    </p>
-    <div class="flex flex-col md:flex-row justify-center gap-6">
-      <!-- Couleur dominante BLEU -->
-      <div *ngIf="dominantColor === 'blue'" class="w-96 p-6 border-blue-300   rounded-lg shadow-lg">
-        <h3 class="text-xl font-bold uppercase text-center bg-[#0000FF] text-white">Bleu</h3>
-        <ul class="mt-4 space-y-2 text-black">
-          <li>🔹 Recherche des faits et explications logiques</li>
-          <li>🔹 Actions prudentes et décisions réfléchies</li>
-          <li>🔹 Organisation et structures appréciées</li>
-          <li>🔹 Intérêt pour les détails</li>
-          <li>🔹 Travail précis, souvent en solitaire</li>
-        </ul>
-      </div>
-
-      <!-- Couleur dominante ROUGE -->
-      <div *ngIf="dominantColor === 'red'" class="w-96 p-6 border-red-300  rounded-lg shadow-lg">
-        <h3 class="text-xl font-bold uppercase text-center bg-[#FF0000] text-white">Rouge</h3>
-        <ul class="mt-4 space-y-2 text-black">
-          <li>🔺 Rapide, énergique et décidé</li>
-          <li>🔺 Aime la compétition</li>
-          <li>🔺 Résultats orientés, pragmatique</li>
-          <li>🔺 Recherche l'indépendance</li>
-          <li>🔺 Contrôle et prise d'initiatives</li>
-        </ul>
-      </div>
-
-      <!-- Couleur dominante VERT -->
-      <div *ngIf="dominantColor === 'green'" class="w-96 p-6  border-green-300  rounded-lg shadow-lg">
-        <h3 class="text-xl font-bold uppercase text-center bg-[#008000] text-white">Vert</h3>
-        <ul class="mt-4 space-y-2 text-black">
-          <li>🔹 Attentionné, stable et coopérant</li>
-          <li>🔹 Apprécie les relations personnalisées</li>
-          <li>🔹 Évite les conflits</li>
-          <li>🔹 Patient et accommodant</li>
-          <li>🔹 Renforce la cohésion</li>
-        </ul>
-      </div>
-
-      <!-- Couleur dominante JAUNE -->
-      <div *ngIf="dominantColor === 'yellow'" class="w-96 p-6 border-yellow-300  rounded-lg shadow-lg">
-        <h3 class="text-xl font-bold uppercase text-center bg-[#FFD700] text-white">Jaune</h3>
-        <ul class="mt-4 space-y-2 text-black">
-          <li>🔸 Enthousiaste et optimiste</li>
-          <li>🔸 Aime travailler en groupe</li>
-          <li>🔸 Créatif et spontané</li>
-          <li>🔸 Sens de l'improvisation</li>
-          <li>🔸 Impulsif et communicatif</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- après avoir cliqué sur le bouton "Démarrer le test" -->
-
-  <div class="flex justify-center font-inter">
-    <!-- Le contenu à centrer -->
-    <div *ngIf="testStarted" class="border border-gray-300 rounded-lg shadow-md p-6 space-y-6">
-      <!-- Barre de progression sous forme de cercles -->
-      <div *ngIf="questions.length > 0" class="flex justify-center space-x-2 mb-6">
-        <div *ngFor="let question of questions; let i = index"
-          class="w-5 h-5 flex items-center justify-center rounded-full border-2" [ngClass]="{
-              'bg-green-500 text-white border-green-500': currentQuestionIndex === i,
-              'bg-gray-200 text-gray-700 border-gray-300': currentQuestionIndex !== i
-            }">
-          {{ i + 1 }}
-        </div>
-      </div>
-      <!-- Section Question -->
-      <div *ngIf="currentQuestionIndex < questions.length" class="p-4">
-        <h2 class="text-[#114C5A]">{{ currentQuestionIndex + 1 }}.{{ questions[currentQuestionIndex].text }}</h2>
-
-        <!-- Liste des réponses -->
-        <div *ngFor="let answer of remainingAnswers; let i = index" class="mt-5">
-          <!-- Card pour chaque réponse -->
-          <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6">
-            <!-- Texte de la réponse -->
-            <p class="text-[#EF7743] text-lg font-bold mb-4">{{ answer.text }}</p>
-            <!-- Liste des options dans la carte -->
-            <div class="space-y-4">
-              <label class="block" *ngIf="remainingPoints.includes(6)">
-                <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, answer); answerSelected = true"
-                  class="mr-2">
-                Me correspond le plus
-              </label>
-              <label class="block" *ngIf="remainingPoints.includes(3)">
-                <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, answer); answerSelected = true"
-                  class="mr-2">
-                Me correspond assez
-              </label>
-              <label class="block" *ngIf="remainingPoints.includes(1)">
-                <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, answer); answerSelected = true"
-                  class="mr-2">
-                Me correspond assez peu
-              </label>
-              <label class="block" *ngIf="remainingPoints.includes(0)">
-                <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, answer); answerSelected = true"
-                  class="mr-2">
-                Ne me correspond pas du tout
-              </label>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Boutons pour naviguer entre les questions -->
-        <div class="mt-4">
-          <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()"
-            class="bg-[#EF7743] text-white px-4 py-2 rounded-md mr-2">
-            Précédent
-          </button>
-          <button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()"
-            class="bg-[#114C5A] text-white px-4 py-2 rounded-md" [disabled]="!answerSelected">
-            Suivant
-          </button>
-        </div>
-      </div>
-
-      <!-- Si toutes les questions sont terminées, afficher le bouton Envoyer -->
-      <div *ngIf="currentQuestionIndex == questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20 flex justify-center">
-        <button (click)="sendResults(); closeTest(); launchToast()" class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">
-          Voir mes résultats
+  <div
+    class="flex flex-col font-inter items-center py-8 px-4 bg-gradient-to-r from-blue-100 via-white to-green-100 min-h-screen">
+    <!-- Message de bienvenue -->
+    <div *ngIf="!testStarted" class="bg-white border border-gray-300 rounded-lg shadow-lg p-6 max-w-2xl text-center">
+      <h1 class="text-2xl font-bold text-[#114C5A] mb-4">
+        Vous êtes membre de la team <span>{{ getOrganizationName(code) }}</span> ,
+      </h1>
+      <p class="text-gray-700 text-lg mb-4">
+        Bienvenue sur le test du Mini DISC Comportemental. C’est un outil simple et efficace pour mieux comprendre les
+        comportements individuels et améliorer les interactions au sein des équipes.
+      </p>
+      <p class="text-gray-700 text-lg">
+        Pour chaque ligne, identifiez la case qui vous :
+      </p>
+      <ul class="text-gray-800 text-lg my-4 space-y-2 font-medium">
+        <li>✔️ Correspond le plus</li>
+        <li>✔️ Correspond assez</li>
+        <li>✔️ Correspond assez peu</li>
+        <li>✔️ Correspond pas du tout</li>
+      </ul>
+      <p class="text-[#EF7743] font-bold text-xl mt-4">
+        Bon test !
+      </p>
+      <!-- Bouton démarrer -->
+      <div class="mt-6">
+        <button *ngIf="!testStarted" (click)="startTest()"
+          class="bg-[#114C5A] hover:bg-[#EF7743] text-white font-bold py-3 px-6 rounded-full shadow-md transition duration-300">
+          Démarrer le test
         </button>
       </div>
     </div>
-  </div>
 
-</div>
+    <!-- <div  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white p-8 rounded-lg shadow-lg text-center max-w-md w-full animate-fadeInUp">
+        <h2 class="text-2xl font-bold text-green-600 animate-bounceTwice">
+          Félicitations !
+        </h2>
+        <span class="text-white text-2xl font-inter">🎉🎉</span>
+        <p class="text-gray-700 mt-4">
+          Vous avez fini vos tests. Voici vos résultats.
+        </p>
+        <button
+          class="mt-6 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+          Voir les résultats
+        </button>
+      </div>
+    </div> -->
+
+
+    <!-- Afficher un message de chargement pendant l'envoi des données -->
+    <div *ngIf="!displayColorCharacteristics && testInProgress" class="text-center text-gray-500 mt-6">
+      Envoi des résultats en cours, veuillez patienter...
+    </div>
+
+
+    <!-- Affichage des résultats -->
+    <div *ngIf="displayColorCharacteristics" class="flex flex-col items-center mt-8 font-inter">
+      <h2 class="uppercase text-2xl font-bold text-center mb-6">
+        Bravo, votre couleur dominante est le <span [ngStyle]="{ 'color': getDominantColorHex() }">{{
+          getDominantColorInFrench() }}</span>
+      </h2>
+      <!-- Image de l'animal correspondant -->
+      <img [src]="getAnimalImage()" loading="lazy" [alt]="getAnimalName()"
+        class="mx-auto w-40 h-40 object-cover rounded-full shadow-lg"
+        [ngStyle]="{ 'border-color': getDominantColorHex() }" style="border-width: 4px;">
+      <p class="mt-4 text-lg font-semibold">
+        L'animal me correspondant est un : <span [ngStyle]="{ 'color': getDominantColorHex() }">{{ getAnimalName()
+          }}</span>
+      </p>
+      <div class="flex flex-col md:flex-row justify-center gap-6">
+        <!-- Couleur dominante BLEU -->
+        <div *ngIf="dominantColor === 'blue'" class="w-96 p-6 border-blue-300   rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold uppercase text-center bg-[#0000FF] text-white">Bleu</h3>
+          <ul class="mt-4 space-y-2 text-black">
+            <li>🔹 Recherche des faits et explications logiques</li>
+            <li>🔹 Actions prudentes et décisions réfléchies</li>
+            <li>🔹 Organisation et structures appréciées</li>
+            <li>🔹 Intérêt pour les détails</li>
+            <li>🔹 Travail précis, souvent en solitaire</li>
+          </ul>
+        </div>
+
+        <!-- Couleur dominante ROUGE -->
+        <div *ngIf="dominantColor === 'red'" class="w-96 p-6 border-red-300  rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold uppercase text-center bg-[#FF0000] text-white">Rouge</h3>
+          <ul class="mt-4 space-y-2 text-black">
+            <li>🔺 Rapide, énergique et décidé</li>
+            <li>🔺 Aime la compétition</li>
+            <li>🔺 Résultats orientés, pragmatique</li>
+            <li>🔺 Recherche l'indépendance</li>
+            <li>🔺 Contrôle et prise d'initiatives</li>
+          </ul>
+        </div>
+
+        <!-- Couleur dominante VERT -->
+        <div *ngIf="dominantColor === 'green'" class="w-96 p-6  border-green-300  rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold uppercase text-center bg-[#008000] text-white">Vert</h3>
+          <ul class="mt-4 space-y-2 text-black">
+            <li>🔹 Attentionné, stable et coopérant</li>
+            <li>🔹 Apprécie les relations personnalisées</li>
+            <li>🔹 Évite les conflits</li>
+            <li>🔹 Patient et accommodant</li>
+            <li>🔹 Renforce la cohésion</li>
+          </ul>
+        </div>
+
+        <!-- Couleur dominante JAUNE -->
+        <div *ngIf="dominantColor === 'yellow'" class="w-96 p-6 border-yellow-300  rounded-lg shadow-lg">
+          <h3 class="text-xl font-bold uppercase text-center bg-[#FFD700] text-white">Jaune</h3>
+          <ul class="mt-4 space-y-2 text-black">
+            <li>🔸 Enthousiaste et optimiste</li>
+            <li>🔸 Aime travailler en groupe</li>
+            <li>🔸 Créatif et spontané</li>
+            <li>🔸 Sens de l'improvisation</li>
+            <li>🔸 Impulsif et communicatif</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- après avoir cliqué sur le bouton "Démarrer le test" -->
+
+    <div class="flex justify-center font-inter">
+      <div *ngIf="testStarted" class="border border-gray-300 rounded-lg shadow-md p-6 space-y-6">
+        <!-- Barre de progression sous forme de cercles -->
+        <div *ngIf="questions.length > 0" class="flex justify-center space-x-2 mb-6">
+          <div *ngFor="let question of questions; let i = index"
+            class="w-5 h-5 flex items-center justify-center rounded-full border-2" [ngClass]="{
+                'bg-green-500 text-white border-green-500': currentQuestionIndex === i,
+                'bg-gray-200 text-gray-700 border-gray-300': currentQuestionIndex !== i
+              }">
+            {{ i + 1 }}
+          </div>
+        </div>
+
+        <!-- Section Question -->
+        <div *ngIf="currentQuestionIndex < questions.length" class="p-4">
+          <h2 class="text-[#114C5A]">{{ currentQuestionIndex + 1 }}. {{ questions[currentQuestionIndex].text }}</h2>
+
+          <div *ngFor="let answer of remainingAnswers; let i = index" class="mt-5">
+            <div class="bg-white border border-gray-300 rounded-lg shadow-md p-6">
+              <p class="text-[#EF7743] text-lg font-bold mb-4">{{ answer.text }}</p>
+              <div class="space-y-4">
+                <label class="block" *ngIf="remainingPoints.includes(6)">
+                  <input type="radio" name="points" [value]="6" (change)="submitAnswer(6, answer); answerSelected = true"
+                    class="mr-2">
+                  Me correspond le plus
+                </label>
+                <label class="block" *ngIf="remainingPoints.includes(3)">
+                  <input type="radio" name="points" [value]="3" (change)="submitAnswer(3, answer); answerSelected = true"
+                    class="mr-2">
+                  Me correspond assez
+                </label>
+                <label class="block" *ngIf="remainingPoints.includes(1)">
+                  <input type="radio" name="points" [value]="1" (change)="submitAnswer(1, answer); answerSelected = true"
+                    class="mr-2">
+                  Me correspond assez peu
+                </label>
+                <label class="block" *ngIf="remainingPoints.includes(0)">
+                  <input type="radio" name="points" [value]="0" (change)="submitAnswer(0, answer); answerSelected = true"
+                    class="mr-2">
+                  Ne me correspond pas du tout
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <button *ngIf="currentQuestionIndex > 0" (click)="previousQuestion()"
+              class="bg-[#EF7743] text-white px-4 py-2 rounded-md mr-2">
+              Précédent
+            </button>
+            <button *ngIf="currentQuestionIndex < questions.length - 1" (click)="nextQuestion()"
+              class="bg-[#114C5A] text-white px-4 py-2 rounded-md" [disabled]="!answerSelected">
+              Suivant
+            </button>
+          </div>
+        </div>
+
+        <!-- Section finale -->
+        <div *ngIf="currentQuestionIndex == questions.length" class="p-4 sm:p-8 md:p-12 lg:p-20">
+          <div class="relative items-center space-x-4 p-4 bg-gray-100 rounded-lg overflow-hidden">
+            <!-- Effet Boum -->
+            <div class="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center z-0">
+              <div class="w-40 h-40 bg-yellow-400 rounded-full animate-boum"></div>
+            </div>
+
+            <!-- Image -->
+            <img src="assets/gifs/E62.gif" alt="Animation de félicitations"
+              class="h-48 w-full animate__animated animate__fadeIn z-10">
+
+            <!-- Texte -->
+            <span class="text-2xl font-semibold font-inter text-gray-700 leading-relaxed z-10">
+              Félicitations, vous avez terminé votre test avec succès, et je vous connais parfaitement maintenant.
+              Vous en doutez ? Cliquez sur le bouton ci-dessous.
+            </span>
+          </div>
+          <div>
+            <a routerLink="/core/apprenant/test">
+            <button (click)="sendResults(); closeTest(); launchToast()"
+              class="bg-[#114C5A] text-white px-4 py-2 rounded-md mt-4">
+              Voir mes résultats
+            </button>
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>

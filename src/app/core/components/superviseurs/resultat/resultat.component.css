@@ -3,3 +3,56 @@
   justify-content: center;
   align-items: center;
 }
+
+.disk-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.disk {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: conic-gradient(
+    #008000 0% 25%,
+    #DACF0A 25% 50%,
+    #FF0000 50% 75%,
+    #0000FF 75% 100%
+  );
+}
+
+.percentage {
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  transform-origin: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-center {
+  margin-top: 10px;
+}
+.cards-container {
+  display: flex;
+  justify-content: space-between; /* Espace uniforme entre les cartes */
+  flex-wrap: nowrap; /* Empêche les cartes de se réorganiser en une nouvelle ligne */
+}
+
+.card {
+  width: 100px; /* Ajustez la taille des cartes */
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

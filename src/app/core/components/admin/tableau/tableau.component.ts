@@ -38,7 +38,7 @@ export class TableauComponent implements OnInit{
       dataLabels: {
         enabled: false,
       },
-      colors: ['#020617'],
+      colors: ['#114C5A'],
       plotOptions: {
         bar: {
           columnWidth: '40%',
@@ -91,5 +91,5 @@ export class TableauComponent implements OnInit{
     chart.render();
   }
 
-  
+
 }

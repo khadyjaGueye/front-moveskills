@@ -52,40 +52,42 @@
               class="text-red-500 text-sm">
               Veuillez entrer un email valide.
             </div>
-            <label for="password"
-              class="block mt-5 mb-2 text-sm font-medium text-gray-700 hover:text-[#114C5A] transition duration-300">
-              Mot de passe
-            </label>
-            <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
-              class="w-full px-8 py-4 rounded-lg font-medium bg-rgba(171, 176, 171, 1) border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-              type="password" placeholder="*******" />
-            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-              class="text-red-500 text-sm">
-              Le mot de passe doit comporter au moins 6 caractères.
+            <div class="relative">
+              <label for="password"
+                class="block mt-5 mb-2 text-sm font-medium text-gray-700 hover:text-[#114C5A] transition duration-300">
+                Mot de passe
+              </label>
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                class="w-full px-8 py-4 rounded-lg font-medium bg-rgba(171, 176, 171, 1) border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                placeholder="*******" />
+              <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                class="text-red-500 text-sm">
+                Le mot de passe doit comporter au moins 6 caractères.
+              </div>
+              <button type="button" (click)="togglePasswordVisibility()"
+                class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path
+                    d="M12 4.5C7.30558 4.5 3.27208 7.32812 1.5 12C3.27208 16.6719 7.30558 19.5 12 19.5C16.6944 19.5 20.7279 16.6719 22.5 12C20.7279 7.32812 16.6944 4.5 12 4.5ZM12 17.5C9.51472 17.5 7.5 15.4853 7.5 13C7.5 10.5147 9.51472 8.5 12 8.5C14.4853 8.5 16.5 10.5147 16.5 13C16.5 15.4853 14.4853 17.5 12 17.5ZM12 10.5C10.6193 10.5 9.5 11.6193 9.5 13C9.5 14.3807 10.6193 15.5 12 15.5C13.3807 15.5 14.5 14.3807 14.5 13C14.5 11.6193 13.3807 10.5 12 10.5Z" />
+                </svg>
+                <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path
+                    d="M17.8827 19.2968C16.1814 20.3755 14.1638 21.0002 12.0003 21.0002C6.60812 21.0002 2.12215 17.1204 1.18164 12.0002C1.61832 9.62282 2.81932 7.5129 4.52047 5.93457L1.39366 2.80777L2.80788 1.39355L22.6069 21.1925L21.1927 22.6068L17.8827 19.2968ZM5.9356 7.3497C4.60673 8.56015 3.6378 10.1672 3.22278 12.0002C4.14022 16.0521 7.7646 19.0002 12.0003 19.0002C13.5997 19.0002 15.112 18.5798 16.4243 17.8384L14.396 15.8101C13.7023 16.2472 12.8808 16.5002 12.0003 16.5002C9.51498 16.5002 7.50026 14.4854 7.50026 12.0002C7.50026 11.1196 7.75317 10.2981 8.19031 9.60442L5.9356 7.3497ZM12.9139 14.328L9.67246 11.0866C9.5613 11.3696 9.50026 11.6777 9.50026 12.0002C9.50026 13.3809 10.6196 14.5002 12.0003 14.5002C12.3227 14.5002 12.6309 14.4391 12.9139 14.328ZM20.8068 16.5925L19.376 15.1617C20.0319 14.2268 20.5154 13.1586 20.7777 12.0002C19.8603 7.94818 16.2359 5.00016 12.0003 5.00016C11.1544 5.00016 10.3329 5.11773 9.55249 5.33818L7.97446 3.76015C9.22127 3.26959 10.5793 3.00016 12.0003 3.00016C17.3924 3.00016 21.8784 6.87992 22.8189 12.0002C22.5067 13.6998 21.8038 15.2628 20.8068 16.5925ZM11.7229 7.50857C11.8146 7.50299 11.9071 7.50016 12.0003 7.50016C14.4855 7.50016 16.5003 9.51488 16.5003 12.0002C16.5003 12.0933 16.4974 12.1858 16.4919 12.2775L11.7229 7.50857Z">
+                  </path>
+                </svg>
+              </button>
             </div>
-            <!-- <button type="button" (click)="togglePasswordVisibility()"
-            class="absolute inset-y-0 right-0 flex items-center pr-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <ng-container *ngIf="!showPassword">
-                <path
-                  d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z">
-                </path>
-              </ng-container>
-              <ng-container *ngIf="showPassword">
-                <path
-                  d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z">
-                </path>
-              </ng-container>
-            </svg>
-          </button> -->
-
-
-            <button type="submit" (click)="connecter()" [disabled]="loginForm.invalid"
+            <button type="submit" (click)="connecter()" [disabled]="loginForm.invalid" [ngClass]="{
+              'bg-gray-400 cursor-not-allowed': loginForm.invalid,
+              'bg-[#114C5A] hover:bg-[#0d3b47]': !loginForm.invalid
+            }"
               class="mt-5 tracking-wide font-semibold bg-[#114C5A] text-gray-100 w-full py-4 rounded-lg  transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
               <span class="ml-3">Se connecter</span>
             </button>
             <div class="flex justify-between mt-5">
-              <a  class="text-[#114C5A]">Mot de passe oublié?</a>
+              <a (click)="openForgotPasswordModal()" class="text-[#114C5A]">Mot de passe oublié?</a>
               <a routerLink="register" class="text-[#114C5A]">Je n'ai pas de compte</a>
             </div>
           </div>
@@ -98,6 +100,42 @@
     <img src="assets/images/login.png" class="w-full h-auto rounded-3xl" style="object-fit: cover;" alt="" />
   </div>
 </div>
+
+<!-- Modal Background -->
+<div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+  <!-- Modal Container -->
+  <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-1/3 p-6 relative">
+    <!-- Close Button -->
+    <button (click)="closeForgotPasswordModal()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+      &times;
+    </button>
+    <!-- Logo -->
+    <div class="flex justify-center mb-4">
+      <img src="assets/images/Logo.png" alt="Logo" class="h-12 w-12">
+    </div>
+    <!-- Modal Content -->
+    <h2 class="text-xl font-semibold text-center mb-4">Réinitialiser le mot de passe</h2>
+    <form [formGroup]="sendMailUser" (ngSubmit)="sendMail()">
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>
+        <input type="email" id="email" formControlName="email" name="email" required
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#114C5A] focus:border-[#114C5A]">
+      </div>
+      <div *ngIf="sendMailUser.get('email')?.invalid && sendMailUser.get('email')?.touched"
+        class="text-red-500 text-sm">
+        Veuillez entrer un email valide.
+      </div>
+      <button type="submit" type="submit" [disabled]="sendMailUser.invalid" [ngClass]="{
+        'bg-gray-400 cursor-not-allowed': sendMailUser.invalid,
+        'bg-[#114C5A] hover:bg-[#0d3b47]': !sendMailUser.invalid
+      }"
+        class="w-full bg-[#114C5A] text-white py-2 px-4 rounded-md hover:bg-[#0d3a44] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#114C5A]">
+        Envoyer
+      </button>
+    </form>
+  </div>
+</div>
+
 
 
 

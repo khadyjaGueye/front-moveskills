@@ -92,9 +92,12 @@ export class ListApprenantComponent implements OnInit {
   }
   get filteredApprenant() {
     return this.apprenants.filter(appreant =>
-      appreant.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      appreant.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      appreant.email.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
+
+
   getInfoUser(id: number) {
     this.service.url = `${environment.apiBaseUrl}couleur-des-users/${id}`;
     this.service.all().subscribe(resp => {

@@ -17,7 +17,7 @@
   </form>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-  <div *ngFor="let parcour of filteredParcours | paginate: { itemsPerPage: itemsPerPage, currentPage: page }"
+  <div *ngFor="let parcour of filteredParcours "
     class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div (click)="openModalParcour(parcour.id)">
       <div class="relative inline-block w-full">
@@ -64,33 +64,41 @@
 <div *ngIf="display" tabindex="-1" aria-hidden="true" id="modal1"
   class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white rounded-lg shadow-lg p-6 sm:w-[90%] md:w-[70%] lg:w-[40%] max-h-[100vh] overflow-y-auto">
-    <button class="flex items-center mb-4">
-      <svg (click)="closeModalParcour()" class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-        fill="currentColor">
-        <path
-          d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z">
-        </path>
-      </svg>
-      <h2>Parcour {{selectedParcour?.nom_parcour}}</h2>
-    </button>
+    <div class="flex justify-between">
+      <div>
+        <button class="flex items-center mb-4">
+          <svg (click)="closeModalParcour()" class="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            fill="currentColor">
+            <path
+              d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z">
+            </path>
+          </svg>
+          <h2>Parcour {{selectedParcour?.nom_parcour}}</h2>
+        </button>
+      </div>
+      <div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M11.1002 3C7.45057 3.00657 5.53942 3.09617 4.31806 4.31754C3 5.63559 3 7.75698 3 11.9997C3 16.2425 3 18.3639 4.31806 19.6819C5.63611 21 7.7575 21 12.0003 21C16.243 21 18.3644 21 19.6825 19.6819C20.9038 18.4606 20.9934 16.5494 21 12.8998"
+            stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M20.9995 6.02529L20 6.02276C16.2634 6.01331 14.3951 6.00859 13.0817 6.95266C12.6452 7.26639 12.2622 7.64845 11.9474 8.08412C11 9.39515 11 11.2634 11 15M20.9995 6.02529C21.0062 5.86266 20.9481 5.69906 20.8251 5.55333C20.0599 4.64686 18.0711 3 18.0711 3M20.9995 6.02529C20.9934 6.17112 20.9352 6.31616 20.8249 6.44681C20.0596 7.3531 18.0711 9 18.0711 9"
+            stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+
 
     <div class="bg-[#114C5A] text-white p-3 mb-4">
       <div>
         <h1>Description</h1>
-        <p>Kale chips hashtag tofu, vegan semiotics pork belly selfies grailed blog pickled tote bag polaroid. Praxis
-          lomo
-          gentrify cold-pressed 8-bit cardigan, ramps farm-to-table mixtape. Offal marxism forage Brooklyn
-          asymmetrical.
-          Kinfolk drinking vinegar readymade jawn farm-to-table leggings. Vegan sus dreamcatcher pitchfork, mukbang
-          hella
-          activated charcoal small batch williamsburg. Offal chia narwhal PBR&B, chartreuse forage blog schlitz
-          letterpress.</p>
+        <p>{{selectedParcour?.description}}</p>
         <div class="flex justify-between">
           <div class="flex gap-2">
             <img class="p-2 rounded-t-lg" src="assets/images/user.png" alt="user image" />
             <h1 class="mt-5">{{selectedParcour?.user?.name}}</h1>
           </div>
-          <button class="text-[#FFDE73] bg-[#114C5A]">Voir profil</button>
+          <a class="text-[#FFDE73] bg-[#114C5A]">Voir profil</a>
         </div>
 
       </div>
@@ -98,17 +106,17 @@
     <!-- Grille des catégories avec 2 colonnes -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <!-- Carte Vidéos -->
-      <div class="bg-[#4C4D79] p-4 text-center rounded-lg">
+      <div class="bg-[#4C4D79] p-4 text-center text-white rounded-lg">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
           <path
             d="M2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM4 5V19H20V5H4ZM10.6219 8.41459L15.5008 11.6672C15.6846 11.7897 15.7343 12.0381 15.6117 12.2219C15.5824 12.2658 15.5447 12.3035 15.5008 12.3328L10.6219 15.5854C10.4381 15.708 10.1897 15.6583 10.0672 15.4745C10.0234 15.4088 10 15.3316 10 15.2526V8.74741C10 8.52649 10.1791 8.34741 10.4 8.34741C10.479 8.34741 10.5562 8.37078 10.6219 8.41459Z">
           </path>
         </svg>
-        <a>{{selectedParcour?.nombre_videos}}
+        <a class="">{{selectedParcour?.nombre_videos}}
           Vidéos</a>
       </div>
       <!-- Carte Articles -->
-      <div class="bg-[#114C5A] p-4 text-center rounded-lg">
+      <div class="bg-[#114C5A] text-white p-4 text-center rounded-lg">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
           <path
             d="M13 21V23H11V21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H9C10.1947 3 11.2671 3.52375 12 4.35418C12.7329 3.52375 13.8053 3 15 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H13ZM20 19V5H15C13.8954 5 13 5.89543 13 7V19H20ZM11 19V7C11 5.89543 10.1046 5 9 5H4V19H11Z">
@@ -118,7 +126,7 @@
           Articles</a>
       </div>
       <!-- Carte Audios -->
-      <div class="bg-[#FFDE73] p-4 text-center rounded-lg">
+      <div class="bg-[#FFDE73] text-white p-4 text-center rounded-lg">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
           <path
             d="M12.4142 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H10.4142L12.4142 5ZM11 13.05C10.8384 13.0172 10.6712 13 10.5 13C9.11929 13 8 14.1193 8 15.5C8 16.8807 9.11929 18 10.5 18C11.8807 18 13 16.8807 13 15.5V11H16V9H11V13.05Z">
@@ -127,7 +135,7 @@
         <a>5 Audios</a>
       </div>
       <!-- Carte Challenges -->
-      <div class="bg-[#EF7743] p-4 text-center rounded-lg">
+      <div class="bg-[#EF7743] p-4 text-white text-center rounded-lg">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mx-auto mb-2">
           <path
             d="M12 6.99999C16.4183 6.99999 20 10.5817 20 15C20 19.4183 16.4183 23 12 23C7.58172 23 4 19.4183 4 15C4 10.5817 7.58172 6.99999 12 6.99999ZM12 8.99999C8.68629 8.99999 6 11.6863 6 15C6 18.3137 8.68629 21 12 21C15.3137 21 18 18.3137 18 15C18 11.6863 15.3137 8.99999 12 8.99999ZM12 10.5L13.3225 13.1797L16.2798 13.6094L14.1399 15.6953L14.645 18.6406L12 17.25L9.35497 18.6406L9.86012 15.6953L7.72025 13.6094L10.6775 13.1797L12 10.5ZM18 1.99999V4.99999L16.6366 6.13755C15.5305 5.5577 14.3025 5.17884 13.0011 5.04948L13 1.99899L18 1.99999ZM11 1.99899L10.9997 5.04939C9.6984 5.17863 8.47046 5.55735 7.36441 6.13703L6 4.99999V1.99999L11 1.99899Z">
@@ -142,24 +150,51 @@
         <a href="#">
           <h2 class="mb-2 text-2xl font-bold tracking-tight text-[#114C5A] dark:text-white">Accéder à ce cours</h2>
         </a>
-        <div class="text-[#114C5AI] text-center">
-          <p class="">9900 F.CFA</p>
-          <p>Validité: pour toujours</p>
-          <p>Accessible sur téléphone, tablet et Tv</p>
-          <p>Suivi par un mentor</p>
+        <div>
+          <span *ngIf="selectedParcour?.status_disponibilite === 'disponible'; else premiumLabel">
+            <button (click)="openModalChapitre()"
+              class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-[#114C5A] bg-[#D9E8E3] rounded-lg hover:bg-[#114C5A] hover:text-[#D9E8E3] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Ouvrir
+              <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9" />
+              </svg>
+            </button>
+          </span>
+          <ng-template #premiumLabel>
+            <span
+              class=" bg-[#F9BD4F] text-neutral-900 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-[#EF7743]">
+              <div class="text-[#114C5AI] text-center">
+                <p class="">9900 F.CFA</p>
+                <p>Validité: pour toujours</p>
+                <p>Accessible sur téléphone, tablette et TV</p>
+                <p>Suivi par un mentor</p>
+              </div>
+              <button (click)="acheterParcour()"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-[#114C5A] bg-[#D9E8E3] rounded-lg hover:bg-[#114C5A] hover:text-[#D9E8E3] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Acheter
+                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg>
+              </button>
+              <!-- <button (click)="nextStep();acheterParcour()"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-[#114C5A] bg-[#D9E8E3] rounded-lg hover:bg-[#114C5A] hover:text-[#D9E8E3] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Acheter
+                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg>
+              </button> -->
+            </span>
+          </ng-template>
         </div>
-        <button (click)="nextStep()"
-          class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-[#114C5A] bg-[#D9E8E3] rounded-lg hover:bg-[#114C5A] hover:text-[#D9E8E3] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          Acheter
-          <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 5h12m0 0L9 1m4 4L9 9" />
-          </svg>
-        </button>
       </div>
     </div>
-    <div class="text-center">
+    <!-- <div class="text-center">
       <h1 class="mt-5">Partager le cours</h1>
       <div class="flex justify-center p-2 gap-4">
         <svg class="w-6 h-6 text-[#114C5A]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -183,7 +218,7 @@
           </path>
         </svg>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -191,10 +226,15 @@
 <div *ngIf="currentStep === 2" tabindex="-1" aria-hidden="true" id="modal2"
   class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
   <div class="bg-white rounded-lg shadow-lg p-6 sm:w-[90%] md:w-[70%] lg:w-[40%] max-h-[100vh] overflow-y-auto">
-
-    <div>
-      <h2>Sélectionner un mode de paiement</h2>
-    </div>
+    <button class="flex items-center mb-4">
+      <svg (click)="previousStep()" class="w-6 h-6 mr-2 text-[#114C5A]" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z">
+        </path>
+      </svg>
+      <h2 class="text-[#114C5A]">Sélectionner un mode de paiement</h2>
+    </button>
     <div class="bg-[#FFDE73] flex justify-between p-5 rounded-lg">
       <span>Total</span>
       <span>9900 F.CFA</span>
@@ -245,23 +285,25 @@
       <h2 class="text-[#114C5A]">Finaliser le paiment</h2>
     </div>
     <div class="bg-[#FFDE73] text-[#114C5A] flex justify-between p-5 rounded-lg">
-      <span >Total</span>
+      <span>Total</span>
       <span>9900 F.CFA</span>
     </div>
 
-      <div class="relative items-center border-b border-gray-400 py-2">
-        <label for="phone" class="uppercase text-[#114C5A]">Votre numéro de téléphone wave</label>
-        <input id="phone" name="nom" type="number" placeholder="7X XXX XX XX" aria-label="Full name"
-          class="mt-5 appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 pl-10 pr-2 leading-tight focus:outline-none">
-        <svg class="absolute top-2/3
-         left-2 transform -translate-y-1/2 text-gray-400 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M9.36556 10.6821C10.302 12.3288 11.6712 13.698 13.3179 14.6344L14.2024 13.3961C14.4965 12.9845 15.0516 12.8573 15.4956 13.0998C16.9024 13.8683 18.4571 14.3353 20.0789 14.4637C20.599 14.5049 21 14.9389 21 15.4606V19.9234C21 20.4361 20.6122 20.8657 20.1022 20.9181C19.5723 20.9726 19.0377 21 18.5 21C9.93959 21 3 14.0604 3 5.5C3 4.96227 3.02742 4.42771 3.08189 3.89776C3.1343 3.38775 3.56394 3 4.07665 3H8.53942C9.0611 3 9.49513 3.40104 9.5363 3.92109C9.66467 5.54288 10.1317 7.09764 10.9002 8.50444C11.1427 8.9484 11.0155 9.50354 10.6039 9.79757L9.36556 10.6821ZM6.84425 10.0252L8.7442 8.66809C8.20547 7.50514 7.83628 6.27183 7.64727 5H5.00907C5.00303 5.16632 5 5.333 5 5.5C5 12.9558 11.0442 19 18.5 19C18.667 19 18.8337 18.997 19 18.9909V16.3527C17.7282 16.1637 16.4949 15.7945 15.3319 15.2558L13.9748 17.1558C13.4258 16.9425 12.8956 16.6915 12.3874 16.4061L12.3293 16.373C10.3697 15.2587 8.74134 13.6303 7.627 11.6707L7.59394 11.6126C7.30849 11.1044 7.05754 10.5742 6.84425 10.0252Z"></path>
-        </svg>
-      </div>
-      <div class="flex justify-center mt-5">
-        <button (click)="nextStep()"
-         class="bg-[#114C5A] w-[90%] h-16 rounded-lg text-white">Payer</button>
-      </div>
+    <div class="relative items-center border-b border-gray-400 py-2">
+      <label for="phone" class="uppercase text-[#114C5A]">Votre numéro de téléphone wave</label>
+      <input id="phone" name="nom" type="number" placeholder="7X XXX XX XX" aria-label="Full name"
+        class="mt-5 appearance-none bg-transparent border-none w-full text-gray-500 mr-3 py-1 pl-10 pr-2 leading-tight focus:outline-none">
+      <svg class="absolute top-2/3
+         left-2 transform -translate-y-1/2 text-gray-400 w-5 h-5" xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M9.36556 10.6821C10.302 12.3288 11.6712 13.698 13.3179 14.6344L14.2024 13.3961C14.4965 12.9845 15.0516 12.8573 15.4956 13.0998C16.9024 13.8683 18.4571 14.3353 20.0789 14.4637C20.599 14.5049 21 14.9389 21 15.4606V19.9234C21 20.4361 20.6122 20.8657 20.1022 20.9181C19.5723 20.9726 19.0377 21 18.5 21C9.93959 21 3 14.0604 3 5.5C3 4.96227 3.02742 4.42771 3.08189 3.89776C3.1343 3.38775 3.56394 3 4.07665 3H8.53942C9.0611 3 9.49513 3.40104 9.5363 3.92109C9.66467 5.54288 10.1317 7.09764 10.9002 8.50444C11.1427 8.9484 11.0155 9.50354 10.6039 9.79757L9.36556 10.6821ZM6.84425 10.0252L8.7442 8.66809C8.20547 7.50514 7.83628 6.27183 7.64727 5H5.00907C5.00303 5.16632 5 5.333 5 5.5C5 12.9558 11.0442 19 18.5 19C18.667 19 18.8337 18.997 19 18.9909V16.3527C17.7282 16.1637 16.4949 15.7945 15.3319 15.2558L13.9748 17.1558C13.4258 16.9425 12.8956 16.6915 12.3874 16.4061L12.3293 16.373C10.3697 15.2587 8.74134 13.6303 7.627 11.6707L7.59394 11.6126C7.30849 11.1044 7.05754 10.5742 6.84425 10.0252Z">
+        </path>
+      </svg>
+    </div>
+    <div class="flex justify-center mt-5">
+      <button (click)="nextStep()" class="bg-[#114C5A] w-[90%] h-16 rounded-lg text-white">Payer</button>
+    </div>
   </div>
 </div>
 
@@ -279,17 +321,105 @@
       <h2 class="text-[#114C5A]">Paiement</h2>
     </button>
     <div class="flex justify-center text-[#114C5A]">
-      <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.0072 2.10365C8.60556 1.64993 7.08193 2.28104 6.41168 3.59294L5.6059 5.17011C5.51016 5.35751 5.35775 5.50992 5.17036 5.60566L3.59318 6.41144C2.28128 7.08169 1.65018 8.60532 2.10389 10.0069L2.64935 11.6919C2.71416 11.8921 2.71416 12.1077 2.64935 12.3079L2.10389 13.9929C1.65018 15.3945 2.28129 16.9181 3.59318 17.5883L5.17036 18.3941C5.35775 18.4899 5.51016 18.6423 5.6059 18.8297L6.41169 20.4068C7.08194 21.7187 8.60556 22.3498 10.0072 21.8961L11.6922 21.3507C11.8924 21.2859 12.1079 21.2859 12.3081 21.3507L13.9931 21.8961C15.3947 22.3498 16.9183 21.7187 17.5886 20.4068L18.3944 18.8297C18.4901 18.6423 18.6425 18.4899 18.8299 18.3941L20.4071 17.5883C21.719 16.9181 22.3501 15.3945 21.8964 13.9929L21.3509 12.3079C21.2861 12.1077 21.2861 11.8921 21.3509 11.6919L21.8964 10.0069C22.3501 8.60531 21.719 7.08169 20.4071 6.41144L18.8299 5.60566C18.6425 5.50992 18.4901 5.3575 18.3944 5.17011L17.5886 3.59294C16.9183 2.28104 15.3947 1.64993 13.9931 2.10365L12.3081 2.6491C12.1079 2.71391 11.8924 2.71391 11.6922 2.6491L10.0072 2.10365ZM8.19271 4.50286C8.41612 4.06556 8.924 3.8552 9.39119 4.00643L11.0762 4.55189C11.6768 4.74632 12.3235 4.74632 12.9241 4.55189L14.6091 4.00643C15.0763 3.8552 15.5841 4.06556 15.8076 4.50286L16.6133 6.08004C16.9006 6.64222 17.3578 7.09946 17.92 7.38668L19.4972 8.19246C19.9345 8.41588 20.1448 8.92375 19.9936 9.39095L19.4481 11.076C19.2537 11.6766 19.2537 12.3232 19.4481 12.9238L19.9936 14.6088C20.1448 15.076 19.9345 15.5839 19.4972 15.8073L17.92 16.6131C17.3578 16.9003 16.9006 17.3576 16.6133 17.9197L15.8076 19.4969C15.5841 19.9342 15.0763 20.1446 14.6091 19.9933L12.9241 19.4479C12.3235 19.2535 11.6768 19.2535 11.0762 19.4479L9.3912 19.9933C8.924 20.1446 8.41612 19.9342 8.19271 19.4969L7.38692 17.9197C7.09971 17.3576 6.64246 16.9003 6.08028 16.6131L4.50311 15.8073C4.06581 15.5839 3.85544 15.076 4.00668 14.6088L4.55213 12.9238C4.74656 12.3232 4.74656 11.6766 4.55213 11.076L4.00668 9.39095C3.85544 8.92375 4.06581 8.41588 4.50311 8.19246L6.08028 7.38668C6.64246 7.09946 7.09971 6.64222 7.38692 6.08004L8.19271 4.50286ZM6.75972 11.7573L11.0023 15.9999L18.0734 8.92885L16.6592 7.51464L11.0023 13.1715L8.17394 10.343L6.75972 11.7573Z"></path></svg>
+      <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M10.0072 2.10365C8.60556 1.64993 7.08193 2.28104 6.41168 3.59294L5.6059 5.17011C5.51016 5.35751 5.35775 5.50992 5.17036 5.60566L3.59318 6.41144C2.28128 7.08169 1.65018 8.60532 2.10389 10.0069L2.64935 11.6919C2.71416 11.8921 2.71416 12.1077 2.64935 12.3079L2.10389 13.9929C1.65018 15.3945 2.28129 16.9181 3.59318 17.5883L5.17036 18.3941C5.35775 18.4899 5.51016 18.6423 5.6059 18.8297L6.41169 20.4068C7.08194 21.7187 8.60556 22.3498 10.0072 21.8961L11.6922 21.3507C11.8924 21.2859 12.1079 21.2859 12.3081 21.3507L13.9931 21.8961C15.3947 22.3498 16.9183 21.7187 17.5886 20.4068L18.3944 18.8297C18.4901 18.6423 18.6425 18.4899 18.8299 18.3941L20.4071 17.5883C21.719 16.9181 22.3501 15.3945 21.8964 13.9929L21.3509 12.3079C21.2861 12.1077 21.2861 11.8921 21.3509 11.6919L21.8964 10.0069C22.3501 8.60531 21.719 7.08169 20.4071 6.41144L18.8299 5.60566C18.6425 5.50992 18.4901 5.3575 18.3944 5.17011L17.5886 3.59294C16.9183 2.28104 15.3947 1.64993 13.9931 2.10365L12.3081 2.6491C12.1079 2.71391 11.8924 2.71391 11.6922 2.6491L10.0072 2.10365ZM8.19271 4.50286C8.41612 4.06556 8.924 3.8552 9.39119 4.00643L11.0762 4.55189C11.6768 4.74632 12.3235 4.74632 12.9241 4.55189L14.6091 4.00643C15.0763 3.8552 15.5841 4.06556 15.8076 4.50286L16.6133 6.08004C16.9006 6.64222 17.3578 7.09946 17.92 7.38668L19.4972 8.19246C19.9345 8.41588 20.1448 8.92375 19.9936 9.39095L19.4481 11.076C19.2537 11.6766 19.2537 12.3232 19.4481 12.9238L19.9936 14.6088C20.1448 15.076 19.9345 15.5839 19.4972 15.8073L17.92 16.6131C17.3578 16.9003 16.9006 17.3576 16.6133 17.9197L15.8076 19.4969C15.5841 19.9342 15.0763 20.1446 14.6091 19.9933L12.9241 19.4479C12.3235 19.2535 11.6768 19.2535 11.0762 19.4479L9.3912 19.9933C8.924 20.1446 8.41612 19.9342 8.19271 19.4969L7.38692 17.9197C7.09971 17.3576 6.64246 16.9003 6.08028 16.6131L4.50311 15.8073C4.06581 15.5839 3.85544 15.076 4.00668 14.6088L4.55213 12.9238C4.74656 12.3232 4.74656 11.6766 4.55213 11.076L4.00668 9.39095C3.85544 8.92375 4.06581 8.41588 4.50311 8.19246L6.08028 7.38668C6.64246 7.09946 7.09971 6.64222 7.38692 6.08004L8.19271 4.50286ZM6.75972 11.7573L11.0023 15.9999L18.0734 8.92885L16.6592 7.51464L11.0023 13.1715L8.17394 10.343L6.75972 11.7573Z">
+        </path>
+      </svg>
     </div>
     <div class="flex justify-center">
       <h2 class="text-[#114C5A]">Opération réussie</h2>
     </div>
     <div class="text-[#114C5A] flex justify-center rounded-lg">
-      <span >Votre cours a été acheté</span>
+      <span>Votre cours a été acheté</span>
     </div>
-      <div class="flex justify-center mt-5">
-        <button routerLink="/core/apprenant/list" routerLinkActive="router-active"
-         class="bg-[#F9BD4F] w-[90%] h-16 rounded-lg text-white">Consulter votre cours</button>
-      </div>
+    <div class="flex justify-center mt-5">
+      <button routerLink="/core/apprenant/list" routerLinkActive="router-active"
+        class="bg-[#F9BD4F] w-[90%] h-16 rounded-lg text-white">Consulter votre cours</button>
+    </div>
   </div>
+</div>
+
+<div *ngIf="dispalyChap" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl mx-4">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center p-4 border-b">
+      <h2 class="text-xl font-semibold text-[#114C5A]">La liste des chapitres du parcours {{ nomParcour }}</h2>
+      <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <!-- Modal Body -->
+    <div class="p-4">
+      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div *ngFor="let chap of chapitres" (click)="displayContenu(chap.id)" class="bg-[#D9E8E3] rounded-lg shadow p-4 cursor-pointer flex items-center hover:bg-[#c0d6cd] transition">
+          <div class="flex items-center">
+            <span class="w-10 h-10 rounded-full bg-[#114C5A] flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 8V7a6 6 0 1112 0v1h2a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V9a1 1 0 011-1h1z"></path>
+              </svg>
+            </span>
+            <span class="text-[#114C5A] font-medium">{{ chap.nom_chapitre }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Footer -->
+    <div class="flex justify-end p-4 border-t">
+      <button (click)="closeModal()" class="px-4 py-2 bg-[#114C5A] text-white rounded hover:bg-[#0e3a44] transition">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour afficher les contenus d'un chapitre -->
+<div *ngIf="selectedChapitre" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl">
+    <!-- Header -->
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h2 class="text-2xl font-bold text-gray-800">Contenus de : {{ selectedChapitre.nom_chapitre }}</h2>
+      <button (click)="closeModalContenuChapitre()" class="text-gray-500 hover:text-red-500 transition">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M6.225 4.811a.75.75 0 1 1 1.06 1.061L7.06 6.06 12 11l4.94-4.94a.75.75 0 1 1 1.06 1.06L13.06 12l4.94 4.94a.75.75 0 0 1-1.06 1.06L12 13.06l-4.94 4.94a.75.75 0 1 1-1.06-1.06L10.94 12 6 7.06a.75.75 0 0 1 0-1.06Z">
+          </path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Liste des contenus -->
+    <div class="px-6 py-4 space-y-4">
+      <div *ngFor="let contenu of contenus"
+        class="flex items-center gap-4 p-4 bg-gray-100 rounded-lg shadow-sm hover:bg-gray-200 transition">
+        <ng-container *ngIf="isVideo(contenu.file_path); else documentIcon">
+          <!-- Icône Vidéo -->
+          <svg class="w-12 h-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            fill="currentColor">
+            <path d="M9 6v12l10.5-6L9 6zm1.5 3.87l5.19 3.33-5.19 3.33V9.87z">
+            </path>
+          </svg>
+        </ng-container>
+        <ng-template #documentIcon>
+          <!-- Icône Document -->
+          <svg class="w-12 h-12 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            fill="currentColor">
+            <path
+              d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.828a2 2 0 0 0-.586-1.414l-4.828-4.828A2 2 0 0 0 13.172 2H6zm0 2h7v3a2 2 0 0 0 2 2h3v11H6V4zm9 3h2.172L15 4.828V7z">
+            </path>
+          </svg>
+        </ng-template>
+
+        <div>
+          <h3 (click)="afficherContenu(contenu)" class="text-lg font-medium text-gray-800">{{ contenu.libelle }}</h3>
+          <!-- <button (click)="afficherContenu(contenu)" class="text-blue-600 hover:underline">Voir contenu</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>

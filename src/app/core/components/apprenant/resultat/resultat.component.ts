@@ -42,7 +42,7 @@ export class ResultatComponent implements OnInit {
 
   openModal(test: Test) {
     this.selectedTest = test;
-    console.log(this.selectedTest);
+   // console.log(this.selectedTest);
 
   }
   // Fonction pour fermer le modal
@@ -104,15 +104,16 @@ export class ResultatComponent implements OnInit {
     return colorMap[colorName.toLowerCase()] || '#E5E7EB'; // Gris clair par défaut si la couleur n'est pas trouvée
   }
 
-
-
   getDataResultatsTest() {
     this.service.url = `${environment.apiBaseUrl}question1/${this.id}`;
     this.service.all().subscribe({
       next: (rep) => {
         this.tests = rep.data.tests;
-        console.log( this.tests);
 
+        // Trier les tests par ordre décroissant (plus récent au plus ancien)
+        this.tests.sort((a, b) => {
+          return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+        });
       }
     })
   }

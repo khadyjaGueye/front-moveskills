@@ -21,6 +21,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ListParcourComponent implements OnInit {
 
+  url: string = "https://moovskil.tucamarketing.com/storage/";
   selectedSkills: Competence[] = [];// Liste des compétences sélectionnées
   parcours: Parcour[] = [];
   chapitres: Chapitre[] = [];
@@ -56,8 +57,10 @@ export class ListParcourComponent implements OnInit {
     info: {
       nom_parcour: '',
       objectif: '',
-      status_type: 1,
-      status_audiance: 1,
+      image:'',
+      description:'',
+      status_type: '',
+      status_audiance: '',
       duree: 0,
       competences: [], // Modifié pour stocker les compétences sélectionnées
       status_disponibilite: 20,
@@ -65,7 +68,7 @@ export class ListParcourComponent implements OnInit {
     },
     content: {
       videos: [],
-      document: [],
+      documents: [],
     },
     summary: {
       confirmation: false
@@ -76,6 +79,7 @@ export class ListParcourComponent implements OnInit {
   selectedDocuments: File[] = []; // Tableau pour stocker l
   idParcour: number = 1; // Variable pour stocker l'ID du parcours créé .
   nomParcour: string = ""; // Pour garder le parcour cliqué
+
   constructor(private service: FormateurService, private sanitizer: DomSanitizer, private fb: FormBuilder) {
     this.formDataChap = fb.group({
       nom_chapitre: [''],
@@ -111,6 +115,12 @@ export class ListParcourComponent implements OnInit {
     this.openModal = true;
     this.savedData = "";
   }
+
+  openUpdate(parcour:Parcour){
+    console.log(parcour);
+
+  }
+
   closeModal() {
     this.openModal = false;
   }
@@ -163,12 +173,13 @@ export class ListParcourComponent implements OnInit {
       nom_parcour: this.formData.info.nom_parcour,
       prix: this.formData.info.prix,
       duree: this.formData.info.duree,
+      image: this.formData.info.image,
       status_type: 1, // Supposons que 'Gratuit' = 0 et 'Premium' = 1
       status_audiance: 1,
       status_disponibilite: 20, // Valeur d'exemple, ajustez selon vos besoins
       competences: this.selectedSkills.map(skill => skill.id)
     };
-    //console.log(this.savedData);
+    console.log(this.savedData);
 
     // Appeler le service pour envoyer les données
     this.service.store(this.savedData).subscribe({
@@ -191,7 +202,7 @@ export class ListParcourComponent implements OnInit {
         } else {
           Swal.fire('Erreur', 'Échec de la création du parcours.', 'error');
         }
-        this.savedData.reset();
+        //this.savedData.reset();
       }
     });
   }
@@ -329,7 +340,7 @@ export class ListParcourComponent implements OnInit {
     this.service.all().subscribe(resp => {
       this.parcours = resp.data.parcours;
       this.isLoading = false; // Données chargées, on masque le spinner
-      // console.log(this.parcours);
+       //console.log(this.parcours);
     })
   }
 
@@ -367,6 +378,8 @@ export class ListParcourComponent implements OnInit {
     this.service.all().subscribe({
       next: (response) => {
         this.chapitres = response.data.chapitres;
+        //console.log(this.chapitres);
+
         // Afficher une alerte de succès
         // Swal.fire({
         //   icon: 'success',
@@ -406,5 +419,18 @@ export class ListParcourComponent implements OnInit {
     // Stocker le nom du chapitre dans le Local Storage
     localStorage.setItem('nomChapitre', nomChapitre);
   }
+
+  onPhotoSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.formData.info.image = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+
 
 }

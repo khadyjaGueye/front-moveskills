@@ -55,38 +55,140 @@
 
 
 
-<div class="container mx-auto p-6 space-y-8">
-  <h1 class="text-2xl font-bold text-center text-gray-800">Auto-Évaluation - Les 21 Lois Irréfutables du Leadership</h1>
+<div
+  class="container mx-auto px-4 py-8 space-y-12 font-inter bg-gradient-to-r from-blue-100 via-white to-green-100 min-h-screen">
+  <!-- Titre -->
+  <h1 class="text-3xl sm:text-4xl font-semibold text-center text-gray-800">
+    Auto-Évaluation - Les 21 Lois Irréfutables du Leadership
+  </h1>
+  <p class="text-center text-gray-600 text-sm sm:text-base">
+    Lire chaque phrase ci-dessous et vous autoévaluer, en utilisant la notation suivante :
+    <span class="font-semibold">Jamais (0) Rarement (1) Occasionnellement (2) Toujours (3)</span>
+  </p>
 
-  <div *ngFor="let law of laws" class="bg-white shadow rounded-lg p-6 space-y-4">
-    <h2 class="text-xl font-semibold text-gray-700">{{ law.id }}. {{ law.title }}</h2>
-    <p class="text-gray-600">{{ law.description }}</p>
+  <!-- Affiche les questions d'une seule loi -->
 
-    <div *ngFor="let question of law.questions; let i = index" class="space-y-2">
-      <p class="text-gray-800">{{ question }}</p>
-      <div class="flex items-center space-x-4">
-        <label *ngFor="let score of [0, 1, 2, 3]" class="flex items-center space-x-2">
-          <input
-            type="radio"
-            [name]="'law-' + law.id + '-question-' + i"
-            [value]="score"
-            [(ngModel)]="law.scores[i]"
-            (change)="updateTotal(law)"
-            class="form-radio text-blue-600"
-          />
-          <span>{{ score }}</span>
-        </label>
+    <div *ngIf="currentLawIndex < lois.length" class="bg-white shadow-md rounded-lg p-6 sm:p-8 space-y-6">
+      <!-- Titre de la loi -->
+      <h2 class="text-2xl sm:text-3xl text-[#114C5A] font-semibold">
+        {{ lois[currentLawIndex].id }}. {{ lois[currentLawIndex].title }}
+      </h2>
+      <p class="text-gray-700">{{ lois[currentLawIndex].description }}</p>
+
+      <!-- Questions -->
+      <div *ngFor="let loi of lois[currentLawIndex].questions; let i = index"
+        class="bg-gray-50 border border-gray-200 rounded-lg shadow p-4 sm:p-6">
+        <p class="text-[#EF7743] text-sm sm:text-base font-medium mb-4">
+          {{ i + 1 }}. {{ loi.question }}
+        </p>
+        <div class="flex flex-wrap items-center  gap-4">
+          <label *ngFor="let option of evaluationOptions" class="flex items-center space-x-2">
+            <input type="radio" [name]="'law-' + currentLawIndex + '-question-' + i" [value]="option.value"
+              [(ngModel)]="lois[currentLawIndex].scores[i]" class="form-radio text-blue-600 focus:ring-blue-400" />
+            <span class="text-gray-700 items-center">{{ option.label }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Total pour la loi -->
+      <div class="mt-6 flex justify-end bg-gray-50 border border-gray-200 rounded-lg shadow p-4 sm:w-1/3">
+        <p class="text-gray-800 font-semibold">Total pour cette loi :
+          <span class="text-[#114C5A] font-bold">{{ calculateLawTotal(lois[currentLawIndex]) }}</span>
+        </p>
+      </div>
+
+      <!-- Boutons -->
+      <div class="flex flex-col sm:flex-row justify-between mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
+        <button *ngIf="currentLawIndex > 0" (click)="goToPreviousLaw()"
+          class="w-full sm:w-auto px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition">
+          Précédent
+        </button>
+        <button *ngIf="currentLawIndex < lois.length - 1" (click)="goToNextLaw()"
+          [disabled]="!isLawComplete(lois[currentLawIndex])"
+          class="w-full sm:w-auto px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition disabled:opacity-50">
+          Suivant
+        </button>
+        <button *ngIf="currentLawIndex === lois.length - 1 && isLawComplete(lois[currentLawIndex])"
+          (click)="showResults()"
+          class="w-full sm:w-auto px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition">
+          Voir les résultats
+        </button>
       </div>
     </div>
+  
 
-    <div class="mt-4">
-      <p class="font-bold">Total : {{ law.total }}</p>
-      <p class="text-sm text-gray-600 italic">{{ getEvaluationMessage(law.total) }}</p>
-    </div>
+  <!-- Résultat final -->
+  <div *ngIf="currentLawIndex === lois.length" class="bg-gray-100 shadow rounded-lg p-6 sm:p-8 text-center">
+    <!-- <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800">Résultat Final</h2>
+    <p class="text-4xl sm:text-5xl font-bold text-[#114C5A] mt-4">Score Total : {{ overallTotal }}</p> -->
+    <div
+  class="container mx-auto px-6 py-12 space-y-8 font-inter bg-gradient-to-r from-green-50 via-white to-blue-50 min-h-screen">
+  <!-- Titre principal -->
+  <h1 class="text-3xl sm:text-4xl font-bold text-center text-gray-800">
+    Résultats de l'Auto-Évaluation
+  </h1>
+  <p class="text-center text-gray-600 text-base sm:text-lg">
+    Maintenant que vous avez terminé cette auto-évaluation, passez en revue chacun des lois irréfutables du leadership et notez vos forces et vos faiblesses selon les instructions ci-dessous.
+  </p>
+
+  <!-- Instructions -->
+  <div class="bg-white shadow-lg rounded-lg p-6 sm:p-8 space-y-4">
+    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Interprétation des Résultats</h2>
+    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+      <li>
+        <span class="font-bold text-green-600">Total de 8-9 :</span>
+        Cette loi est votre terrain de force et d’excellence. Utilisez vos aptitudes et compétences développées dans cette loi, et coachez ou mentorez d'autres personnes.
+      </li>
+      <li>
+        <span class="font-bold text-yellow-600">Total de 5-7 :</span>
+        Identifiez cette loi comme une opportunité d’apprentissage et de développement personnel. Vous avez du potentiel pour en faire une force.
+      </li>
+      <li>
+        <span class="font-bold text-red-600">Total de 0-4 :</span>
+        Cette loi est une insuffisance claire. Recrutez des membres de votre équipe ou sélectionnez des partenaires plus forts dans ce domaine ; apprenez auprès d’eux.
+      </li>
+    </ul>
   </div>
 
-  <div class="bg-gray-100 shadow rounded-lg p-6 text-center">
-    <h2 class="text-lg font-semibold text-gray-800">Résultat Final</h2>
-    <p class="text-2xl font-bold text-blue-600">{{ overallTotal }}</p>
+  <!-- Tableau des résultats -->
+  <div class="bg-white shadow-lg rounded-lg p-6 sm:p-8 space-y-6">
+    <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 text-center">Résumé des Résultats</h2>
+    <table class="w-full table-auto border-collapse border border-gray-200 text-gray-700 text-sm sm:text-base">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-200 p-4 text-left">#</th>
+          <th class="border border-gray-200 p-4 text-left">Titre de la Loi</th>
+          <th class="border border-gray-200 p-4 text-left">Description</th>
+          <th class="border border-gray-200 p-4 text-center">Score</th>
+          <th class="border border-gray-200 p-4 text-center">Interprétation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let loi of lois; let i = index" [class]="getRowClass(calculateLawTotal(loi))">
+          <td class="border border-gray-200 p-4">{{ i + 1 }}</td>
+          <td class="border border-gray-200 p-4">{{ loi.title }}</td>
+          <td class="border border-gray-200 p-4">{{ loi.description }}</td>
+          <td class="border border-gray-200 p-4 text-center">
+            {{ calculateLawTotal(loi) }}
+          </td>
+          <td class="border border-gray-200 p-4 text-center">
+            {{ getInterpretation(calculateLawTotal(loi)) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Bouton de fin -->
+  <div class="flex justify-center">
+    <button
+      class="px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition font-medium text-lg">
+      Terminer et Enregistrer
+    </button>
+  </div>
+</div>
+
+
+    <button (click)="sendResultat()"  class="w-full sm:w-auto px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition"></button>
   </div>
 </div>

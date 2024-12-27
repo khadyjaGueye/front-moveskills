@@ -1,8 +1,8 @@
-<div class="flex h-full font-inter" style="background-color: rgba(239, 239, 239, 1);">
-  <!-- Logo Section -->
+<div class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden w-full h-full">
   <!-- Section Formulaire -->
-  <div class="w-full lg:w-3/5 p-12 items-center">
-    <div class="flex justify-center items-center ">
+  <!-- Logo Section -->
+  <div class="md:w-5/12 p-8">
+    <div class="mb-20">
       <svg width="190" height="58" viewBox="0 0 190 58" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M24.4791 0.0919838C22.8032 0.302395 20.1562 0.933628 18.8613 1.45009C12.8626 3.76462 8.25416 7.37987 4.92158 12.3915C0.160752 19.5455 -1.17228 27.7707 1.03674 36.4549C2.27456 41.3709 5.93087 47.1094 9.9871 50.4951C14.5575 54.3208 19.2421 56.3484 25.2408 57.0944C28.9161 57.5534 33.4294 57.0752 37.0476 55.8319C46.8168 52.4653 53.8819 44.2784 55.9386 33.9682C56.4908 31.1372 56.4908 25.9152 55.9195 23.1416C53.901 13.1757 47.312 5.2375 38.1521 1.71789C34.9529 0.493675 32.82 0.0919838 29.0494 0.0154686C27.2213 -0.022789 25.1646 0.0154686 24.4791 0.0919838ZM31.6584 1.64138C38.7044 2.57866 45.2172 6.42345 49.4448 12.1619C50.416 13.5009 50.7588 14.0365 51.9014 16.0833C52.8155 17.7092 54.0723 21.4583 54.4532 23.6772C55.0055 26.8334 54.9293 31.3668 54.2628 34.4464C52.3965 43.0542 46.3598 50.2847 38.1902 53.7469C32.7629 56.0232 26.0596 56.3292 20.3847 54.512C16.0048 53.0965 12.8055 51.1263 9.53006 47.8363C5.43575 43.7237 3.18864 39.4772 1.96987 33.5857C1.20813 29.913 1.43665 24.7866 2.56021 20.961C5.18818 11.875 12.577 4.56801 21.4321 2.29174C24.5362 1.48835 28.5734 1.23968 31.6584 1.64138Z"
@@ -31,7 +31,7 @@
       </svg>
     </div>
 
-    <h2 class="text-3xl font-bold  text-[#114C5A] mb-6">Inscription</h2>
+    <h2 class="text-3xl  font-bold  text-[#114C5A] mb-6">Inscription</h2>
 
     <form [formGroup]="inscriptionForm" (ngSubmit)="onSubmit()" class="space-y-6">
       <!-- Champ Nom -->
@@ -73,7 +73,7 @@
 
         <!-- Champ Confirmation du Mot de passe -->
         <div class="w-1/2">
-          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirmez le mot de passe</label>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirmez pass word</label>
           <input id="confirmPassword" type="password" formControlName="password_confirmation"
             class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
             placeholder="Confirmez votre mot de passe" />
@@ -99,10 +99,7 @@
           <input id="phone" type="text" formControlName="phoneNumber"
             class="mt-1 block w-full p-3 rounded-md border border-gray-300 shadow-sm focus:border-[#114C5A] focus:ring-[#114C5A] sm:text-sm"
             placeholder="Entrez votre numéro de téléphone" />
-          <!-- <div *ngIf="inscriptionForm.get('phoneNumber')?.invalid && inscriptionForm.get('phoneNumber')?.touched"
-            class="text-red-500 text-sm mt-1">
-            Veuillez entrer un numéro de téléphone valide (9 chiffres).
-          </div> -->
+
         </div>
       </div>
 
@@ -123,7 +120,7 @@
   </div>
 
   <!-- Section Image -->
-  <div class=" lg:w-2/5 h-full">
-    <img src="assets/images/slider.png" class="h-full w-full bg-cover bg-center rounded-lg object-contain" alt="">
+  <div class="hidden md:block md:w-7/12">
+    <img src="assets/images/slider.png" class="w-full h-full object-cover" alt="">
   </div>
 </div>

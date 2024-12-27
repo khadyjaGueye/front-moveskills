@@ -61,7 +61,7 @@ export class ListeTestComponent implements OnInit {
     this.service.all().subscribe({
       next: (resp) => {
         this.userDetails = resp.data.userDetails;
-        console.log(this.userDetails);
+        //console.log(this.userDetails);
         this.report = resp.data.report;
         this.isLoading = false; // Le chargement est terminé
         this.initItems();
@@ -193,4 +193,11 @@ export class ListeTestComponent implements OnInit {
     });
   }
 
+
+  get filteredApprenant() {
+    return this.userDetails.filter(user =>
+      user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 }
