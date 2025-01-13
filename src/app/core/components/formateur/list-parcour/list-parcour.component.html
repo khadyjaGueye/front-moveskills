@@ -15,8 +15,7 @@
   </div>
 
 
-  <div>
-    <span>Les parcours</span>
+  <div class="flex justify-end">
     <form class="max-w-md mx-auto mb-4">
       <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
       <div class="relative">
@@ -34,94 +33,46 @@
     </form>
   </div>
 
-
-  <div class="mt-20">
-    <div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md w-full">
-      <div class="overflow-x-auto w-full">
-        <table class="w-full min-w-[540px]" data-tab-for="order" data-page="active">
-          <thead>
-            <tr>
-              <!-- <th
-                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
-                Images</th> -->
-              <th
-                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
-                Parcours</th>
-              <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
-                Type</th>
-              <th
-                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
-                Prix(fcfa)</th>
-              <th
-                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
-                Apprenant</th>
-              <th
-                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
-                Durée</th>
-                <th
-                class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md">
-                Status</th>
-              <th class="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
-                Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let parcour of filteredParcours | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-              <!-- <td class="py-2 px-4 border-b border-b-gray-50">
-                <img [src]="url+parcour.image" alt="{{ parcour.nom_parcour }}"
-                  class="w-16 h-16 object-cover rounded-md">
-              </td> -->
-              <td class="py-2 px-4 border-b border-b-gray-50">{{parcour.nom_parcour}}</td>
-              <td class="py-2 px-4 border-b border-b-gray-50">
-                <span class="text-[13px] font-medium text-gray-400">
-                  {{ parcour.status_audiance === 0 ? 'Gratuit' : 'Premium' }}
-                </span>
-              </td>
-
-              <td class="py-2 px-4 border-b border-b-gray-50">
-                <span
-                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.prix}}</span>
-              </td>
-              <td class="py-2 px-4 border-b border-b-gray-50">
-                <span
-                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">90</span>
-              </td>
-              <td class="py-2 px-4 border-b border-b-gray-50">
-                <span
-                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.duree}}jours</span>
-              </td>
-              <td class="py-2 px-4 border-b border-b-gray-50">
-                <span
-                  class="inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none">{{parcour.status_disponibilite}}</span>
-              </td>
-              <td class="py-2 px-4 border-b border-b-gray-50">
-                <div class="flex items-center space-x-2">
-                  <svg (click)="openModalChapitre(parcour.id,parcour.nom_parcour)" class="px-1 py-1 w-10 text-[#F9BD4F]"
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                      d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H7V13H11V17H13V13H17V11H13V7H11V11Z">
-                    </path>
-                  </svg>
-                  <a href="">
-                    <svg (click)="openUpdate(parcour)" class="px-1 py-1 w-10 text-[#F9BD4F]"
-                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                      <path
-                        d="M16.6256 3.1285L9.29145 10.4626L9.29886 14.7098L13.537 14.7024L20.8682 7.37114C21.5912 8.75438 22 10.3278 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C13.6689 1.9967 15.2423 2.40553 16.6256 3.1285ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
-                      </path>
-                    </svg>
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <!-- Add more rows as needed -->
-          </tbody>
-        </table>
-        <div class="mt-5">
-          <pagination-controls (pageChange)="page = $event"></pagination-controls>
-        </div>
-      </div>
-    </div>
+ <!-- Tableau -->
+ <div  class="bg-white shadow rounded p-4 w-full">
+  <h2 class="text-lg font-bold text-gray-700 mb-4">Liste des parcours</h2>
+  <table class="min-w-full table-auto">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Parcours</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Formateur</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Type</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Prix(fcfa)</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Apprenants</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Durée</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Publier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let parcour of filteredParcours | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.nom_parcour }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.user.name }}</td>
+          <td class="px-6 py-3 border-b" [ngClass]="{
+            'bg-green-200': parcour.status_type === 1,
+            'bg-red-200': parcour.status_type === 0,
+          }" > {{ parcour.status_type === 0 ? 'Gratuit' : 'Premium' }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.prix }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]"> 90</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{parcour.duree}}</td>
+        <td class="px-6 py-3 border-b" [ngClass]="{
+          'bg-green-200': parcour.status_audiance === 1,
+          'bg-red-200': parcour.status_audiance === 0
+        }"
+        >{{ parcour.status_audiance === 0 ? 'Publier' : 'Non publier' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="mt-5">
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
+</div>
+
+
 </div>
 
 <!-- Modal pour afficher les chapitres -->

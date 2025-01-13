@@ -1,66 +1,84 @@
 <div
-class="container mx-auto px-6 py-12 space-y-8 font-inter bg-gradient-to-r from-green-50 via-white to-blue-50 min-h-screen">
-<!-- Titre principal -->
-<h1 class="text-3xl sm:text-4xl font-bold text-center text-gray-800">
-  Résultats de l'Auto-Évaluation
-</h1>
-<p class="text-center text-gray-600 text-base sm:text-lg">
-  Maintenant que vous avez terminé cette auto-évaluation, passez en revue chacun des lois irréfutables du leadership et notez vos forces et vos faiblesses selon les instructions ci-dessous.
-</p>
+  class="container mx-auto px-6 py-12 space-y-8 font-inter bg-gradient-to-r from-green-50 via-white to-blue-50 min-h-screen">
+  <!-- Titre principal -->
+  <h1 class="text-3xl sm:text-4xl font-bold text-center text-gray-800">
+    Résultats de l'Auto-Évaluation
+  </h1>
+  <p class="text-center text-gray-600 text-base sm:text-lg">
+    Maintenant que vous avez terminé cette auto-évaluation, passez en revue chacun des lois irréfutables du leadership
+    et notez vos forces et vos faiblesses selon les instructions ci-dessous.
+  </p>
 
-<!-- Instructions -->
-<div class="bg-white shadow-lg rounded-lg p-6 sm:p-8 space-y-4">
-  <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Interprétation des Résultats</h2>
-  <ul class="list-disc pl-6 text-gray-700 space-y-2">
-    <li>
-      <span class="font-bold text-green-600">Total de 8-9 :</span>
-      Cette loi est votre terrain de force et d’excellence. Utilisez vos aptitudes et compétences développées dans cette loi, et coachez ou mentorez d'autres personnes.
-    </li>
-    <li>
-      <span class="font-bold text-yellow-600">Total de 5-7 :</span>
-      Identifiez cette loi comme une opportunité d’apprentissage et de développement personnel. Vous avez du potentiel pour en faire une force.
-    </li>
-    <li>
-      <span class="font-bold text-red-600">Total de 0-4 :</span>
-      Cette loi est une insuffisance claire. Recrutez des membres de votre équipe ou sélectionnez des partenaires plus forts dans ce domaine ; apprenez auprès d’eux.
-    </li>
-  </ul>
-</div>
+  <!-- Instructions -->
+  <div class="bg-white shadow-lg rounded-lg p-6 sm:p-8 space-y-4">
+    <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Interprétation des Résultats</h2>
+    <ul class="list-disc pl-6 text-gray-700 space-y-2">
+      <li>
+        <span class="font-bold text-green-600">Total de 8-9 :</span>
+        Cette loi est votre terrain de force et d’excellence. Utilisez vos aptitudes et compétences développées dans
+        cette loi, et coachez ou mentorez d'autres personnes.
+      </li>
+      <li>
+        <span class="font-bold text-yellow-600">Total de 5-7 :</span>
+        Identifiez cette loi comme une opportunité d’apprentissage et de développement personnel. Vous avez du potentiel
+        pour en faire une force.
+      </li>
+      <li>
+        <span class="font-bold text-red-600">Total de 0-4 :</span>
+        Cette loi est une insuffisance claire. Recrutez des membres de votre équipe ou sélectionnez des partenaires plus
+        forts dans ce domaine ; apprenez auprès d’eux.
+      </li>
+    </ul>
+  </div>
 
-<!-- Tableau des résultats -->
-<div class="bg-white shadow-lg rounded-lg p-6 sm:p-8 space-y-6">
-  <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 text-center">Résumé des Résultats</h2>
-  <table class="w-full table-auto border-collapse border border-gray-200 text-gray-700 text-sm sm:text-base">
-    <thead>
-      <tr class="bg-gray-100">
-        <th class="border border-gray-200 p-4 text-left">#</th>
-        <th class="border border-gray-200 p-4 text-left">Titre de la Loi</th>
-        <th class="border border-gray-200 p-4 text-left">Description</th>
-        <th class="border border-gray-200 p-4 text-center">Score</th>
-        <th class="border border-gray-200 p-4 text-center">Interprétation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let loi of resutats; let i = index" [class]="getRowClass(calculateLawTotal(loi.lois))">
-        <td class="border border-gray-200 p-4">{{ i + 1 }}</td>
-        <td class="border border-gray-200 p-4">{{ loi.lois }}</td>
-        <td class="border border-gray-200 p-4">{{ loi.description }}</td>
-        <td class="border border-gray-200 p-4 text-center">
-          {{ calculateLawTotal(loi.lois) }}
-        </td>
-        <td class="border border-gray-200 p-4 text-center">
-          {{ getInterpretation(calculateLawTotal(loi.lois)) }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <!-- Tableau des résultats -->
+  <div class="bg-white shadow-lg rounded-lg p-6 sm:p-8 space-y-6">
+    <h2 class="text-2xl sm:text-3xl font-semibold text-gray-800 text-center">Résumé des Résultats</h2>
+    <table class="w-full table-auto border-collapse border border-gray-200 text-gray-700 text-sm sm:text-base">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-200 p-4 text-left">#</th>
+          <th class="border border-gray-200 p-4 text-left">Loi</th>
+          <th class="border border-gray-200 p-4 text-left">Description</th>
+          <th class="border border-gray-200 p-4 text-center">Score</th>
+          <th class="border border-gray-200 p-4 text-center">Interprétation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let resultat of paginatedResultats; let i = index">
+          <tr *ngFor="let evaluation of resultat.lois; let j = index" [ngClass]="getRowClass(evaluation.total)">
+            <td class="border border-gray-200 p-4">{{ (currentPage - 1) * itemsPerPage + i + 1 }}.{{ j + 1 }}</td>
+            <td class="border border-gray-200 p-4">{{ evaluation.title }}</td>
+            <td class="border border-gray-200 p-4">{{ evaluation.description }}</td>
+            <td class="border border-gray-200 p-4 text-center">{{ evaluation.total }}</td>
+            <td class="border border-gray-200 p-4 text-center">{{ evaluation.evaluation }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <!-- Pagination controls -->
+    <div class="pagination flex justify-center mt-4">
+      <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300" [disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)">
+        Précédent
+      </button>
+      <button *ngFor="let page of [].constructor(totalPages); let pageIndex = index" class="px-4 py-2 mx-1" [ngClass]="{
+      'bg-[#114C5A] text-white': currentPage === pageIndex + 1,
+      'bg-gray-200 text-gray-700': currentPage !== pageIndex + 1
+    }" (click)="changePage(pageIndex + 1)">
+        {{ pageIndex + 1 }}
+      </button>
+      <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+        [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+        Suivant
+      </button>
+    </div>
+  </div>
 
-<!-- Bouton de fin -->
-<div class="flex justify-center">
-  <button
-    class="px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition font-medium text-lg">
-    Terminer et Enregistrer
-  </button>
-</div>
+  <!-- Bouton de fin -->
+  <!-- <div class="flex justify-center">
+    <button class="px-6 py-3 bg-[#114C5A] text-white rounded-md hover:bg-[#EF7743] transition font-medium text-lg">
+      Terminer et Enregistrer
+    </button>
+  </div> -->
 </div>

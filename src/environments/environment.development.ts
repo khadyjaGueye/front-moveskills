@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: "https://backend-moveskills.dev-illimitis.com/api/",
-  apiUrlpathvideos: "https://moovskil.tucamarketing.com/storage/videos/",
-  apiUrlpathdocuments: "https://moovskil.tucamarketing.com/storage/documents/",
+  apiUrlpathvideos: "https://backend-moveskills.dev-illimitis.com/storage/",
+  apiUrlpathdocuments: "https://backend-moveskills.dev-illimitis.com/storage/",
 
 };

@@ -33,4 +33,9 @@ export class ParcourComponent implements OnInit {
     })
   }
 
+  publierParcour(){
+   // this.service.url = environment.apiBaseUrl + "publier";
+   
+  }
+
 }

@@ -436,7 +436,9 @@ export class FormComponent implements OnInit {
       case 'NRC7470JF':
         return 'NCR';
       case 'PNUD BURUNDI2084JV':
-        return 'PNUD'
+        return 'PNUD';
+        case 'KFW4303YV':
+          return 'KFW';
       default:
         return 'Code inconnu';
     }

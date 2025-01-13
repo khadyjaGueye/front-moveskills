@@ -58,7 +58,7 @@
 </div>
 
 <!-- Tableau des données importées -->
-<div *ngIf="data.length > 0" class="overflow-x-auto mt-5">
+<div *ngIf="file.length > 0" class="overflow-x-auto mt-5">
   <table class="table-auto w-full text-left border-collapse border border-gray-200">
     <thead class="bg-gray-100">
       <tr>
@@ -69,7 +69,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data">
+      <tr *ngFor="let item of file">
         <td class="border border-gray-300 px-4 py-2">{{ item.name }}</td>
         <td class="border border-gray-300 px-4 py-2">{{ item.email }}</td>
         <td class="border border-gray-300 px-4 py-2">{{ item.password }}</td>

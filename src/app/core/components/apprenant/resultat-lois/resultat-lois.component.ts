@@ -13,7 +13,9 @@ import { environment } from '../../../../../environments/environment.development
 })
 export class ResultatLoisComponent implements OnInit {
 
-  resutats: ResultatLois[] = []
+  resultats: ResultatLois[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 1;
 
   constructor(private service: ApprenantService) {
 
@@ -26,11 +28,22 @@ export class ResultatLoisComponent implements OnInit {
     this.service.url = environment.apiBaseUrl + "loi/resultat";
     this.service.all().subscribe({
       next: (resp) => {
-        this.resutats = resp.data.resultats;
-        console.log(resp);
+        this.resultats = resp.data.resultats
+        //console.log(this.resultats);
+
+        // this.resultats = resp.data.resultats.sort((a: any, b: any) => {
+        //   console.log(this.resultats);
+
+        //   // Remplacez 'created_at' par le champ pertinent
+        //   return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        // });
+      },
+      error: (err) => {
+        console.error("Erreur lors de la récupération des résultats :", err);
       }
-    })
+    });
   }
+
 
   // Classe de style pour chaque ligne
   getRowClass(score: number): string {
@@ -43,11 +56,6 @@ export class ResultatLoisComponent implements OnInit {
     }
   }
 
-  // Calcule le total des réponses pour une loi
-  calculateLawTotal(law: any): number {
-    return law.scores.reduce((acc: number, score: number | null) => acc + (score || 0), 0);
-  }
-
   // Obtenir l'interprétation en fonction du score
   getInterpretation(score: number): string {
     if (score >= 8) {
@@ -58,4 +66,22 @@ export class ResultatLoisComponent implements OnInit {
       return 'Insuffisance Claire';
     }
   }
+
+  // Méthode pour récupérer les données à afficher pour la page actuelle
+  get paginatedResultats() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.resultats.slice(startIndex, endIndex);
+  }
+
+  // Méthode pour changer de page
+  changePage(page: number) {
+    this.currentPage = page;
+  }
+
+  // Méthode pour calculer le nombre total de pages
+  get totalPages() {
+    return Math.ceil(this.resultats.length / this.itemsPerPage);
+  }
+
 }

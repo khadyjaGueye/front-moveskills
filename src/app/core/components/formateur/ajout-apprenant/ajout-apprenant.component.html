@@ -1,7 +1,7 @@
 <div class="container mx-auto p-4">
   <!-- Section Ajouter un Apprenant -->
   <div class="bg-[#114C5A] shadow-md rounded-lg p-6 mb-6">
-    <h2 class="text-xl font-inter text-white mb-4">Ajouter les informations d'un partisant</h2>
+    <h2 class="text-xl font-inter text-white mb-4">Ajouter les informations d'un participant </h2>
     <form [formGroup]="apprenantForm" (ngSubmit)="addApprenant()">
       <div class="flex flex-col lg:flex-row gap-6 items-stretch">
         <!-- Section Input -->
@@ -69,24 +69,5 @@
         </div>
       </div>
     </form>
-
   </div>
-
-
-  <!-- Section Liste des Chapitres -->
-  <!-- <div class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-xl font-bold mb-4">Liste des Chapitres</h2>
-    <div *ngFor="let chapitre of chapitres" class="border-b pb-4 mb-4">
-      <h3 class="text-lg font-semibold">{{ chapitre.nom_chapitre }}</h3>
-      <p class="text-gray-600">Parcours : {{ chapitre.parcour_id }}</p>
-      <div class="flex gap-2 mt-2">
-        <button (click)="editChapitre(chapitre)" class="text-blue-500 hover:underline">
-          Éditer
-        </button>
-        <button (click)="deleteChapitre(chapitre.id)" class="text-red-500 hover:underline">
-          Supprimer
-        </button>
-      </div>
-    </div>
-  </div> -->
 </div>

@@ -1,20 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import ApexCharts from 'apexcharts';
+import { ApprenantService } from '../../apprenant/service/apprenant.service';
+import { environment } from '../../../../../environments/environment.development';
+import { User } from '../../../../interfaces/model';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../../../shared/shared.module';
+import { ApprenantsAyantAchete, Inscrit, Vente } from '../interface/model';
 
 @Component({
   selector: 'app-tableau',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule],
   templateUrl: './tableau.component.html',
   styleUrl: './tableau.component.css'
 })
-export class TableauComponent implements OnInit{
+export class TableauComponent implements OnInit {
 
-  constructor(){
+  formateurs: User[] = [];
+  inscris: Inscrit[] = [];
+  apprenants_ayant_achete: ApprenantsAyantAchete[] = [];
+  ventes: Vente[] = [];
+  nombreInscrits: number = 0;
+  nombreApprenants: number = 0;
+  nombreFormateur: number = 0;
 
-  }
+  constructor(private service: ApprenantService) { }
 
   ngOnInit(): void {
+    this.getDataTopFormateur();
+    this.getUserInscrit();
+    this.getApprenantAyantAcheterParcours();
+    this.getDataVentes();
     setTimeout(() => {
       this.initChart();
     }, 0);
@@ -46,7 +63,7 @@ export class TableauComponent implements OnInit{
         },
       },
       xaxis: {
-        categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        categories: ['Avril', 'Mai', 'Juin', 'Jul', 'Août', 'Sep', 'Oct', 'Nov', 'Dec'],
         labels: {
           style: {
             colors: '#616161',
@@ -91,5 +108,56 @@ export class TableauComponent implements OnInit{
     chart.render();
   }
 
+  getDataVentes(): void {
+    this.service.url = environment.apiBaseUrl + "dashboard";
+    this.service.all().subscribe({
+      next: (resp) => {
+        this.ventes = resp.data.ventes;
+      }, error: (err) => {
+
+      }
+    })
+  }
+
+  getUserInscrit(): number {
+    this.service.url = environment.apiBaseUrl + "dashboard";
+    this.service.all().subscribe({
+      next: (response) => {
+        this.inscris = response.data.inscrits;
+        this.nombreInscrits = this.inscris.length; // Calcule le nombre d'inscrits
+      },
+      error: (erre) => {
+        console.error(erre);
+      }
+    });
+    return this.nombreInscrits;
+  }
+
+
+  getApprenantAyantAcheterParcours(): number {
+    this.service.url = environment.apiBaseUrl + "dashboard";
+    this.service.all().subscribe({
+      next: (response) => {
+        this.apprenants_ayant_achete = response.data.apprenants_ayant_achete;
+        this.nombreApprenants = this.apprenants_ayant_achete.length;
+      }, error: (erre) => {
+        console.error(erre);
+      }
+    });
+    return this.nombreApprenants;
+  }
+
+  getDataTopFormateur(): number {
+    this.service.url = environment.apiBaseUrl + "dashboard";
+    this.service.all().subscribe({
+      next: (resp) => {
+        this.formateurs = resp.data.formateurs;
+        this.nombreFormateur = this.formateurs.length
+      }, error: (erre) => {
+        console.error(erre);
+      }
+    });
+    return this.nombreFormateur;
+  }
 
 }

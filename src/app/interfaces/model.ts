@@ -1,4 +1,5 @@
 import { UserInfo } from "../auth/interfaces/auth-interface"
+import { ApprenantsAyantAchete, Formateur, Inscrit, TopParcour, Vente } from "../core/components/admin/interface/model"
 import { Apprenant } from "../core/components/apprenant/interface/apprenant"
 
 
@@ -30,7 +31,18 @@ export interface Data {
   lois: Lois[];
   report: Report;
   resultats: ResultatLois[]
-  affiliations:Affiliation[]
+  affiliations: Affiliation[]
+  data: ParcourAcheter[]
+  formateurs: User[];
+  // formateurs: Formateur[]
+  ventes: Vente[]
+  inscrits: Inscrit[]
+  apprenants_ayant_achete: ApprenantsAyantAchete[]
+  inscriptions_par_mois: number[]
+  months: string[]
+  parcours_par_mois: number[]
+  top_parcours: TopParcour[]
+  total_vente: number
 }
 export interface Question {
   text: string;
@@ -137,7 +149,7 @@ export interface Parcour {
   nombre_videos: number
   nombre_documents: number
   image: string;
-  description:string
+  description: string
 }
 export interface ContentItem {
   id: number
@@ -247,6 +259,7 @@ export interface Lois {
   questions: Question1[]
   scores: number[]
   total: number
+  evaluation: string
 }
 
 export interface Question1 {
@@ -265,8 +278,9 @@ export interface ResultatLois {
   id: number
   user: User
   description: string
-  lois: Lois
-  auto_evaluation: AutoEvaluation
+  lois: Lois[]
+  auto_evaluation: AutoEvaluation[]
+  created_at: string;
 }
 
 export interface Affiliation {
@@ -279,7 +293,14 @@ export interface Affiliation {
   numero: number
   password_confirmation: string
   code: string
-  isInscrit:number
-  created_at:string
+  isInscrit: number
+  created_at: string
 }
 
+
+export interface ParcourAcheter {
+  id: number
+  nom_parcour: string;
+  description: string;
+  duree: number;
+}

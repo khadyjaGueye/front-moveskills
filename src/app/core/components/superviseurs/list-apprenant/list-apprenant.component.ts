@@ -34,7 +34,7 @@ export class ListApprenantComponent implements OnInit {
   public couleurDominant: string = "";
   user_id!: number;
   codeForm: FormGroup;
-  data: { name: string; email: string; password: string; code_invitatin: string }[] = []; // Contient les données extraites
+  file: { name: string; email: string; password: string; code_invitatin: string }[] = []; // Contient les données extraites
 
   constructor(private service: SuperviseurService, private fb: FormBuilder) {
     this.codeForm = fb.group({
@@ -235,7 +235,7 @@ export class ListApprenantComponent implements OnInit {
       const jsonData = XLSX.utils.sheet_to_json(sheetData, { header: 1 }) as string[][];
 
       // Mapper les données (en supposant que le fichier contient trois colonnes : nom, email, mot de passe)
-      this.data = jsonData
+      this.file = jsonData
         .slice(1) // Ignorer l'en-tête
         .map(row => ({
           name: row[0],
@@ -244,7 +244,7 @@ export class ListApprenantComponent implements OnInit {
           code_invitatin: row[3],
         }));
 
-      console.log(this.data); // Affichez les données dans la console
+      console.log(this.file); // Affichez les données dans la console
     };
 
     reader.readAsBinaryString(target.files[0]);
@@ -253,23 +253,25 @@ export class ListApprenantComponent implements OnInit {
 
   // Soumettre les données
   submitData(): void {
-    this.service.url = environment.apiBaseUrl + "users";
-    if (this.data.length === 0) {
+       this.service.url = environment.apiBaseUrl + "users";
+    if (!this.file || this.file.length === 0) {
       console.error('Aucune donnée à soumettre');
       return;
     }
-    this.service.store(this.data).pipe(
-      tap({
-        next: (resp) => {
-          this.service.handleResponse(resp);
-        }, error: (error) => {
-          console.error("Erreur lors de l'envoi des données :", error);
-          this.service.handleResponse(error); // Gérer les erreurs
-        }
-      })
-    )
 
-    // Remplacez par une requête HTTP réelle
-    //console.log('Envoi des données à la base de données...', this.data);
+    const formData = new FormData();
+    formData.append('file', JSON.stringify(this.file)); // Convertir le tableau en chaîne JSON
+
+    this.service.store(formData).subscribe({
+      next: (resp) => {
+        console.log('Réponse réussie :', resp);
+        this.service.handleResponse(resp);
+      },
+      error: (error) => {
+        console.error("Erreur lors de l'envoi des données :", error);
+        this.service.handleResponse(error);
+      }
+    });
   }
+
 }

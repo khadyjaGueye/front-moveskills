@@ -146,8 +146,28 @@
         </a>
       </li>
 
+      <li class="mb-1 group ml-8">
+        <a routerLink="/core/apprenant/resultatLois" *ngIf="role== 'apprenant'" routerLinkActive="active-link"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M13 13C13 11.1144 13 10.1716 13.5858 9.58579C14.1716 9 15.1144 9 17 9C18.8856 9 19.8284 9 20.4142 9.58579C21 10.1716 21 11.1144 21 13C21 14.8856 21 15.8284 20.4142 16.4142C19.8284 17 18.8856 17 17 17C15.1144 17 14.1716 17 13.5858 16.4142C13 15.8284 13 14.8856 13 13Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path d="M13 13V8.86265C13 5.19569 15.5157 2.08584 19 1" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" />
+            <path
+              d="M1 13C1 11.1144 1 10.1716 1.58579 9.58579C2.17157 9 3.11438 9 5 9C6.88562 9 7.82843 9 8.41421 9.58579C9 10.1716 9 11.1144 9 13C9 14.8856 9 15.8284 8.41421 16.4142C7.82843 17 6.88562 17 5 17C3.11438 17 2.17157 17 1.58579 16.4142C1 15.8284 1 14.8856 1 13Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" />
+          </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Mes tests 21 lois</span>
+        </a>
+      </li>
+
+
       <li class="mb-1 group">
-        <a routerLink="/core/apprenant/list" *ngIf="role== 'apprenant'" routerLinkActive="router-active"
+        <a routerLink="/core/apprenant" *ngIf="role== 'apprenant'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -161,7 +181,7 @@
             <path d="M21 13C21 16.3171 18.3171 19 15 19L15.8571 17.2857" stroke="#D9E8E3" stroke-width="1.5"
               stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Mes chapitres</span>
+          <span class="font-inter font-semibold text-sm ml-2">Mes parcours</span>
         </a>
       </li>
 
@@ -180,7 +200,20 @@
             <path d="M21 13C21 16.3171 18.3171 19 15 19L15.8571 17.2857" stroke="#D9E8E3" stroke-width="1.5"
               stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Mes parcours</span>
+          <span class="font-inter font-semibold text-sm ml-2">Parcours</span>
+        </a>
+      </li>
+
+      <li class="mb-1 group">
+        <a routerLink="/core/apprenant/invitation" *ngIf="role== 'apprenant'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+
+          <span class="font-inter font-semibold text-sm ml-2">Invitation</span>
         </a>
       </li>
 
@@ -188,42 +221,45 @@
       <li class="mb-1 group">
         <a routerLink="/core/superviseur/listApprenant" *ngIf="role== 'superviseur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg class="py-2 px-4 w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M4 11.3333L0 9L12 2L24 9V17.5H22V10.1667L20 11.3333V18.0113L19.7774 18.2864C17.9457 20.5499 15.1418 22 12 22C8.85817 22 6.05429 20.5499 4.22263 18.2864L4 18.0113V11.3333ZM6 12.5V17.2917C7.46721 18.954 9.61112 20 12 20C14.3889 20 16.5328 18.954 18 17.2917V12.5L12 16L6 12.5ZM3.96927 9L12 13.6846L20.0307 9L12 4.31541L3.96927 9Z">
-            </path>
-          </svg>
-          <span class="font-inter font-semibold text-sm">List Participant</span>
+          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.001 1.5C16.7722 1.5 18.6578 1.5 19.8294 2.7448C21.001 3.98959 21.001 5.99306 21.001 10C21.001 14.0069 21.001 16.0104 19.8294 17.2552C18.6578 18.5 16.7722 18.5 13.001 18.5L9.00098 18.5C5.22974 18.5 3.34412 18.5 2.17255 17.2552C1.00098 16.0104 1.00098 14.0069 1.00098 10C1.00098 5.99306 1.00098 3.98959 2.17255 2.7448C3.34412 1.5 5.22974 1.5 9.00098 1.5L13.001 1.5Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M4.00098 13.4999C5.60963 11.3625 9.35488 11.2458 11.001 13.4999M9.25 8.25C9.25 9.2165 8.4665 10 7.5 10C6.5335 10 5.75 9.2165 5.75 8.25C5.75 7.2835 6.5335 6.5 7.5 6.5C8.4665 6.5 9.25 7.2835 9.25 8.25Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 7.5L18.001 7.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 11.5H16.001" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          <span class="font-inter font-semibold text-sm ml-2">List Participant</span>
         </a>
       </li>
 
       <li class="mb-1 group">
         <a routerLink="/core/superviseur/resultat" *ngIf="role== 'superviseur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg class=" py-2 px-4 w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 14V16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM14.5946 18.8115C14.5327 18.5511 14.5 18.2794 14.5 18C14.5 17.7207 14.5327 17.449 14.5945 17.1886L13.6029 16.6161L14.6029 14.884L15.5952 15.4569C15.9883 15.0851 16.4676 14.8034 17 14.6449V13.5H19V14.6449C19.5324 14.8034 20.0116 15.0851 20.4047 15.4569L21.3971 14.8839L22.3972 16.616L21.4055 17.1885C21.4673 17.449 21.5 17.7207 21.5 18C21.5 18.2793 21.4673 18.551 21.4055 18.8114L22.3972 19.3839L21.3972 21.116L20.4048 20.543C20.0117 20.9149 19.5325 21.1966 19.0001 21.355V22.5H17.0001V21.3551C16.4677 21.1967 15.9884 20.915 15.5953 20.5431L14.603 21.1161L13.6029 19.384L14.5946 18.8115ZM18 19.5C18.8284 19.5 19.5 18.8284 19.5 18C19.5 17.1716 18.8284 16.5 18 16.5C17.1716 16.5 16.5 17.1716 16.5 18C16.5 18.8284 17.1716 19.5 18 19.5Z">
-            </path>
-          </svg>
-          <span class="font-inter font-semibold text-sm">Résultats</span>
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 13C13 11.1144 13 10.1716 13.5858 9.58579C14.1716 9 15.1144 9 17 9C18.8856 9 19.8284 9 20.4142 9.58579C21 10.1716 21 11.1144 21 13C21 14.8856 21 15.8284 20.4142 16.4142C19.8284 17 18.8856 17 17 17C15.1144 17 14.1716 17 13.5858 16.4142C13 15.8284 13 14.8856 13 13Z" stroke="#D9E8E3" stroke-width="1.5"/>
+            <path d="M13 13V8.86265C13 5.19569 15.5157 2.08584 19 1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M1 13C1 11.1144 1 10.1716 1.58579 9.58579C2.17157 9 3.11438 9 5 9C6.88562 9 7.82843 9 8.41421 9.58579C9 10.1716 9 11.1144 9 13C9 14.8856 9 15.8284 8.41421 16.4142C7.82843 17 6.88562 17 5 17C3.11438 17 2.17157 17 1.58579 16.4142C1 15.8284 1 14.8856 1 13Z" stroke="#D9E8E3" stroke-width="1.5"/>
+            <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Résultats</span>
         </a>
       </li>
 
       <li class="mb-1 group">
         <a routerLink="/core/superviseur/participant" *ngIf="role== 'superviseur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg class=" py-2 px-4 w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 14V16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM14.5946 18.8115C14.5327 18.5511 14.5 18.2794 14.5 18C14.5 17.7207 14.5327 17.449 14.5945 17.1886L13.6029 16.6161L14.6029 14.884L15.5952 15.4569C15.9883 15.0851 16.4676 14.8034 17 14.6449V13.5H19V14.6449C19.5324 14.8034 20.0116 15.0851 20.4047 15.4569L21.3971 14.8839L22.3972 16.616L21.4055 17.1885C21.4673 17.449 21.5 17.7207 21.5 18C21.5 18.2793 21.4673 18.551 21.4055 18.8114L22.3972 19.3839L21.3972 21.116L20.4048 20.543C20.0117 20.9149 19.5325 21.1966 19.0001 21.355V22.5H17.0001V21.3551C16.4677 21.1967 15.9884 20.915 15.5953 20.5431L14.603 21.1161L13.6029 19.384L14.5946 18.8115ZM18 19.5C18.8284 19.5 19.5 18.8284 19.5 18C19.5 17.1716 18.8284 16.5 18 16.5C17.1716 16.5 16.5 17.1716 16.5 18C16.5 18.8284 17.1716 19.5 18 19.5Z">
-            </path>
-          </svg>
-          <span class="font-inter font-semibold text-sm">Participant</span>
+          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.001 1.5C16.7722 1.5 18.6578 1.5 19.8294 2.7448C21.001 3.98959 21.001 5.99306 21.001 10C21.001 14.0069 21.001 16.0104 19.8294 17.2552C18.6578 18.5 16.7722 18.5 13.001 18.5L9.00098 18.5C5.22974 18.5 3.34412 18.5 2.17255 17.2552C1.00098 16.0104 1.00098 14.0069 1.00098 10C1.00098 5.99306 1.00098 3.98959 2.17255 2.7448C3.34412 1.5 5.22974 1.5 9.00098 1.5L13.001 1.5Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M4.00098 13.4999C5.60963 11.3625 9.35488 11.2458 11.001 13.4999M9.25 8.25C9.25 9.2165 8.4665 10 7.5 10C6.5335 10 5.75 9.2165 5.75 8.25C5.75 7.2835 6.5335 6.5 7.5 6.5C8.4665 6.5 9.25 7.2835 9.25 8.25Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 7.5L18.001 7.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 11.5H16.001" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Participant</span>
         </a>
       </li>
 
-      <!-- Parie Formateur -->
+      <!-- Partie Formateur -->
       <li class="mb-1 group">
-        <a *ngIf="role== 'formateur'" routerLinkActive="router-active"
+        <a routerLink="/core/formateur/" *ngIf="role== 'formateur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -315,7 +351,7 @@
             <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5"
               stroke-linecap="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Mes apprenants</span>
+          <span class="font-inter font-semibold text-sm ml-2">Mes affiliations</span>
         </a>
       </li>
 
@@ -601,7 +637,7 @@
       </li>
 
       <li class="mb-1 group ml-8">
-        <a routerLink="/core/apprenant/test" *ngIf="role== 'apprenant'" routerLinkActive="active-link"
+        <a (click)="closeNav()" routerLink="/core/apprenant/test" *ngIf="role== 'apprenant'" routerLinkActive="active-link"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -657,8 +693,27 @@
         </a>
       </li>
 
+      <li class="mb-1 group ml-8">
+        <a (click)="closeNav()" routerLink="/core/apprenant/resultatLois" *ngIf="role== 'apprenant'" routerLinkActive="active-link"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M13 13C13 11.1144 13 10.1716 13.5858 9.58579C14.1716 9 15.1144 9 17 9C18.8856 9 19.8284 9 20.4142 9.58579C21 10.1716 21 11.1144 21 13C21 14.8856 21 15.8284 20.4142 16.4142C19.8284 17 18.8856 17 17 17C15.1144 17 14.1716 17 13.5858 16.4142C13 15.8284 13 14.8856 13 13Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path d="M13 13V8.86265C13 5.19569 15.5157 2.08584 19 1" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" />
+            <path
+              d="M1 13C1 11.1144 1 10.1716 1.58579 9.58579C2.17157 9 3.11438 9 5 9C6.88562 9 7.82843 9 8.41421 9.58579C9 10.1716 9 11.1144 9 13C9 14.8856 9 15.8284 8.41421 16.4142C7.82843 17 6.88562 17 5 17C3.11438 17 2.17157 17 1.58579 16.4142C1 15.8284 1 14.8856 1 13Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" />
+          </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Mes tests 21 lois</span>
+        </a>
+      </li>
+
       <li class="mb-1 group">
-        <a (click)="closeNav()" routerLink="/core/apprenant/list" *ngIf="role== 'apprenant'"
+        <a (click)="closeNav()" routerLink="/core/apprenant/" *ngIf="role== 'apprenant'"
           routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -673,7 +728,7 @@
             <path d="M21 13C21 16.3171 18.3171 19 15 19L15.8571 17.2857" stroke="#D9E8E3" stroke-width="1.5"
               stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Mes chapitres</span>
+          <span class="font-inter font-semibold text-sm ml-2">Mes parcour</span>
         </a>
       </li>
 
@@ -693,62 +748,227 @@
             <path d="M21 13C21 16.3171 18.3171 19 15 19L15.8571 17.2857" stroke="#D9E8E3" stroke-width="1.5"
               stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Mes parcours</span>
-        </a>
-      </li>
-      <!-- Partie Superviseur -->
-      <li class="mb-1 group">
-        <a (click)="closeNav()" routerLink="/core/superviseur/listApprenant" *ngIf="role== 'superviseur'"
-          routerLinkActive="router-active"
-          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg class="py-2 px-4 w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M4 11.3333L0 9L12 2L24 9V17.5H22V10.1667L20 11.3333V18.0113L19.7774 18.2864C17.9457 20.5499 15.1418 22 12 22C8.85817 22 6.05429 20.5499 4.22263 18.2864L4 18.0113V11.3333ZM6 12.5V17.2917C7.46721 18.954 9.61112 20 12 20C14.3889 20 16.5328 18.954 18 17.2917V12.5L12 16L6 12.5ZM3.96927 9L12 13.6846L20.0307 9L12 4.31541L3.96927 9Z">
-            </path>
-          </svg>
-          <span class="font-inter font-semibold text-sm">Apprenant</span>
+          <span class="font-inter font-semibold text-sm ml-2">Parcours</span>
         </a>
       </li>
 
       <li class="mb-1 group">
-        <a (click)="closeNav()" routerLink="/core/superviseur/resultat" *ngIf="role== 'superviseur'"
-          routerLinkActive="router-active"
+        <a (click)="closeNav()" routerLink="/core/apprenant/invitation" *ngIf="role== 'apprenant'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg class=" py-2 px-4 w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 14V16C8.68629 16 6 18.6863 6 22H4C4 17.5817 7.58172 14 12 14ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11ZM14.5946 18.8115C14.5327 18.5511 14.5 18.2794 14.5 18C14.5 17.7207 14.5327 17.449 14.5945 17.1886L13.6029 16.6161L14.6029 14.884L15.5952 15.4569C15.9883 15.0851 16.4676 14.8034 17 14.6449V13.5H19V14.6449C19.5324 14.8034 20.0116 15.0851 20.4047 15.4569L21.3971 14.8839L22.3972 16.616L21.4055 17.1885C21.4673 17.449 21.5 17.7207 21.5 18C21.5 18.2793 21.4673 18.551 21.4055 18.8114L22.3972 19.3839L21.3972 21.116L20.4048 20.543C20.0117 20.9149 19.5325 21.1966 19.0001 21.355V22.5H17.0001V21.3551C16.4677 21.1967 15.9884 20.915 15.5953 20.5431L14.603 21.1161L13.6029 19.384L14.5946 18.8115ZM18 19.5C18.8284 19.5 19.5 18.8284 19.5 18C19.5 17.1716 18.8284 16.5 18 16.5C17.1716 16.5 16.5 17.1716 16.5 18C16.5 18.8284 17.1716 19.5 18 19.5Z">
-            </path>
-          </svg>
-          <span class="font-inter font-semibold text-sm">Résultats</span>
+          <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+
+          <span class="font-inter font-semibold text-sm ml-2">Invitation</span>
+        </a>
+      </li>
+
+      <!-- Partie Superviseur -->
+      <li class="mb-1 group">
+        <a (click)="closeNav()" routerLink="/core/superviseur/listApprenant" *ngIf="role== 'superviseur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.001 1.5C16.7722 1.5 18.6578 1.5 19.8294 2.7448C21.001 3.98959 21.001 5.99306 21.001 10C21.001 14.0069 21.001 16.0104 19.8294 17.2552C18.6578 18.5 16.7722 18.5 13.001 18.5L9.00098 18.5C5.22974 18.5 3.34412 18.5 2.17255 17.2552C1.00098 16.0104 1.00098 14.0069 1.00098 10C1.00098 5.99306 1.00098 3.98959 2.17255 2.7448C3.34412 1.5 5.22974 1.5 9.00098 1.5L13.001 1.5Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M4.00098 13.4999C5.60963 11.3625 9.35488 11.2458 11.001 13.4999M9.25 8.25C9.25 9.2165 8.4665 10 7.5 10C6.5335 10 5.75 9.2165 5.75 8.25C5.75 7.2835 6.5335 6.5 7.5 6.5C8.4665 6.5 9.25 7.2835 9.25 8.25Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 7.5L18.001 7.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 11.5H16.001" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          <span class="font-inter font-semibold text-sm ml-2">List Participant</span>
+        </a>
+      </li>
+
+      <li class="mb-1 group">
+        <a (click)="closeNav()" routerLink="/core/superviseur/resultat" *ngIf="role== 'superviseur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 13C13 11.1144 13 10.1716 13.5858 9.58579C14.1716 9 15.1144 9 17 9C18.8856 9 19.8284 9 20.4142 9.58579C21 10.1716 21 11.1144 21 13C21 14.8856 21 15.8284 20.4142 16.4142C19.8284 17 18.8856 17 17 17C15.1144 17 14.1716 17 13.5858 16.4142C13 15.8284 13 14.8856 13 13Z" stroke="#D9E8E3" stroke-width="1.5"/>
+            <path d="M13 13V8.86265C13 5.19569 15.5157 2.08584 19 1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M1 13C1 11.1144 1 10.1716 1.58579 9.58579C2.17157 9 3.11438 9 5 9C6.88562 9 7.82843 9 8.41421 9.58579C9 10.1716 9 11.1144 9 13C9 14.8856 9 15.8284 8.41421 16.4142C7.82843 17 6.88562 17 5 17C3.11438 17 2.17157 17 1.58579 16.4142C1 15.8284 1 14.8856 1 13Z" stroke="#D9E8E3" stroke-width="1.5"/>
+            <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Résultats</span>
+        </a>
+      </li>
+
+      <li class="mb-1 group">
+        <a (click)="closeNav()" routerLink="/core/superviseur/participant" *ngIf="role== 'superviseur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.001 1.5C16.7722 1.5 18.6578 1.5 19.8294 2.7448C21.001 3.98959 21.001 5.99306 21.001 10C21.001 14.0069 21.001 16.0104 19.8294 17.2552C18.6578 18.5 16.7722 18.5 13.001 18.5L9.00098 18.5C5.22974 18.5 3.34412 18.5 2.17255 17.2552C1.00098 16.0104 1.00098 14.0069 1.00098 10C1.00098 5.99306 1.00098 3.98959 2.17255 2.7448C3.34412 1.5 5.22974 1.5 9.00098 1.5L13.001 1.5Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M4.00098 13.4999C5.60963 11.3625 9.35488 11.2458 11.001 13.4999M9.25 8.25C9.25 9.2165 8.4665 10 7.5 10C6.5335 10 5.75 9.2165 5.75 8.25C5.75 7.2835 6.5335 6.5 7.5 6.5C8.4665 6.5 9.25 7.2835 9.25 8.25Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 7.5L18.001 7.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14.001 11.5H16.001" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Participant</span>
         </a>
       </li>
       <!-- Partie Formateur -->
       <li class="mb-1 group">
-        <a (click)="closeNav()" *ngIf="role== 'formateur'" routerLinkActive="router-active"
+        <a (click)="closeNav()" routerLink="/core/formateur/" *ngIf="role== 'formateur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg class=" py-2 px-4 w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              d="M8 4C8 5.10457 7.10457 6 6 6 4.89543 6 4 5.10457 4 4 4 2.89543 4.89543 2 6 2 7.10457 2 8 2.89543 8 4ZM5 16V22H3V10C3 8.34315 4.34315 7 6 7 6.82059 7 7.56423 7.32946 8.10585 7.86333L10.4803 10.1057 12.7931 7.79289 14.2073 9.20711 10.5201 12.8943 9 11.4587V22H7V16H5ZM6 9C5.44772 9 5 9.44772 5 10V14H7V10C7 9.44772 6.55228 9 6 9ZM19 5H10V3H20C20.5523 3 21 3.44772 21 4V15C21 15.5523 20.5523 16 20 16H16.5758L19.3993 22H17.1889L14.3654 16H10V14H19V5Z">
-            </path>
+              d="M2 18C2 16.4596 2 15.6893 2.34673 15.1235C2.54074 14.8069 2.80693 14.5407 3.12353 14.3467C3.68934 14 4.45956 14 6 14C7.54044 14 8.31066 14 8.87647 14.3467C9.19307 14.5407 9.45926 14.8069 9.65327 15.1235C10 15.6893 10 16.4596 10 18C10 19.5404 10 20.3107 9.65327 20.8765C9.45926 21.1931 9.19307 21.4593 8.87647 21.6533C8.31066 22 7.54044 22 6 22C4.45956 22 3.68934 22 3.12353 21.6533C2.80693 21.4593 2.54074 21.1931 2.34673 20.8765C2 20.3107 2 19.5404 2 18Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path
+              d="M14 18C14 16.4596 14 15.6893 14.3467 15.1235C14.5407 14.8069 14.8069 14.5407 15.1235 14.3467C15.6893 14 16.4596 14 18 14C19.5404 14 20.3107 14 20.8765 14.3467C21.1931 14.5407 21.4593 14.8069 21.6533 15.1235C22 15.6893 22 16.4596 22 18C22 19.5404 22 20.3107 21.6533 20.8765C21.4593 21.1931 21.1931 21.4593 20.8765 21.6533C20.3107 22 19.5404 22 18 22C16.4596 22 15.6893 22 15.1235 21.6533C14.8069 21.4593 14.5407 21.1931 14.3467 20.8765C14 20.3107 14 19.5404 14 18Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path
+              d="M2 6C2 4.45956 2 3.68934 2.34673 3.12353C2.54074 2.80693 2.80693 2.54074 3.12353 2.34673C3.68934 2 4.45956 2 6 2C7.54044 2 8.31066 2 8.87647 2.34673C9.19307 2.54074 9.45926 2.80693 9.65327 3.12353C10 3.68934 10 4.45956 10 6C10 7.54044 10 8.31066 9.65327 8.87647C9.45926 9.19307 9.19307 9.45926 8.87647 9.65327C8.31066 10 7.54044 10 6 10C4.45956 10 3.68934 10 3.12353 9.65327C2.80693 9.45926 2.54074 9.19307 2.34673 8.87647C2 8.31066 2 7.54044 2 6Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path
+              d="M14 6C14 4.45956 14 3.68934 14.3467 3.12353C14.5407 2.80693 14.8069 2.54074 15.1235 2.34673C15.6893 2 16.4596 2 18 2C19.5404 2 20.3107 2 20.8765 2.34673C21.1931 2.54074 21.4593 2.80693 21.6533 3.12353C22 3.68934 22 4.45956 22 6C22 7.54044 22 8.31066 21.6533 8.87647C21.4593 9.19307 21.1931 9.45926 20.8765 9.65327C20.3107 10 19.5404 10 18 10C16.4596 10 15.6893 10 15.1235 9.65327C14.8069 9.45926 14.5407 9.19307 14.3467 8.87647C14 8.31066 14 7.54044 14 6Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
           </svg>
-          <span class="font-inter font-semibold text-sm">Ajout Parcours</span>
+          <span class="font-inter font-semibold text-sm ml-2">Tableau de bord</span>
         </a>
       </li>
+
       <li class="mb-1 group">
         <a (click)="closeNav()" *ngIf="role== 'formateur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg class=" py-2 px-4 w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
-              d="M8 4C8 5.10457 7.10457 6 6 6 4.89543 6 4 5.10457 4 4 4 2.89543 4.89543 2 6 2 7.10457 2 8 2.89543 8 4ZM5 16V22H3V10C3 8.34315 4.34315 7 6 7 6.82059 7 7.56423 7.32946 8.10585 7.86333L10.4803 10.1057 12.7931 7.79289 14.2073 9.20711 10.5201 12.8943 9 11.4587V22H7V16H5ZM6 9C5.44772 9 5 9.44772 5 10V14H7V10C7 9.44772 6.55228 9 6 9ZM19 5H10V3H20C20.5523 3 21 3.44772 21 4V15C21 15.5523 20.5523 16 20 16H16.5758L19.3993 22H17.1889L14.3654 16H10V14H19V5Z">
-            </path>
+              d="M6.5 7H5.5C4.08579 7 3.37868 7 2.93934 6.56066C2.5 6.12132 2.5 5.41421 2.5 4C2.5 2.58579 2.5 1.87868 2.93934 1.43934C3.37868 1 4.08579 1 5.5 1H6.5C7.91421 1 8.62132 1 9.06066 1.43934C9.5 1.87868 9.5 2.58579 9.5 4C9.5 5.41421 9.5 6.12132 9.06066 6.56066C8.62132 7 7.91421 7 6.5 7Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2.5 3H1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 3H19.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M2.15224 15.7654L1.45933 16.0524L1.45933 16.0524L2.15224 15.7654ZM3.23463 16.8478L2.94762 17.5407H2.94762L3.23463 16.8478ZM3.23463 11.1522L2.94762 10.4593L2.94762 10.4593L3.23463 11.1522ZM2.15224 12.2346L1.45933 11.9476V11.9476L2.15224 12.2346ZM20 11.75C20.4142 11.75 20.75 11.4142 20.75 11C20.75 10.5858 20.4142 10.25 20 10.25V11.75ZM20 17.75C20.4142 17.75 20.75 17.4142 20.75 17C20.75 16.5858 20.4142 16.25 20 16.25V17.75ZM19 17.75C19.4142 17.75 19.75 17.4142 19.75 17C19.75 16.5858 19.4142 16.25 19 16.25V17.75ZM19 11.75C19.4142 11.75 19.75 11.4142 19.75 11C19.75 10.5858 19.4142 10.25 19 10.25V11.75ZM1.25 14C1.25 14.4557 1.24959 14.835 1.27077 15.1454C1.29241 15.4625 1.33905 15.762 1.45933 16.0524L2.84515 15.4784C2.81319 15.4012 2.78372 15.284 2.76729 15.0433C2.75041 14.7958 2.75 14.4762 2.75 14H1.25ZM5 16.25C4.5238 16.25 4.20421 16.2496 3.95674 16.2327C3.71602 16.2163 3.5988 16.1868 3.52165 16.1548L2.94762 17.5407C3.23801 17.661 3.53754 17.7076 3.85464 17.7292C4.165 17.7504 4.54432 17.75 5 17.75V16.25ZM1.45933 16.0524C1.73844 16.7262 2.27379 17.2616 2.94762 17.5407L3.52165 16.1548C3.21536 16.028 2.97202 15.7846 2.84515 15.4784L1.45933 16.0524ZM5 10.25C4.54432 10.25 4.165 10.2496 3.85464 10.2708C3.53754 10.2924 3.23801 10.339 2.94762 10.4593L3.52165 11.8452C3.5988 11.8132 3.71602 11.7837 3.95674 11.7673C4.20421 11.7504 4.5238 11.75 5 11.75V10.25ZM2.75 14C2.75 13.5238 2.75041 13.2042 2.76729 12.9567C2.78372 12.716 2.81319 12.5988 2.84515 12.5216L1.45933 11.9476C1.33905 12.238 1.29241 12.5375 1.27077 12.8546C1.24959 13.165 1.25 13.5443 1.25 14H2.75ZM2.94762 10.4593C2.27379 10.7384 1.73844 11.2738 1.45933 11.9476L2.84515 12.5216C2.97202 12.2154 3.21536 11.972 3.52165 11.8452L2.94762 10.4593ZM20 10.25H5V11.75H20V10.25ZM5 17.75H20V16.25H5V17.75ZM19 16.25C18.7765 16.25 18.4824 16.1141 18.2098 15.7053C17.9408 15.3017 17.75 14.701 17.75 14H16.25C16.25 14.9558 16.5069 15.8551 16.9617 16.5373C17.4131 17.2143 18.1189 17.75 19 17.75V16.25ZM17.75 14C17.75 13.299 17.9408 12.6983 18.2098 12.2947C18.4824 11.8859 18.7765 11.75 19 11.75V10.25C18.1189 10.25 17.4131 10.7857 16.9617 11.4627C16.5069 12.1449 16.25 13.0442 16.25 14H17.75Z"
+              fill="#D9E8E3" />
+            <path
+              d="M15.5 7H16.5C17.9142 7 18.6213 7 19.0607 6.56066C19.5 6.12132 19.5 5.41421 19.5 4C19.5 2.58579 19.5 1.87868 19.0607 1.43934C18.6213 1 17.9142 1 16.5 1H15.5C14.0858 1 13.3787 1 12.9393 1.43934C12.5 1.87868 12.5 2.58579 12.5 4C12.5 5.41421 12.5 6.12132 12.9393 6.56066C13.3787 7 14.0858 7 15.5 7Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3"
+              stroke-width="1.5" />
           </svg>
-          <span class="font-inter font-semibold text-sm">Ajout Contenu</span>
+          <span class="font-inter font-semibold text-sm ml-2">Mes formations</span>
+        </a>
+      </li>
+
+      <li class="mb-1 group">
+        <a (click)="closeNav()" routerLink="/core/formateur/listParcours" *ngIf="role== 'formateur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 13C9.70833 19 3.29167 13 1 19" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M14.5 13H16.0013C18.3583 13 19.5368 13 20.2691 12.2678C21.0013 11.5355 21.0013 10.357 21.0013 8V6C21.0013 3.64298 21.0013 2.46447 20.2691 1.73223C19.5368 1 18.3583 1 16.0013 1H12.0013C9.64428 1 8.46576 1 7.73353 1.73223C7.11312 2.35264 7.01838 3.29344 7.00391 5"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="6.5" cy="10.5" r="2.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M11 5H17M17 9H14" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Mes Parcours</span>
+        </a>
+      </li>
+
+      <li (click)="closeNav()" class="mb-1 group">
+        <a *ngIf="role== 'formateur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M13.001 1.5C16.7722 1.5 18.6578 1.5 19.8294 2.7448C21.001 3.98959 21.001 5.99306 21.001 10C21.001 14.0069 21.001 16.0104 19.8294 17.2552C18.6578 18.5 16.7722 18.5 13.001 18.5L9.00098 18.5C5.22974 18.5 3.34412 18.5 2.17255 17.2552C1.00098 16.0104 1.00098 14.0069 1.00098 10C1.00098 5.99306 1.00098 3.98959 2.17255 2.7448C3.34412 1.5 5.22974 1.5 9.00098 1.5L13.001 1.5Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linejoin="round" />
+            <path
+              d="M4.00098 13.4999C5.60963 11.3625 9.35488 11.2458 11.001 13.4999M9.25 8.25C9.25 9.2165 8.4665 10 7.5 10C6.5335 10 5.75 9.2165 5.75 8.25C5.75 7.2835 6.5335 6.5 7.5 6.5C8.4665 6.5 9.25 7.2835 9.25 8.25Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M14.001 7.5L18.001 7.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M14.001 11.5H16.001" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Mes clients B2B</span>
+        </a>
+      </li>
+
+      <li class="mb-1 group">
+        <a (click)="closeNav()" routerLink="/core/formateur/affinite" *ngIf="role== 'formateur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M13 13C13 11.1144 13 10.1716 13.5858 9.58579C14.1716 9 15.1144 9 17 9C18.8856 9 19.8284 9 20.4142 9.58579C21 10.1716 21 11.1144 21 13C21 14.8856 21 15.8284 20.4142 16.4142C19.8284 17 18.8856 17 17 17C15.1144 17 14.1716 17 13.5858 16.4142C13 15.8284 13 14.8856 13 13Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path d="M13 13V8.86265C13 5.19569 15.5157 2.08584 19 1" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" />
+            <path
+              d="M1 13C1 11.1144 1 10.1716 1.58579 9.58579C2.17157 9 3.11438 9 5 9C6.88562 9 7.82843 9 8.41421 9.58579C9 10.1716 9 11.1144 9 13C9 14.8856 9 15.8284 8.41421 16.4142C7.82843 17 6.88562 17 5 17C3.11438 17 2.17157 17 1.58579 16.4142C1 15.8284 1 14.8856 1 13Z"
+              stroke="#D9E8E3" stroke-width="1.5" />
+            <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" />
+          </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Mes affiliations</span>
+        </a>
+      </li>
+
+      <li class="mb-1 group">
+        <a (click)="closeNav()" *ngIf="role== 'formateur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M10.8841 9.44264L11.3554 8.85918L10.8841 9.44264ZM10.579 9.14899L11.1444 8.65616V8.65616L10.579 9.14899ZM20.421 9.14899L19.8556 8.65616V8.65616L20.421 9.14899ZM20.1159 9.44264L19.6446 8.85918L20.1159 9.44264ZM20.1159 1.55736L19.6446 2.14082L20.1159 1.55736ZM20.421 1.85101L19.8556 2.34384V2.34384L20.421 1.85101ZM10.8841 1.55736L11.3554 2.14082L10.8841 1.55736ZM10.579 1.85101L11.1444 2.34384V2.34384L10.579 1.85101ZM10 3.75C9.58579 3.75 9.25 4.08579 9.25 4.5C9.25 4.91421 9.58579 5.25 10 5.25L10 3.75ZM21 5.25C21.4142 5.25 21.75 4.91421 21.75 4.5C21.75 4.08579 21.4142 3.75 21 3.75V5.25ZM14.675 1.75H16.325V0.25H14.675V1.75ZM16.325 9.25H14.675V10.75H16.325V9.25ZM14.675 9.25C13.6234 9.25 12.8992 9.24883 12.3492 9.18528C11.8141 9.12347 11.544 9.01153 11.3554 8.85918L10.4128 10.0261C10.9143 10.4311 11.506 10.5978 12.177 10.6754C12.8332 10.7512 13.6594 10.75 14.675 10.75V9.25ZM9.25 5.5C9.25 6.47553 9.24864 7.27674 9.32814 7.91439C9.41006 8.57138 9.58742 9.15283 10.0137 9.64183L11.1444 8.65616C10.9916 8.48092 10.8795 8.23279 10.8166 7.7288C10.7514 7.20547 10.75 6.51431 10.75 5.5H9.25ZM11.3554 8.85918C11.2787 8.79726 11.2081 8.7293 11.1444 8.65616L10.0137 9.64183C10.1352 9.78117 10.2688 9.90971 10.4128 10.0261L11.3554 8.85918ZM20.25 5.5C20.25 6.51431 20.2486 7.20547 20.1834 7.7288C20.1205 8.23279 20.0084 8.48092 19.8556 8.65616L20.9863 9.64183C21.4126 9.15283 21.5899 8.57138 21.6719 7.91439C21.7514 7.27674 21.75 6.47553 21.75 5.5H20.25ZM16.325 10.75C17.3406 10.75 18.1668 10.7512 18.823 10.6754C19.494 10.5978 20.0857 10.4311 20.5872 10.0261L19.6446 8.85918C19.456 9.01153 19.1859 9.12347 18.6508 9.18528C18.1008 9.24883 17.3766 9.25 16.325 9.25V10.75ZM19.8556 8.65616C19.7919 8.7293 19.7213 8.79726 19.6446 8.85918L20.5872 10.0261C20.7312 9.90972 20.8648 9.78117 20.9863 9.64183L19.8556 8.65616ZM16.325 1.75C17.3766 1.75 18.1008 1.75117 18.6508 1.81472C19.1859 1.87653 19.456 1.98847 19.6446 2.14082L20.5872 0.973908C20.0857 0.568899 19.494 0.402154 18.823 0.324626C18.1668 0.248826 17.3406 0.25 16.325 0.25V1.75ZM21.75 5.5C21.75 4.52447 21.7514 3.72326 21.6719 3.08561C21.5899 2.42862 21.4126 1.84717 20.9863 1.35818L19.8556 2.34384C20.0084 2.51908 20.1205 2.76721 20.1834 3.2712C20.2486 3.79453 20.25 4.48569 20.25 5.5H21.75ZM19.6446 2.14082C19.7213 2.20274 19.7919 2.2707 19.8556 2.34384L20.9863 1.35818C20.8648 1.21883 20.7312 1.09029 20.5872 0.973908L19.6446 2.14082ZM14.675 0.25C13.6594 0.25 12.8332 0.248826 12.177 0.324626C11.506 0.402153 10.9143 0.568899 10.4128 0.973908L11.3554 2.14082C11.544 1.98847 11.8141 1.87653 12.3492 1.81472C12.8992 1.75117 13.6234 1.75 14.675 1.75V0.25ZM10.75 5.5C10.75 4.48569 10.7514 3.79453 10.8166 3.2712C10.8795 2.76721 10.9916 2.51908 11.1444 2.34384L10.0137 1.35818C9.58742 1.84717 9.41006 2.42862 9.32814 3.08561C9.24864 3.72326 9.25 4.52447 9.25 5.5H10.75ZM10.4128 0.973908C10.2688 1.09029 10.1352 1.21883 10.0137 1.35818L11.1444 2.34384C11.2081 2.2707 11.2787 2.20274 11.3554 2.14082L10.4128 0.973908ZM10 5.25L21 5.25V3.75L10 3.75L10 5.25Z"
+              fill="#D9E8E3" />
+            <path
+              d="M1 14.75C0.585786 14.75 0.25 15.0858 0.25 15.5C0.25 15.9142 0.585786 16.25 1 16.25L1 14.75ZM12 16.25C12.4142 16.25 12.75 15.9142 12.75 15.5C12.75 15.0858 12.4142 14.75 12 14.75V16.25ZM1.8841 20.4426L2.35535 19.8592L1.8841 20.4426ZM1.57904 20.149L2.14439 19.6562L2.14439 19.6562L1.57904 20.149ZM11.421 20.149L10.8556 19.6562V19.6562L11.421 20.149ZM11.1159 20.4426L10.6446 19.8592L11.1159 20.4426ZM11.1159 12.5574L10.6446 13.1408L11.1159 12.5574ZM11.421 12.851L10.8556 13.3438V13.3438L11.421 12.851ZM1.8841 12.5574L2.35535 13.1408L1.8841 12.5574ZM1.57904 12.851L2.14439 13.3438L2.14439 13.3438L1.57904 12.851ZM1 16.25L12 16.25V14.75L1 14.75L1 16.25ZM5.675 12.75H7.325V11.25H5.675V12.75ZM7.325 20.25H5.675V21.75H7.325V20.25ZM5.675 20.25C4.62339 20.25 3.8992 20.2488 3.34919 20.1853C2.81414 20.1235 2.54398 20.0115 2.35535 19.8592L1.41285 21.0261C1.91429 21.4311 2.50598 21.5978 3.17705 21.6754C3.83317 21.7512 4.65939 21.75 5.675 21.75V20.25ZM0.25 16.5C0.25 17.4755 0.248635 18.2767 0.328143 18.9144C0.410061 19.5714 0.587418 20.1528 1.01369 20.6418L2.14439 19.6562C1.99162 19.4809 1.87946 19.2328 1.81662 18.7288C1.75136 18.2055 1.75 17.5143 1.75 16.5H0.25ZM2.35535 19.8592C2.27869 19.7973 2.20814 19.7293 2.14439 19.6562L1.01369 20.6418C1.13517 20.7812 1.26876 20.9097 1.41285 21.0261L2.35535 19.8592ZM11.25 16.5C11.25 17.5143 11.2486 18.2055 11.1834 18.7288C11.1205 19.2328 11.0084 19.4809 10.8556 19.6562L11.9863 20.6418C12.4126 20.1528 12.5899 19.5714 12.6719 18.9144C12.7514 18.2767 12.75 17.4755 12.75 16.5H11.25ZM7.325 21.75C8.34061 21.75 9.16683 21.7512 9.82295 21.6754C10.494 21.5978 11.0857 21.4311 11.5872 21.0261L10.6446 19.8592C10.456 20.0115 10.1859 20.1235 9.65081 20.1853C9.1008 20.2488 8.37661 20.25 7.325 20.25V21.75ZM10.8556 19.6562C10.7919 19.7293 10.7213 19.7973 10.6446 19.8592L11.5872 21.0261C11.7312 20.9097 11.8648 20.7812 11.9863 20.6418L10.8556 19.6562ZM7.325 12.75C8.37661 12.75 9.1008 12.7512 9.65081 12.8147C10.1859 12.8765 10.456 12.9885 10.6446 13.1408L11.5872 11.9739C11.0857 11.5689 10.494 11.4022 9.82295 11.3246C9.16683 11.2488 8.34061 11.25 7.325 11.25V12.75ZM12.75 16.5C12.75 15.5245 12.7514 14.7233 12.6719 14.0856C12.5899 13.4286 12.4126 12.8472 11.9863 12.3582L10.8556 13.3438C11.0084 13.5191 11.1205 13.7672 11.1834 14.2712C11.2486 14.7945 11.25 15.4857 11.25 16.5H12.75ZM10.6446 13.1408C10.7213 13.2027 10.7919 13.2707 10.8556 13.3438L11.9863 12.3582C11.8648 12.2188 11.7312 12.0903 11.5872 11.9739L10.6446 13.1408ZM5.675 11.25C4.65939 11.25 3.83317 11.2488 3.17705 11.3246C2.50598 11.4022 1.91429 11.5689 1.41285 11.9739L2.35535 13.1408C2.54398 12.9885 2.81414 12.8765 3.34919 12.8147C3.8992 12.7512 4.62339 12.75 5.675 12.75V11.25ZM1.75 16.5C1.75 15.4857 1.75136 14.7945 1.81662 14.2712C1.87946 13.7672 1.99162 13.5191 2.14439 13.3438L1.01369 12.3582C0.587418 12.8472 0.410061 13.4286 0.328143 14.0856C0.248635 14.7233 0.25 15.5245 0.25 16.5H1.75ZM1.41285 11.9739C1.26876 12.0903 1.13517 12.2188 1.01369 12.3582L2.14439 13.3438C2.20814 13.2707 2.27869 13.2027 2.35535 13.1408L1.41285 11.9739Z"
+              fill="#D9E8E3" />
+            <path d="M1 9C1 5.68286 3.68286 3 7 3L6.14286 4.71429" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 13C21 16.3171 18.3171 19 15 19L15.8571 17.2857" stroke="#D9E8E3" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+
+          <span class="font-inter font-semibold text-sm ml-2">Mes ventes</span>
+        </a>
+      </li>
+
+      <li routerLink="/core/formateur/contenu" class="mb-1 group">
+        <a (click)="closeNav()" *ngIf="role== 'formateur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.5 7H5.5C4.08579 7 3.37868 7 2.93934 6.56066C2.5 6.12132 2.5 5.41421 2.5 4C2.5 2.58579 2.5 1.87868 2.93934 1.43934C3.37868 1 4.08579 1 5.5 1H6.5C7.91421 1 8.62132 1 9.06066 1.43934C9.5 1.87868 9.5 2.58579 9.5 4C9.5 5.41421 9.5 6.12132 9.06066 6.56066C8.62132 7 7.91421 7 6.5 7Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2.5 3H1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 3H19.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M2.15224 15.7654L1.45933 16.0524L1.45933 16.0524L2.15224 15.7654ZM3.23463 16.8478L2.94762 17.5407H2.94762L3.23463 16.8478ZM3.23463 11.1522L2.94762 10.4593L2.94762 10.4593L3.23463 11.1522ZM2.15224 12.2346L1.45933 11.9476V11.9476L2.15224 12.2346ZM20 11.75C20.4142 11.75 20.75 11.4142 20.75 11C20.75 10.5858 20.4142 10.25 20 10.25V11.75ZM20 17.75C20.4142 17.75 20.75 17.4142 20.75 17C20.75 16.5858 20.4142 16.25 20 16.25V17.75ZM19 17.75C19.4142 17.75 19.75 17.4142 19.75 17C19.75 16.5858 19.4142 16.25 19 16.25V17.75ZM19 11.75C19.4142 11.75 19.75 11.4142 19.75 11C19.75 10.5858 19.4142 10.25 19 10.25V11.75ZM1.25 14C1.25 14.4557 1.24959 14.835 1.27077 15.1454C1.29241 15.4625 1.33905 15.762 1.45933 16.0524L2.84515 15.4784C2.81319 15.4012 2.78372 15.284 2.76729 15.0433C2.75041 14.7958 2.75 14.4762 2.75 14H1.25ZM5 16.25C4.5238 16.25 4.20421 16.2496 3.95674 16.2327C3.71602 16.2163 3.5988 16.1868 3.52165 16.1548L2.94762 17.5407C3.23801 17.661 3.53754 17.7076 3.85464 17.7292C4.165 17.7504 4.54432 17.75 5 17.75V16.25ZM1.45933 16.0524C1.73844 16.7262 2.27379 17.2616 2.94762 17.5407L3.52165 16.1548C3.21536 16.028 2.97202 15.7846 2.84515 15.4784L1.45933 16.0524ZM5 10.25C4.54432 10.25 4.165 10.2496 3.85464 10.2708C3.53754 10.2924 3.23801 10.339 2.94762 10.4593L3.52165 11.8452C3.5988 11.8132 3.71602 11.7837 3.95674 11.7673C4.20421 11.7504 4.5238 11.75 5 11.75V10.25ZM2.75 14C2.75 13.5238 2.75041 13.2042 2.76729 12.9567C2.78372 12.716 2.81319 12.5988 2.84515 12.5216L1.45933 11.9476C1.33905 12.238 1.29241 12.5375 1.27077 12.8546C1.24959 13.165 1.25 13.5443 1.25 14H2.75ZM2.94762 10.4593C2.27379 10.7384 1.73844 11.2738 1.45933 11.9476L2.84515 12.5216C2.97202 12.2154 3.21536 11.972 3.52165 11.8452L2.94762 10.4593ZM20 10.25H5V11.75H20V10.25ZM5 17.75H20V16.25H5V17.75ZM19 16.25C18.7765 16.25 18.4824 16.1141 18.2098 15.7053C17.9408 15.3017 17.75 14.701 17.75 14H16.25C16.25 14.9558 16.5069 15.8551 16.9617 16.5373C17.4131 17.2143 18.1189 17.75 19 17.75V16.25ZM17.75 14C17.75 13.299 17.9408 12.6983 18.2098 12.2947C18.4824 11.8859 18.7765 11.75 19 11.75V10.25C18.1189 10.25 17.4131 10.7857 16.9617 11.4627C16.5069 12.1449 16.25 13.0442 16.25 14H17.75Z"
+              fill="#D9E8E3" />
+            <path
+              d="M15.5 7H16.5C17.9142 7 18.6213 7 19.0607 6.56066C19.5 6.12132 19.5 5.41421 19.5 4C19.5 2.58579 19.5 1.87868 19.0607 1.43934C18.6213 1 17.9142 1 16.5 1H15.5C14.0858 1 13.3787 1 12.9393 1.43934C12.5 1.87868 12.5 2.58579 12.5 4C12.5 5.41421 12.5 6.12132 12.9393 6.56066C13.3787 7 14.0858 7 15.5 7Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3"
+              stroke-width="1.5" />
+          </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Mes Contenu</span>
+        </a>
+      </li>
+
+      <li class="mb-1 group">
+        <a (click)="closeNav()" routerLink="/core/formateur/competence" *ngIf="role== 'formateur'" routerLinkActive="router-active"
+          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
+          <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M6.5 7H5.5C4.08579 7 3.37868 7 2.93934 6.56066C2.5 6.12132 2.5 5.41421 2.5 4C2.5 2.58579 2.5 1.87868 2.93934 1.43934C3.37868 1 4.08579 1 5.5 1H6.5C7.91421 1 8.62132 1 9.06066 1.43934C9.5 1.87868 9.5 2.58579 9.5 4C9.5 5.41421 9.5 6.12132 9.06066 6.56066C8.62132 7 7.91421 7 6.5 7Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2.5 3H1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 3H19.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M2.15224 15.7654L1.45933 16.0524L1.45933 16.0524L2.15224 15.7654ZM3.23463 16.8478L2.94762 17.5407H2.94762L3.23463 16.8478ZM3.23463 11.1522L2.94762 10.4593L2.94762 10.4593L3.23463 11.1522ZM2.15224 12.2346L1.45933 11.9476V11.9476L2.15224 12.2346ZM20 11.75C20.4142 11.75 20.75 11.4142 20.75 11C20.75 10.5858 20.4142 10.25 20 10.25V11.75ZM20 17.75C20.4142 17.75 20.75 17.4142 20.75 17C20.75 16.5858 20.4142 16.25 20 16.25V17.75ZM19 17.75C19.4142 17.75 19.75 17.4142 19.75 17C19.75 16.5858 19.4142 16.25 19 16.25V17.75ZM19 11.75C19.4142 11.75 19.75 11.4142 19.75 11C19.75 10.5858 19.4142 10.25 19 10.25V11.75ZM1.25 14C1.25 14.4557 1.24959 14.835 1.27077 15.1454C1.29241 15.4625 1.33905 15.762 1.45933 16.0524L2.84515 15.4784C2.81319 15.4012 2.78372 15.284 2.76729 15.0433C2.75041 14.7958 2.75 14.4762 2.75 14H1.25ZM5 16.25C4.5238 16.25 4.20421 16.2496 3.95674 16.2327C3.71602 16.2163 3.5988 16.1868 3.52165 16.1548L2.94762 17.5407C3.23801 17.661 3.53754 17.7076 3.85464 17.7292C4.165 17.7504 4.54432 17.75 5 17.75V16.25ZM1.45933 16.0524C1.73844 16.7262 2.27379 17.2616 2.94762 17.5407L3.52165 16.1548C3.21536 16.028 2.97202 15.7846 2.84515 15.4784L1.45933 16.0524ZM5 10.25C4.54432 10.25 4.165 10.2496 3.85464 10.2708C3.53754 10.2924 3.23801 10.339 2.94762 10.4593L3.52165 11.8452C3.5988 11.8132 3.71602 11.7837 3.95674 11.7673C4.20421 11.7504 4.5238 11.75 5 11.75V10.25ZM2.75 14C2.75 13.5238 2.75041 13.2042 2.76729 12.9567C2.78372 12.716 2.81319 12.5988 2.84515 12.5216L1.45933 11.9476C1.33905 12.238 1.29241 12.5375 1.27077 12.8546C1.24959 13.165 1.25 13.5443 1.25 14H2.75ZM2.94762 10.4593C2.27379 10.7384 1.73844 11.2738 1.45933 11.9476L2.84515 12.5216C2.97202 12.2154 3.21536 11.972 3.52165 11.8452L2.94762 10.4593ZM20 10.25H5V11.75H20V10.25ZM5 17.75H20V16.25H5V17.75ZM19 16.25C18.7765 16.25 18.4824 16.1141 18.2098 15.7053C17.9408 15.3017 17.75 14.701 17.75 14H16.25C16.25 14.9558 16.5069 15.8551 16.9617 16.5373C17.4131 17.2143 18.1189 17.75 19 17.75V16.25ZM17.75 14C17.75 13.299 17.9408 12.6983 18.2098 12.2947C18.4824 11.8859 18.7765 11.75 19 11.75V10.25C18.1189 10.25 17.4131 10.7857 16.9617 11.4627C16.5069 12.1449 16.25 13.0442 16.25 14H17.75Z"
+              fill="#D9E8E3" />
+            <path
+              d="M15.5 7H16.5C17.9142 7 18.6213 7 19.0607 6.56066C19.5 6.12132 19.5 5.41421 19.5 4C19.5 2.58579 19.5 1.87868 19.0607 1.43934C18.6213 1 17.9142 1 16.5 1H15.5C14.0858 1 13.3787 1 12.9393 1.43934C12.5 1.87868 12.5 2.58579 12.5 4C12.5 5.41421 12.5 6.12132 12.9393 6.56066C13.3787 7 14.0858 7 15.5 7Z"
+              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3"
+              stroke-width="1.5" />
+          </svg>
+          <span class="font-inter font-semibold text-sm ml-2">Mes Compétences</span>
         </a>
       </li>
 
       <!-- Partie Admin -->
       <li class="mb-1 group">
-        <a routerLink="/core/admin/tableau" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a (click)="closeNav()" routerLink="/core/admin/tableau" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -769,7 +989,7 @@
       </li>
 
       <li class="mb-1 group">
-        <a routerLink="/core/admin/parcour" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a (click)="closeNav()" routerLink="/core/admin/parcour" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -791,7 +1011,7 @@
       </li>
 
       <li class="mb-1 group">
-        <a routerLink="/core/admin/parcour" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a (click)="closeNav()" routerLink="/core/admin/parcour" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 13C9.70833 19 3.29167 13 1 19" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"
@@ -808,7 +1028,7 @@
         </a>
       </li>
 
-      <li class="mb-1 group">
+      <li (click)="closeNav()" class="mb-1 group">
         <a routerLink="/core/admin/utilisateur" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -826,7 +1046,7 @@
       </li>
 
       <li class="mb-1 group">
-        <a *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a (click)="closeNav()" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -845,7 +1065,7 @@
       </li>
 
       <li class="mb-1 group">
-        <a *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a  (click)="closeNav()" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -862,7 +1082,7 @@
           <span class="font-inter font-semibold text-sm ml-2">Transactions</span>
         </a>
       </li>
-      
+
     </ul>
   </nav>
 

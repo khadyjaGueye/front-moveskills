@@ -117,7 +117,7 @@ export class AjoutParcoursComponent implements OnInit {
     this.selectedSkills.forEach(skill => {
       formData.append('competences[]', skill.id.toString());
     });
-    console.log(formData);
+    //console.log(this.selectedSkills);
 
     // Envoi des données via le service
     this.service.url = environment.apiBaseUrl + 'parcours';

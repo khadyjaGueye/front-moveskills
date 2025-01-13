@@ -12,9 +12,14 @@
               <span class="text-sm text-[#ABB0AB]">F.CFA</span>
             </div>
             <div class="flex gap-2">
-              <button class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Aujourd’hui</button>
-              <button class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Semaine</button>
-              <button class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Mois</button>
+              <button
+                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Aujourd’hui</button>
+              <button
+                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Semaine</button>
+              <button
+                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Mois</button>
+              <button
+                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Année</button>
             </div>
           </div>
         </div>
@@ -31,20 +36,10 @@
     <h3 class="text-lg font-bold text-gray-800 mb-4">Liste des Formateurs</h3>
     <div class="space-y-4">
       <!-- Formateur -->
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between" *ngFor="let formateur of formateurs">
         <div class="flex items-center">
           <img class="w-12 h-12 rounded-full" src="assets/images/user.png" alt="Photo Formateur">
-          <span class="ml-4 text-gray-800 font-medium">Roland Kyedrebeogo</span>
-        </div>
-        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 1L7 7L1 13" stroke="#2C7C79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </div>
-      <!-- Autres formateurs -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <img class="w-12 h-12 rounded-full" src="assets/images/user.png" alt="Photo Formateur">
-          <span class="ml-4 text-gray-800 font-medium">Roland Kyedrebeogo</span>
+          <span class="ml-4 text-gray-800 font-medium">{{formateur.name}}</span>
         </div>
         <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 1L7 7L1 13" stroke="#2C7C79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -61,16 +56,16 @@
     <h3 class="text-lg font-bold text-gray-800 mb-4">Apprenants et Parcours</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <div class="bg-[#EFEFEF] p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]">Carte 1</h4>
-        <p class="text-[#2C7C79]">Contenu de la carte 1</p>
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreInscrits"></h4>
+        <p class="text-[#2C7C79]">Inscrits</p>
       </div>
       <div class="bg-gray-100 p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]">Carte 2</h4>
-        <p class="text-[#2C7C79]">Contenu de la carte 2</p>
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreApprenants"></h4>
+        <p class="text-[#2C7C79]">Apprenants</p>
       </div>
       <div class="bg-gray-100 p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]">Carte 3</h4>
-        <p class="text-[#2C7C79]">Contenu de la carte 3</p>
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreFormateur"></h4>
+        <p class="text-[#2C7C79]">Formateurs</p>
       </div>
     </div>
   </div>

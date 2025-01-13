@@ -36,6 +36,7 @@ export class ParcoursComponent implements OnInit {
   selectedChapitre: any = null;
   contenuAffiche: any = null;
   redirect_url: string = "";
+  contenu:boolean = false
 
   constructor(private service: ApprenantService) { }
 
@@ -83,7 +84,8 @@ export class ParcoursComponent implements OnInit {
 
   displayContenu(chapitreId: number) {
     this.selectedChapitre = this.chapitres.find(chap => chap.id === chapitreId);
-    this.getDataContenu(chapitreId)
+    this.getDataContenu(chapitreId);
+    this.contenu = true
   }
 
   getDataContenu(idChapitre: number) {
@@ -105,9 +107,18 @@ export class ParcoursComponent implements OnInit {
   afficherContenu(contenu: any) {
     this.contenuAffiche = contenu;
   }
-  closeModalContenuChapitre() {
-    if (this.selectedChapitre == null) {
 
+
+  closeModalContenuChapitre() {
+    this.contenu = false
+    if (this.selectedChapitre == null) {
+      // Logic to close the modal
+      const modal = document.getElementById('modalId'); // Remplacez 'modalId' par l'ID réel de votre modal
+      console.log(modal);
+
+      if (modal) {
+        modal.classList.add('hidden'); // Exemple pour cacher le modal
+      }
     }
   }
 

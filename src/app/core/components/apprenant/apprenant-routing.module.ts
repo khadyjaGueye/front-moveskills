@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ApprenantComponent } from './apprenant/apprenant.component';
 import { ListComponent } from './list/list.component';
@@ -12,6 +12,7 @@ import { LoisComponent } from './lois/lois.component';
 import { DernierTestComponent } from './dernier-test/dernier-test.component';
 import { ResultatLoisComponent } from './resultat-lois/resultat-lois.component';
 import { ParcourAcheterComponent } from './parcour-acheter/parcour-acheter.component';
+import { InvitationComponent } from './invitation/invitation.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'test', component: DernierTestComponent, canActivate: [authGuard] },
       { path: 'resultatLois', component: ResultatLoisComponent, canActivate: [authGuard] },
       { path: '', component: ParcourAcheterComponent, canActivate: [authGuard] },
+      { path: 'invitation', component: InvitationComponent, canActivate: [authGuard] },
     ]
   }
 ];
