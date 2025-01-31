@@ -48,10 +48,13 @@ export class ParcoursComponent implements OnInit {
   }
 
   getDataParcours() {
-    this.service.url = environment.apiBaseUrl + "parcours";
+    this.isLoading = true
+    this.service.url = environment.apiBaseUrl + "parcours/status/approved";
     return this.service.all().subscribe(resp => {
       this.parcours = resp.data.parcours;
-      this.isLoading = false; // Données chargées, on masque le spinner
+     // console.log(this.parcours);
+
+     this.isLoading = false; // Données chargées, on masque le spinner
     })
   }
   nextStep() {
@@ -188,6 +191,10 @@ export class ParcoursComponent implements OnInit {
       }
     });
   }
+  elementsAffiches:number = 4; // Par défaut, afficher 4 éléments
 
-
+ // Fonction pour afficher plus d'éléments
+ voirPlus() {
+  this.elementsAffiches += 4; // Augmenter de 4 éléments
+}
 }

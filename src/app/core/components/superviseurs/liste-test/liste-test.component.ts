@@ -57,15 +57,19 @@ export class ListeTestComponent implements OnInit {
   }
 
   getDataParticipant() {
+    this.isLoading = true
     this.service.url = environment.apiBaseUrl + "RapportCouleurDominante";
     this.service.all().subscribe({
       next: (resp) => {
         this.userDetails = resp.data.userDetails;
         //console.log(this.userDetails);
         this.report = resp.data.report;
+       // console.log(this.report);
         this.isLoading = false; // Le chargement est terminé
         this.initItems();
         this.startCounters();
+      },error:(err)=>{
+        console.log(err);
       }
     })
   }

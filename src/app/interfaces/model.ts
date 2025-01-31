@@ -1,6 +1,7 @@
 import { UserInfo } from "../auth/interfaces/auth-interface"
 import { ApprenantsAyantAchete, Formateur, Inscrit, TopParcour, Vente } from "../core/components/admin/interface/model"
 import { Apprenant } from "../core/components/apprenant/interface/apprenant"
+import { Parcours } from "../core/components/formateur/interface/model"
 
 
 export interface Model<T> {
@@ -32,7 +33,7 @@ export interface Data {
   report: Report;
   resultats: ResultatLois[]
   affiliations: Affiliation[]
-  data: ParcourAcheter[]
+  parcoursAcheter: ParcourAcheter[]
   formateurs: User[];
   // formateurs: Formateur[]
   ventes: Vente[]
@@ -42,7 +43,51 @@ export interface Data {
   months: string[]
   parcours_par_mois: number[]
   top_parcours: TopParcour[]
-  total_vente: number
+  total_vente: number;
+  profils: Profil[];
+  citations: Citation[];
+  //c'est la partie formateur
+  nombreAchat: number
+  transactions: Transactions[]
+  parcoursPlusAchetes: ParcoursPlusAchetes[]
+  totalAffilition: User[]
+  registeredAffiliations: User[]
+  notregisteredAffiliations: User[]
+  userAchetesParcourDetails: any[]
+  vente_par_mois: number[];
+  totalRevenu: number;
+  nombreTotalParcours: Parcour[];
+  nombreTotalSuperviseur: User[]
+  nombreParcourPublie: Parcour[];
+  nombreParcourNonPublie: Parcour[]
+  nombreParcourAchete: Parcour[];
+  data: Citation[];
+  listeParcoursAchete: Parcours[];
+  nombreTestFait: number;
+  nombreparcourAchete: number;
+  //c'est la partie admi top_parcours:TopParcour[]
+}
+
+export interface Transactions {
+  id: number;
+  user_name: string;
+  parcour_name: string
+  parcour_prix: number
+  purchase_date: string
+
+}
+
+export interface ParcoursPlusAchetes {
+  id: number
+  parcour_name: string
+  total_achats: number
+}
+
+export interface UserAchetesParcourDetails {
+  id: number
+  user_name: string
+  user_email: string
+  purchase_date: string
 }
 export interface Question {
   text: string;
@@ -78,6 +123,8 @@ export interface InfoData {
   prix: number;
   image: string;
   description: string;
+  profils: number[];
+  aptitudes: number[];
 
 }
 
@@ -149,7 +196,24 @@ export interface Parcour {
   nombre_videos: number
   nombre_documents: number
   image: string;
-  description: string
+  description: string;
+  tests_pre_evaluation: TestsPreEvaluation
+}
+
+export interface TestsPreEvaluation {
+  id: number;
+  parour_id: number;
+  type: string;
+  test: TestEvaluation[];
+}
+
+export interface TestEvaluation {
+  id: number;
+  test_id: number
+  question_text: string;
+  note: number;
+  created_at: string;
+  user: User;
 }
 export interface ContentItem {
   id: number
@@ -173,7 +237,9 @@ export interface Video {
 export interface Chapitre {
   id: number;
   nom_chapitre: string;
-  parcour_id: number
+  parcour_id: number;
+  updated_at: string
+
 }
 export interface Contenu {
   id: number
@@ -303,4 +369,26 @@ export interface ParcourAcheter {
   nom_parcour: string;
   description: string;
   duree: number;
+}
+
+export interface Profil {
+  id: number;
+  libelle: string;
+  aptitudes: Aptitude[];
+  created_at: string
+
+}
+
+export interface Aptitude {
+  id: number;
+  libelle: string;
+  profid_id: number;
+  created_at: string
+}
+
+export interface Citation {
+  id: number;
+  libelle: string;
+  content: string;
+  auteur: string;
 }

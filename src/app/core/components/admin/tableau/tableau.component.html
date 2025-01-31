@@ -1,3 +1,108 @@
+<!-- Section des cartes -->
+<div class="flex flex-col gap-6 p-4 lg:flex-row">
+  <!-- Cartes -->
+  <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Apprenants et Parcours</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Card 1 -->
+      <div class="bg-[#D9E8E3] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreInscrits"></h4>
+        <p class="text-[#2C7C79]"><a routerLink="/core/admin/utilisateur">Inscrits</a></p>
+      </div>
+      <!-- Card 2 -->
+      <div class="bg-[#F9BD4F] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#2C7C79]" appCountUp [endValue]="nombreApprenants"></h4>
+        <p class="text-white">Apprenants</p>
+      </div>
+      <!-- Card 3 -->
+      <div class="bg-[#2C7C79] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#F9BD4F]" appCountUp [endValue]="nombreFormateur"></h4>
+        <p class="text-white">Formateurs</p>
+      </div>
+      <!-- Card 4 -->
+      <div class="bg-[#2C7C7933] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreSuperviseurs"></h4>
+        <p class="text-[#2C7C79]">Superviseurs</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="text-lg font-bold text-[#2C7C79] mb-4">Liste des apprenants ayant acheté un parcours</h3>
+    <table class="w-full table-auto border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Apprenant</th>
+          <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Parcours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vente of ventes">
+          <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+            {{ vente.name }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+            <ul>
+              <li *ngFor="let parcour of vente.purchased_parcours">{{ parcour.nom_parcour }}</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="flex flex-col gap-6 p-4 lg:flex-row">
+  <!-- Cartes -->
+  <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Apprenants et Parcours</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-[#D9E8E3] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotalPublier"></h4>
+        <p class="text-[#2C7C79]"><a routerLink="/core/admin/parcour">Nombre Parcours Publier</a></p>
+      </div>
+      <div class="bg-[#F9BD4F] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcoursTotalNonPublier"></h4>
+        <p class="text-white"><a routerLink="/core/admin/parcour">Nombre Parcours Non Publier</a></p>
+      </div>
+      <div class="bg-[#2C7C79] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotal"></h4>
+        <p class="text-white"><a routerLink="/core/admin/parcour">Nombre Total Parcours</a></p>
+      </div>
+      <div class="bg-[#D9E8E3] p-4 rounded shadow flex flex-col justify-center items-center">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotalAcheter"></h4>
+        <p class="text-[#2C7C79]">Nombre Total Parcours Achéter</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="text-lg font-bold text-[#2C7C79] mb-4">Liste des apprenants ayant acheté un parcours</h3>
+    <table class="w-full table-auto border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Apprenant</th>
+          <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Parcours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vente of ventes">
+          <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+            {{ vente.name }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+            <ul>
+              <li *ngFor="let parcour of vente.purchased_parcours">{{ parcour.nom_parcour }}</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
 <div class="flex flex-col gap-6 p-4 lg:flex-row">
   <!-- Graphique -->
   <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
@@ -8,18 +113,14 @@
           <h2 class="text-lg font-semibold text-[#114C5A]">Les ventes</h2>
           <div class="flex justify-between mt-2">
             <div>
-              <span class="text-xl font-bold text-[#114C5A]">3 838 000</span>
+              <span class="text-xl font-bold text-[#114C5A]">{{total_vente}}</span>
               <span class="text-sm text-[#ABB0AB]">F.CFA</span>
             </div>
             <div class="flex gap-2">
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Aujourd’hui</button>
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Semaine</button>
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Mois</button>
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Année</button>
+              <button *ngFor="let filtre of ['day','week','month','year']" (click)="getDataParcour(filtre)"
+                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">
+                <span> {{ filtre | titlecase }}</span>
+              </button>
             </div>
           </div>
         </div>
@@ -33,13 +134,13 @@
 
   <!-- Liste des formateurs -->
   <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-gray-800 mb-4">Liste des Formateurs</h3>
+    <h3 class="text-lg font-bold text-[#2C7C79] mb-4">Liste des Formateurs</h3>
     <div class="space-y-4">
       <!-- Formateur -->
       <div class="flex items-center justify-between" *ngFor="let formateur of formateurs">
         <div class="flex items-center">
           <img class="w-12 h-12 rounded-full" src="assets/images/user.png" alt="Photo Formateur">
-          <span class="ml-4 text-gray-800 font-medium">{{formateur.name}}</span>
+          <span class="ml-4 text-[#2C7C79] font-medium">{{formateur.name}}</span>
         </div>
         <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 1L7 7L1 13" stroke="#2C7C79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -49,30 +150,38 @@
   </div>
 </div>
 
-<!-- Section des cartes -->
-<div class="flex flex-col gap-6 p-4 lg:flex-row">
-  <!-- Cartes -->
-  <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-gray-800 mb-4">Apprenants et Parcours</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="bg-[#EFEFEF] p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreInscrits"></h4>
-        <p class="text-[#2C7C79]">Inscrits</p>
-      </div>
-      <div class="bg-gray-100 p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreApprenants"></h4>
-        <p class="text-[#2C7C79]">Apprenants</p>
-      </div>
-      <div class="bg-gray-100 p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreFormateur"></h4>
-        <p class="text-[#2C7C79]">Formateurs</p>
-      </div>
-    </div>
-  </div>
 
-  <!-- Graphique -->
-  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-gray-800 mb-4">Graphique</h3>
-    <div id="chart" class="h-64 bg-gray-100 rounded"></div>
-  </div>
+
+<div class=" ml-5 mr-5  bg-white shadow-lg rounded-lg p-4">
+  <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Liste des top parcours</h3>
+  <table class="w-full table-auto border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Nom</th>
+        <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Email</th>
+        <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Parcours</th>
+        <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Total vente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let top of top_parcours">
+        <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+          {{ top.nom_parcour }}
+        </td>
+        <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+          {{ top.user.name }}
+        </td>
+        <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+          {{ top.user.email }}
+        </td>
+        <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+          {{top.total_achats}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>

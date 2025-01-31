@@ -10,6 +10,13 @@ import { AffiniteComponent } from './affinite/affinite.component';
 import { AjoutApprenantComponent } from './ajout-apprenant/ajout-apprenant.component';
 import { authGuard } from '../../../shared/guard/auth.guard';
 import { TableauBordComponent } from './tableau-bord/tableau-bord.component';
+import { TestComponent } from './test/test.component';
+import { CitationComponent } from './citation/citation.component';
+import { ShowTestComponent } from './show-test/show-test.component';
+import { UpdateParcoursComponent } from './update-parcours/update-parcours.component';
+import { UpdateTestComponent } from './update-test/update-test.component';
+import { ShowAptitudeComponent } from './show-aptitude/show-aptitude.component';
+
 
 const routes: Routes = [
   {
@@ -22,6 +29,13 @@ const routes: Routes = [
       { path: 'affinite', component: AffiniteComponent, canActivate: [authGuard] },
       { path: 'apprenant', component: AjoutApprenantComponent, canActivate: [authGuard] },
       { path: '', component: TableauBordComponent, canActivate: [authGuard] },
+      { path: 'test', component: TestComponent, canActivate: [authGuard] },
+      { path: 'citation', component: CitationComponent, canActivate: [authGuard] },
+      { path: 'show-test/:id', component: ShowTestComponent, canActivate: [authGuard] },
+      { path: 'update-parcours/:id', component: UpdateParcoursComponent, canActivate: [authGuard] },
+      { path: 'update-test/:id/id', component: UpdateTestComponent, canActivate: [authGuard] },
+      { path: 'show-aptitude/:id/id', component: ShowAptitudeComponent, canActivate: [authGuard] },
+
     ]
   }
 ];

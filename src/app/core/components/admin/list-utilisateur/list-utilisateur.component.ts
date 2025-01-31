@@ -2,14 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ApprenantService } from '../../apprenant/service/apprenant.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { environment } from '../../../../../environments/environment.development';
 import { tap } from 'rxjs';
+import { Inscrit } from '../interface/model';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
   selector: 'app-list-utilisateur',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,SharedModule],
   templateUrl: './list-utilisateur.component.html',
   styleUrl: './list-utilisateur.component.css'
 })
@@ -18,9 +19,13 @@ export class ListUtilisateurComponent implements OnInit {
   display: boolean = false;
   displayEdit: boolean = false;
   inscriptionForm: FormGroup;
-
+  inscris:Inscrit[]=[]
   isApprenantSelected: boolean = false; // Gère l'affichage conditionnel du champ
-
+  currentPage: number = 1; // Page actuelle
+  itemsPerPage: number = 5; // Nombre d'éléments par page
+  filteredResultats = [...this.inscris]; // Copie filtrée des résultats
+  searchTerm: string = ''; // Terme de recherche
+  isLoading:boolean = false;
 
   constructor(private fb: FormBuilder, private service: ApprenantService) {
     this.inscriptionForm = this.fb.group({
@@ -40,7 +45,7 @@ export class ListUtilisateurComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.getDataInscrit('all');
   }
   openModalAjout() {
     this.display = true;
@@ -88,5 +93,43 @@ export class ListUtilisateurComponent implements OnInit {
     return this.inscriptionForm.get('password')?.value === this.inscriptionForm.get('password_confirmation')?.value;
   }
 
+  getDataInscrit(filtre:string){
+    this.isLoading = true
+    this.service.url = `${environment.apiBaseUrl}dashboard?filter=${filtre}`;
+    this.service.all().subscribe({
+      next:(resp)=>{
+        this.inscris = resp.data.inscrits
+       // console.log(this.inscris);
+
+        this.isLoading = false
+      }
+    })
+  }
+
+   // Méthode pour calculer le nombre total de pages
+   get totalPages() {
+    return Math.ceil(this.inscris.length / this.itemsPerPage);
+  }
+   // Méthode pour changer de page
+   changePage(page: number) {
+    this.currentPage = page;
+  }
+
+   // Méthode pour récupérer les données à afficher pour la page actuelle
+   get paginatedResultats() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.inscris.slice(startIndex, endIndex);
+  }
+
+
+  // Méthode pour filtrer les résultats
+  filterResultats() {
+    const search = this.searchTerm.toLowerCase();
+    this.filteredResultats = this.inscris.filter(item =>
+      item.name.toLowerCase().includes(search) || item.email.toLowerCase().includes(search)
+    );
+    this.currentPage = 1; // Réinitialiser à la première page après la recherche
+  }
 
 }

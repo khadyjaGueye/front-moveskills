@@ -4,10 +4,12 @@ import { ApprenantService } from '../service/apprenant.service';
 import { ResultatLois } from '../../../../interfaces/model';
 import { environment } from '../../../../../environments/environment.development';
 
+import { SharedModule } from '../../../../shared/shared.module';
+
 @Component({
   selector: 'app-resultat-lois',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './resultat-lois.component.html',
   styleUrl: './resultat-lois.component.css'
 })
@@ -16,6 +18,7 @@ export class ResultatLoisComponent implements OnInit {
   resultats: ResultatLois[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 1;
+  isLoading: boolean = false;
 
   constructor(private service: ApprenantService) {
 
@@ -25,10 +28,12 @@ export class ResultatLoisComponent implements OnInit {
   }
 
   getDataResultat() {
+    this.isLoading = true
     this.service.url = environment.apiBaseUrl + "loi/resultat";
     this.service.all().subscribe({
       next: (resp) => {
         this.resultats = resp.data.resultats
+        this.isLoading = false
         //console.log(this.resultats);
 
         // this.resultats = resp.data.resultats.sort((a: any, b: any) => {

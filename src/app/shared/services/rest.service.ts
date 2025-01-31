@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Data, Model } from '../../interfaces/model';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,15 @@ export class RestService<T> {
 
   update(data: any, id: number | null): Observable<Model<Data>> {
     return this.http.put<Model<Data>>(`${this.url}/${id}`, data);
+  }
+  edit(data: any, id: number | null,parcour:string): Observable<Model<Data>> {
+    const baseUrl = environment.apiBaseUrl + "parcours";
+    return this.http.put<Model<Data>>(`${baseUrl}/${id}${parcour}`, data)
+  }
+
+  edit1(data: any, id: number | null): Observable<Model<Data>> {
+    const api = "https://backend-moveskills.dev-illimitis.com/api/parcours"
+    return this.http.put<Model<Data>>(`${api}/${id}/status/approved`, data);
   }
 
   delete(id: number): Observable<Model<Data>> {

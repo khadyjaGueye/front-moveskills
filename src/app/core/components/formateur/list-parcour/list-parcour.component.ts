@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 
 @Component({
@@ -35,7 +35,7 @@ export class ListParcourComponent implements OnInit {
   displayVideo: boolean = false;
   displayDocument: boolean = false;
   displayChapitre: boolean = false;
-  isLoading: boolean = true; // Variable de chargement
+  isLoading: boolean = false; // Variable de chargement
   public page: number = 1;
   public itemsPerPage: number = 5; // Nombre d'éléments par page
   public searchTerm: string = ''; // Variable pour stocker la valeur de la recherche
@@ -43,6 +43,7 @@ export class ListParcourComponent implements OnInit {
   message: string = "";
   showAddChapitreForm = false; // Variable pour afficher/masquer le formulaire
   tab: number = 0;
+
   // Liste des compétences disponibles
   // skills: Skill[] = [
   //   { id: 1, name: 'Développement Web' },
@@ -57,12 +58,14 @@ export class ListParcourComponent implements OnInit {
     info: {
       nom_parcour: '',
       objectif: '',
-      image:'',
-      description:'',
+      image: '',
+      description: '',
       status_type: '',
       status_audiance: '',
       duree: 0,
       competences: [], // Modifié pour stocker les compétences sélectionnées
+      profils: [],
+      aptitudes: [],
       status_disponibilite: 20,
       prix: 0
     },
@@ -80,7 +83,7 @@ export class ListParcourComponent implements OnInit {
   idParcour: number = 1; // Variable pour stocker l'ID du parcours créé .
   nomParcour: string = ""; // Pour garder le parcour cliqué
 
-  constructor(private service: FormateurService, private sanitizer: DomSanitizer, private fb: FormBuilder) {
+  constructor(private service: FormateurService, private sanitizer: DomSanitizer, private fb: FormBuilder, private router: Router) {
     this.formDataChap = fb.group({
       nom_chapitre: [''],
       prix: [''],
@@ -116,7 +119,7 @@ export class ListParcourComponent implements OnInit {
     this.savedData = "";
   }
 
-  openUpdate(parcour:Parcour){
+  openUpdate(parcour: Parcour) {
     console.log(parcour);
 
   }
@@ -336,11 +339,13 @@ export class ListParcourComponent implements OnInit {
   }
 
   getParcours() {
-    this.service.url = environment.apiBaseUrl + "parcours";
+    this.isLoading = true;
+    this.service.url = environment.apiBaseUrl + "parcours/formateur";
     this.service.all().subscribe(resp => {
       this.parcours = resp.data.parcours;
+     // console.log(this.parcours);
       this.isLoading = false; // Données chargées, on masque le spinner
-       //console.log(this.parcours);
+      //console.log(this.parcours);
     })
   }
 
@@ -431,6 +436,49 @@ export class ListParcourComponent implements OnInit {
     }
   }
 
+  openUpdateParcours(id: number) {
+    this.router.navigate(['/core/formateur/update-parcours', id]); // Passer l'ID du parcours
+  }
+
+  deleteParcours(id: number): void {
+    Swal.fire({
+      title: 'Êtes-vous sûr ?',
+      text: 'Cette action supprimera le parcours définitivement.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#114C5A  ',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      // if (result.isConfirmed) {
+      //   this.service.url = `${environment.apiBaseUrl}citations/${id}`;
+      //   this.service.delete(id).subscribe({
+      //     next: (resp) => {
+      //       // Mise à jour locale après suppression
+      //       this.citations = this.citations.filter(c => c.id !== id);
+      //       Swal.fire('Supprimé !', 'La citation a été supprimée avec succès.', 'success');
+      //     },
+      //     error: (error) => {
+      //       console.error('Erreur lors de la suppression:', error);
+      //       Swal.fire('Erreur', 'Une erreur est survenue lors de la suppression.', 'error');
+      //     }
+      //   });
+      // }
+    });
+  }
+
+  demandePublicationParcour(id: number) {
+    const parcour = "/status/pending"
+    //console.log(id);
+    this.service.edit("pending", id, parcour).subscribe({
+      next: (resp) => {
+        this.service.handleResponse(resp);
+      }, error: (erreur) => {
+        console.log(erreur);
+      }
+    })
+  }
 
 
 }

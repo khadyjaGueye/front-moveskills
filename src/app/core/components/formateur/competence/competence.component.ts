@@ -3,39 +3,45 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormateurService } from '../service/formateur.service';
 import { environment } from '../../../../../environments/environment.development';
 import { TestService } from '../../../../shared/services/test.service';
-import { Competence } from '../../../../interfaces/model';
+import { Aptitude, Competence, Profil } from '../../../../interfaces/model';
 import { firstValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-competence',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, NgxPaginationModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, NgxPaginationModule],
   templateUrl: './competence.component.html',
   styleUrl: './competence.component.css'
 })
 export class CompetenceComponent implements OnInit {
 
   showAddCompetenceForm = false; // Variable pour afficher/masquer le formulaire
-  showUpdateCompetenceForm = false
+  showUpdateCompetenceForm = false;
+  isLoading: boolean = false;
+  isModalOpen: boolean = false; // État du modal
   formData: FormGroup;
   competences: Competence[] = [];
+  profils: Profil[] = [];
+  aptitudes: Aptitude[] = [];
   page: number = 1;
   itemsPerPage: number = 5; // Nombre d'éléments par page
   searchTerm: string = ''; // Variable pour stocker la valeur de la recherche
   currentCompetenceId: number | null = null; // Ajoutez cette ligne pour définir la propriété
 
-  constructor(private service: FormateurService, private fb: FormBuilder, private test: TestService) {
+  constructor(private service: FormateurService, private fb: FormBuilder, private test: TestService, private router: Router) {
     this.formData = fb.group({
       nom: [''],
     })
 
   }
   ngOnInit(): void {
-    this.getDataCompetence()
+    this.getDataProfil();
+
   }
 
   OpenCreateComptence() {
@@ -47,11 +53,11 @@ export class CompetenceComponent implements OnInit {
     const competence = this.filteredCompetence.find(comp => comp.id === id);
     if (competence) {
       this.showAddCompetenceForm = true;
-      this.formData.patchValue({ nom: competence.nom });
+      this.formData.patchValue({ nom: competence.libelle });
       this.currentCompetenceId = id; // Sauvegarder l'id pour l'API de mise à jour
-    }else {
+    } else {
       // console.log('Aucune compétence trouvée pour cet ID :', id);
-  }
+    }
   }
   // Méthode pour envoyer les données créer à l'API
   async createCompetence() {
@@ -86,26 +92,64 @@ export class CompetenceComponent implements OnInit {
     );
   }
 
-  getDataCompetence() {
-    this.service.url = environment.apiBaseUrl + "competences";
+  // Fonction de filtre basée sur le nom du competence
+  get filteredCompetence() {
+    return this.profils.filter(profil =>
+      profil.libelle.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  getDataProfil() {
+    this.isLoading = true
+    this.service.url = environment.apiBaseUrl + "profils";
     this.service.all().subscribe({
-      next: (response) => {
-        this.competences = response.data.competences;
-        //console.log(response);
-        //this.competences = response.data.competences;
+      next: (resp) => {
+        this.profils = resp.data.profils;
+        this.isLoading = false
       }, error: (err) => {
-        // console.error('Erreur lors de la récupération des chapicompétence:', err);
-      }, complete: () => {
-        //console.log('Récupération des chapitres terminée');
+
       }
     })
   }
 
-  // Fonction de filtre basée sur le nom du competence
-  get filteredCompetence() {
-    return this.competences.filter(parcour =>
-      parcour.nom.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  deleteCitation(id: number): void {
+    Swal.fire({
+      title: 'Êtes-vous sûr ?',
+      text: 'Cette action supprimera le profil définitivement.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#114C5A  ',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //this.service.url = environment.apiBaseUrl + "profil";
+        this.service.delete(id).subscribe({
+          next: (resp) => {
+            // Mise à jour locale après suppression
+            this.profils = this.profils.filter(c => c.id !== id);
+            Swal.fire('Supprimé !', 'La citation a été supprimée avec succès.', 'success');
+          },
+          error: (error) => {
+            console.error('Erreur lors de la suppression:', error);
+            Swal.fire('Erreur', 'Une erreur est survenue lors de la suppression.', 'error');
+          }
+        });
+      }
+    });
   }
+
+  showApitude(id: number, aptitude: Aptitude[]) {
+   // console.log(aptitude);
+    this.aptitudes = aptitude;
+    this.isModalOpen = true;
+  }
+
+  // Méthode pour fermer le modal
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
 
 }

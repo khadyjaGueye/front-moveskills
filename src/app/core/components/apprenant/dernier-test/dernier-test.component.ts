@@ -4,11 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Test } from '../../../../interfaces/model';
 import { ApprenantService } from '../service/apprenant.service';
 import { environment } from '../../../../../environments/environment.development';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
   selector: 'app-dernier-test',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,SharedModule],
   templateUrl: './dernier-test.component.html',
   styleUrl: './dernier-test.component.css'
 })
@@ -19,6 +20,8 @@ export class DernierTestComponent implements OnInit {
   displayColorCharacteristics: boolean = false;
   id!: number;
   tests: Test[] = [];
+  isLoading: boolean = false;
+
   constructor(private service: ApprenantService) { }
 
   ngOnInit(): void {
@@ -90,8 +93,8 @@ export class DernierTestComponent implements OnInit {
 
   dernierTest: any = null;
   getDataResultatsTest() {
-  //  console.log( this.service.url = `${environment.apiBaseUrl}question1/${this.id}`);
-
+    //  console.log( this.service.url = `${environment.apiBaseUrl}question1/${this.id}`);
+    this.isLoading = true
     this.service.url = `${environment.apiBaseUrl}question1/${this.id}`;
     this.service.all().subscribe({
       next: (rep) => {
@@ -109,6 +112,7 @@ export class DernierTestComponent implements OnInit {
         } else {
           console.error('Les données des tests sont manquantes ou non valides.');
         }
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Erreur lors du chargement des tests:', err);
@@ -117,7 +121,7 @@ export class DernierTestComponent implements OnInit {
   }
 
   // Fonction pour obtenir la couleur sous forme de code hexadécimal
-  getColorCode(color: string ): string {
+  getColorCode(color: string): string {
     const colorMap: any = {
       bleu: '#0000FF',
       rouge: '#FF0000',

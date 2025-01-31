@@ -21,6 +21,7 @@ export class ResultatComponent implements OnInit {
   public chart: any;
   // Données du graphique
   isModalOpen = false;
+  isLoading:boolean = false;
   selectedColorDetails: any;
   dataColor: User[] = [];
   pieChart: any;
@@ -212,7 +213,6 @@ export class ResultatComponent implements OnInit {
       } else {
         this.dataColor = []; // Initialiser à un tableau vide pour éviter les erreurs
       }
-
       this.selectedColorDetails = this.dataColor;
       this.isModalOpen = true;
     });
@@ -259,15 +259,17 @@ export class ResultatComponent implements OnInit {
   }
 
   getDataParticipant() {
+    this.isLoading = true
     this.service.url = environment.apiBaseUrl + "RapportCouleurDominante";
     this.service.all().subscribe({
       next: (resp) => {
         this.userDetails = resp.data.userDetails;
        // console.log(this.userDetails);
         this.report = resp.data.report;
-        // this.isLoading = false; // Le chargement est terminé
+       // console.log(this.report);
         this.initItems();
         this.startCounters();
+        this.isLoading = false;
       }
     })
   }
@@ -277,7 +279,6 @@ export class ResultatComponent implements OnInit {
   generateDiskBackground(): string {
     let gradient = '';
     let start = 0;
-
     this.items.forEach(item => {
       const end = start + item.counter;
       gradient += `${item.color} ${start}% ${end}%, `;
@@ -287,6 +288,7 @@ export class ResultatComponent implements OnInit {
     // Retirer la virgule finale et retourner la couleur de fond du disque
     return `conic-gradient(${gradient.slice(0, -2)})`;
   }
+
   getRotation(item: any): number {
     let start = 0;
 

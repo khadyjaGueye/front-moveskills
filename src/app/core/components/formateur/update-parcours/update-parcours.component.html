@@ -1,0 +1,101 @@
+<section class="max-w-8xl p-6 mx-auto bg-[#114C5A] rounded-md shadow-md dark:bg-gray-800 font-inter">
+  <h1 class="text-xl text-white capitalize dark:text-white">Informations Général</h1>
+  <form>
+    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Nom Parcour -->
+      <div>
+        <label class="text-white dark:text-gray-200" for="nom">Nom Parcour</label>
+        <input id="nom" type="text" [(ngModel)]="formData.info.nom_parcour" name="nom"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+      </div>
+
+      <!-- Prix -->
+      <div>
+        <label class="text-white dark:text-gray-200" for="prix">Prix</label>
+        <input id="prix" type="number" [(ngModel)]="formData.info.prix" name="prix"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+      </div>
+
+      <!-- Status Type -->
+      <div>
+        <label class="text-white dark:text-gray-200">Status Type</label>
+        <div class="flex items-center mt-2 space-x-4">
+          <label class="text-white flex items-center">
+            <input [(ngModel)]="formData.info.status_type" type="radio" name="status_type" value="gratuit"
+              class="text-blue-500 focus:ring-blue-500">
+            <span class="ml-2">Gratuit</span>
+          </label>
+          <label class="text-white flex items-center">
+            <input [(ngModel)]="formData.info.status_type" type="radio" name="status_type" value="premium"
+              class="text-blue-500 focus:ring-blue-500">
+            <span class="ml-2">Premium</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Durée -->
+      <div>
+        <label class="text-white dark:text-gray-200" for="duree">Durée</label>
+        <input id="duree" name="duree" type="number" [(ngModel)]="formData.info.duree"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label class="text-white dark:text-gray-200" for="description">Description</label>
+        <textarea id="description" [(ngModel)]="formData.info.description" name="description"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+      </div>
+
+      <!-- Status Audience -->
+      <div>
+        <label class="text-white dark:text-gray-200">Status Audience</label>
+        <div class="flex items-center mt-2 space-x-4">
+          <label class="text-white flex items-center">
+            <input [(ngModel)]="formData.info.status_audiance" type="radio" name="status_audience" value="public"
+              class="text-blue-500 focus:ring-blue-500">
+            <span class="ml-2">Public</span>
+          </label>
+          <label class="text-white flex items-center">
+            <input [(ngModel)]="formData.info.status_audiance" type="radio" name="status_audience" value="prive"
+              class="text-blue-500 focus:ring-blue-500">
+            <span class="ml-2">Privé</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="sm:col-span-2">
+        <label class="block text-sm text-white">Image</label>
+        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+          <div class="space-y-1 text-center">
+            <svg class="mx-auto h-12 w-12 text-white" stroke="currentColor" fill="none" viewBox="0 0 48 48"
+              aria-hidden="true">
+              <path
+                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <div class="flex text-sm text-gray-600">
+              <label for="file-upload"
+                class="relative cursor-pointer bg-white rounded-md text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                <span>Upload a file</span>
+                <!-- <input id="file-upload" name="file-upload" type="file" [(ngModel)]="formData.info.image"
+                  (change)="onFileSelected($event)" class="sr-only"> -->
+              </label>
+            </div>
+            <p class="text-xs text-white">PNG, JPG, GIF up to 10MB</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <div class="flex justify-end mt-6">
+      <button (click)="updateParcours()"
+        class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-[#F9BD4F] rounded-md">
+        Save
+      </button>
+    </div>
+  </form>
+</section>
+

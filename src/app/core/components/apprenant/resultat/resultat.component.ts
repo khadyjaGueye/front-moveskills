@@ -4,11 +4,12 @@ import { ApprenantService } from '../service/apprenant.service';
 import { environment } from '../../../../../environments/environment.development';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @Component({
   selector: 'app-resultat',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule,],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,SharedModule],
   templateUrl: './resultat.component.html',
   styleUrl: './resultat.component.css'
 })
@@ -18,6 +19,7 @@ export class ResultatComponent implements OnInit {
   colorDominant: string | null = null;
   email!: string;
   id!: number;
+  isLoading: boolean = false;
   //https://web.moveskills.xyz/
 
   constructor(private service: ApprenantService) { }
@@ -42,7 +44,7 @@ export class ResultatComponent implements OnInit {
 
   openModal(test: Test) {
     this.selectedTest = test;
-   // console.log(this.selectedTest);
+    // console.log(this.selectedTest);
 
   }
   // Fonction pour fermer le modal
@@ -105,43 +107,19 @@ export class ResultatComponent implements OnInit {
   }
 
   getDataResultatsTest() {
+    this.isLoading = true;
     this.service.url = `${environment.apiBaseUrl}question1/${this.id}`;
     this.service.all().subscribe({
       next: (rep) => {
         this.tests = rep.data.tests;
-
         // Trier les tests par ordre décroissant (plus récent au plus ancien)
         this.tests.sort((a, b) => {
           return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
         });
+        this.isLoading = false;
       }
     })
   }
-  //   getCircleStyle(test: Test) {
-  //   // Récupérer directement les valeurs des couleurs
-  //   const rouge = test.rouge;
-  //   const vert = test.vert;
-  //   const bleu = test.bleu;
-  //   const jaune = test.jaune;
-
-  //   // Calculer le total pour s'assurer que la somme des couleurs est valide
-  //   const total = rouge + vert + bleu + jaune;
-
-  //   // Vérification pour éviter des erreurs de division par zéro
-  //   if (total === 0) {
-  //     return { 'background': 'gray' }; // Si la somme est 0, on affiche une couleur grise
-  //   }
-
-  //   // Génération du conic-gradient avec les valeurs de couleur directement utilisées
-  //   return {
-  //     'background': `conic-gradient(
-  //       red 0% ${rouge}%,
-  //       yellow ${rouge}% ${rouge + vert}%,
-  //       green ${rouge + vert}% ${rouge + vert + bleu}%,
-  //       blue ${rouge + vert + bleu}% 100%
-  //     )`
-  //   };
-  // }
 
   getCircleStyle() {
     return {

@@ -24,11 +24,13 @@ export class AffiniteComponent implements OnInit {
   affiliations: Affiliation[] = [];
   isInscrit: boolean = false;
   message: string | null = null; // Stocker le message renvoyé par l'API
+  isLoading: boolean = true;
 
   constructor(private service: FormateurService) { }
 
   ngOnInit(): void {
-    this.getDataUserNoInscrit()
+
+    this.getData('noinscrites')
   }
 
   openModalAjout() {
@@ -105,57 +107,34 @@ export class AffiniteComponent implements OnInit {
       },
       error: (err) => {
         this.service.handleResponse(err);
+        console.log(err);
+
       }
     });
   }
 
-
-
-
-  //Liste des utilisateur qui ont cree un compte
-  getDataUserAccept() {
-
-  }
-
-  // Récupérer les utilisateurs non inscrits
-  getDataUserNoInscrit() {
-    this.service.url = environment.apiBaseUrl + 'formateur/affiliations/noinscrites';
+  getData(affiliation: string) {
+    this.isLoading = true;
+    this.service.url = `${environment.apiBaseUrl}formateur/affiliations/${affiliation}`;
     this.service.all().subscribe({
       next: (resp) => {
         this.affiliations = resp.data.affiliations || [];
         if (this.affiliations.length === 0) {
           this.message = "Affiliations non inscrites"
         }
+        this.isLoading = false
       },
       error: (err) => {
-        // console.error('Erreur lors de la récupération des utilisateurs non inscrits:', err);
-        // this.message = 'Une erreur s\'est produite lors du chargement des données.';
+       console.log(err);
+
+        this.message = 'Une erreur s\'est produite lors du chargement des données.';
       }
-    });
-  }
-
-  // Récupérer les utilisateurs inscrits
-  getDataUserInscrit() {
-    this.service.url = environment.apiBaseUrl + 'formateur/affiliations/inscrites';
-    this.service.all().subscribe({
-      next: (resp) => {
-        this.affiliations = resp.data.affiliations || [];
-        this.affiliations = resp.data.affiliations || [];
-        if (this.affiliations.length === 0) {
-          this.message = "Affiliations inscrites non trouvées"
-        }
-
-      },
-      error: (err) => {
-        //console.error('Erreur lors de la récupération des utilisateurs inscrits:', err);
-      },
     });
   }
 
   // Récupérer les utilisateurs à relancer
   getDataRelancer() {
     this.service.url = environment.apiBaseUrl + 'formateur/affiliations/relancer';
-
     this.service.all().subscribe({
       next: (resp) => {
         this.affiliations = resp.data.affiliations || [];
@@ -171,6 +150,5 @@ export class AffiniteComponent implements OnInit {
 
   openListInscrit() {
     this.isInscrit = true;
-    this.getDataUserInscrit()
   }
 }

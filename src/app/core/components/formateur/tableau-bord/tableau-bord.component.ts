@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import ApexCharts from 'apexcharts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
-import { Parcour, User } from '../../../../interfaces/model';
+import { Parcour, ParcoursPlusAchetes, Transactions, User, UserAchetesParcourDetails } from '../../../../interfaces/model';
 import { ApprenantsAyantAchete, Inscrit, PurchasedParcour, TopParcour, Vente } from '../../admin/interface/model';
 import { FormateurService } from '../service/formateur.service';
 import { environment } from '../../../../../environments/environment.development';
@@ -23,32 +23,43 @@ export class TableauBordComponent implements OnInit {
   ventes: Vente[] = [];
   parcours: TopParcour[] = [];
   months: string[] = [];
+  transactions: Transactions[] = [];
   parcoursParMois: number[] = [];
+  userAchetesParcourDetails: UserAchetesParcourDetails[] = []
+  parcoursPlusAchetes: ParcoursPlusAchetes[] = []
+  vente_par_mois: number[] = []
   nombreInscrits: number = 0;
+  affiations: User[] = []
+  nombretotalAffilition: number = 0;
   nombreApprenants: number = 0;
   nombreFormateur: number = 0;
   nombreParcours: number = 0;
   total_vente: number = 0;
+  totalRevenu: number = 0;
+  nombreAchat: number = 0;
+  nbreAffiliationsNonInscris: number = 0;
+  nbreAffiliationsInscris: number = 0;
+  registeredAffiliations: User[] = []
+  notregisteredAffiliations: User[] = []
+
 
   constructor(private service: FormateurService) { }
 
   ngOnInit(): void {
-    this.getDataTopFormateur();
-    this.getUserInscrit();
-    this.getApprenantAyantAcheterParcours();
-    this.getDataVentes();
-    this.getDataTopParcour();
-    this.getChartData();
-    // setTimeout(() => {
-    //   this.initChart();
-    // }, 0);
-
+    this.getDataParcour('all');
   }
+
+  private chart: any; // Ajoutez une propriété pour stocker l'instance du graphique
 
   private initChart(months: string[], parcoursParMois: number[]): void {
     if (!months || months.length === 0 || !parcoursParMois || parcoursParMois.length === 0) {
       console.error('Les données pour le graphique sont invalides ou vides.');
       return;
+    }
+
+    // Supprimez l'ancien graphique s'il existe
+    if (this.chart) {
+      this.chart.destroy();
     }
 
     const chartConfig = {
@@ -66,9 +77,9 @@ export class TableauBordComponent implements OnInit {
         },
         events: {
           dataPointSelection: (event: any, chartContext: any, config: any) => {
-            const monthIndex = config.dataPointIndex; // Récupère l'index du mois cliqué
-            const selectedMonth = months[monthIndex]; // Mois correspondant
-            const parcoursForMonth = parcoursParMois[monthIndex]; // Donnée du mois
+            const monthIndex = config.dataPointIndex;
+            const selectedMonth = months[monthIndex];
+            const parcoursForMonth = parcoursParMois[monthIndex];
             this.handleMonthClick(selectedMonth, parcoursForMonth);
           },
         },
@@ -122,10 +133,15 @@ export class TableauBordComponent implements OnInit {
       },
     };
 
-    const chart = new ApexCharts(document.querySelector('#bar-chart'), chartConfig);
-    chart.render();
+    // Créez et rendez le graphique
+    const chartElement = document.querySelector('#bar-chart');
+    if (chartElement) {
+      this.chart = new ApexCharts(chartElement, chartConfig);
+      this.chart.render();
+    } else {
+      console.error('Élément pour le graphique non trouvé.');
+    }
   }
-
   private handleMonthClick(selectedMonth: string, parcoursForMonth: number): void {
     console.log(`Mois sélectionné : ${selectedMonth}`);
     console.log(`Parcours pour ce mois : ${parcoursForMonth}`);
@@ -134,93 +150,38 @@ export class TableauBordComponent implements OnInit {
   }
 
 
-
-
-  getDataVentes(): void {
-    this.service.url = environment.apiBaseUrl + "dashboard";
-    this.service.all().subscribe({
-      next: (resp) => {
-        this.ventes = resp.data.ventes;
-      }, error: (err) => {
-
-      }
-    })
-  }
-
-  getUserInscrit(): number {
-    this.service.url = environment.apiBaseUrl + "dashboard";
+  getDataParcour(filtre: string) {
+    this.service.url = `${environment.apiBaseUrl}dashboard/formateur?filter=${filtre}`;
     this.service.all().subscribe({
       next: (response) => {
-        this.inscris = response.data.inscrits;
-        this.nombreInscrits = this.inscris.length; // Calcule le nombre d'inscrits
-        this.total_vente = response.data.total_vente;
-      },
-      error: (erre) => {
-        console.error(erre);
-      }
-    });
-    return this.nombreInscrits;
-  }
+        this.nombreAchat = response.data.nombreAchat;
+        this.transactions = response.data.transactions;
+        this.parcoursPlusAchetes = response.data.parcoursPlusAchetes;
+        this.affiations = response.data.totalAffilition;
 
+        this.nombretotalAffilition = this.affiations.length
+        this.registeredAffiliations = response.data.registeredAffiliations;
 
-  getApprenantAyantAcheterParcours(): number {
-    this.service.url = environment.apiBaseUrl + "dashboard";
-    this.service.all().subscribe({
-      next: (response) => {
-        this.apprenants_ayant_achete = response.data.apprenants_ayant_achete;
-        this.nombreApprenants = this.apprenants_ayant_achete.length;
-      }, error: (erre) => {
-        console.error(erre);
-      }
-    });
-    return this.nombreApprenants;
-  }
+        this.nbreAffiliationsInscris = this.registeredAffiliations.length
+        
+        this.notregisteredAffiliations = response.data.notregisteredAffiliations;
+        this.nbreAffiliationsNonInscris = this.notregisteredAffiliations.length
+        this.userAchetesParcourDetails = response.data.userAchetesParcourDetails
+        this.vente_par_mois = response.data.vente_par_mois;
+        this.totalRevenu = response.data.totalRevenu
 
-  getDataTopFormateur(): number {
-    this.service.url = environment.apiBaseUrl + "dashboard";
-    this.service.all().subscribe({
-      next: (resp) => {
-        this.formateurs = resp.data.formateurs;
-        //console.log(resp);
-
-        this.nombreFormateur = this.formateurs.length;
-      }, error: (erre) => {
-        console.error(erre);
-      }
-    });
-    return this.nombreFormateur;
-  }
-
-  getDataTopParcour(): number {
-    this.service.url = environment.apiBaseUrl + "dashboard";
-
-    this.service.all().subscribe({
-      next: (resp) => {
-        this.parcours = resp.data.top_parcours;
-        this.nombreParcours = this.parcours.length;
-      }, error: (err) => {
-
-      }
-    });
-    return this.nombreParcours;
-  }
-
-  getChartData(): void {
-    this.service.url = environment.apiBaseUrl + 'dashboard';
-    this.service.all().subscribe({
-      next: (response) => {
         const months = response?.data?.months || []; // Utilisation d'une valeur par défaut si undefined
-        const parcoursParMois = response?.data?.parcours_par_mois || [];
+        const parcoursParMois = response?.data?.vente_par_mois || [];
 
         if (months.length > 0 && parcoursParMois.length > 0) {
           this.initChart(months, parcoursParMois);
         } else {
-          console.error('Les données récupérées du backend sont invalides.');
+          //console.error('Les données récupérées du backend sont invalides.');
         }
-      },
-      error: (error) => {
-        console.error('Erreur lors de la récupération des données :', error);
-      },
-    });
+
+      }, error: (error) => {
+        console.log(error);
+      }
+    })
   }
 }

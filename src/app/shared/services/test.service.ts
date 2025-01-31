@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Data, Model } from '../../interfaces/model';
+import { Root } from '../../core/components/formateur/interface/model';
+import { environment } from '../../../environments/environment.development';
 
 
 @Injectable({
@@ -9,7 +11,11 @@ import { Data, Model } from '../../interfaces/model';
 })
 export class TestService {
 
-  url: string = "https://backend-moveskills.dev-illimitis.com/api/question1";
+  //url: string = "https://backend-moveskills.dev-illimitis.com/api/question1";
+  private url: string = environment.apiBaseUrl + "question1"
+  //private baseUrl = 'https://backend-moveskills.dev-illimitis.com/api/parcours';
+  private baseUrl: string = environment.apiBaseUrl + "parcours";
+
 
   constructor(private http: HttpClient) { }
 
@@ -33,6 +39,24 @@ export class TestService {
   //Méthode pour vérifier si des résultats existent
   hasResults(): boolean {
     return this.results !== undefined && this.results !== null;
+  }
+
+  getTestsByParcoursId(parcourId: number): Observable<Root> {
+    const url = `${this.baseUrl}/${parcourId}/tests`;
+    return this.http.get<Root>(url);
+  }
+
+  delete(testID: number, parcourId: number): Observable<Root> {
+    const url = `${this.baseUrl}/${testID}/tests/${parcourId}`;
+    console.log(url);
+    return this.http.delete<Root>(url);
+  }
+
+
+  update(testID: number, parcourId: number, data: any): Observable<Root> {
+    const url = `${this.baseUrl}/${parcourId}/tests/${testID}`;
+    console.log(url);
+    return this.http.put<Root>(url, data);
   }
 
 }

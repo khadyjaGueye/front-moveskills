@@ -15,15 +15,15 @@
     </button>
   </div>
   <div>
-    <!-- Bouton pour créer une compétence -->
+    <!-- Bouton pour créer une Profil -->
     <button *ngIf="!currentCompetenceId" (click)="OpenCreateComptence()" type="button"
       class="py-2.5 px-1 me-2 mb-1 bg-[#114C5A] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-      + Créer compétence
+      + Créer Profil
     </button>
-    <!-- Bouton pour mettre à jour une compétence -->
+    <!-- Bouton pour mettre à jour une Profil -->
     <button *ngIf="currentCompetenceId" (click)="updateCompetence()" type="button"
       class="py-2.5 px-1 me-2 mb-1 bg-[#EF7743] text-sm font-medium text-white focus:outline-none rounded-lg border border-[#114C5A] hover:bg-[#114C5A] hover:text-[#EF7743] focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-      Mettre à jour la compétence
+      Mettre à jour la Profil
     </button>
   </div>
 
@@ -32,11 +32,11 @@
   <form [formGroup]="formData" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <div class="mb-4 flex gap-4 justify-center">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="nomChapitre">
-        Nom du Compétences
+        Nom du Profil
       </label>
       <input formControlName="nom"
         class="shadow appearance-none border rounded  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id="nomChapitre" type="text" placeholder="Nom du Compétences">
+        id="nomChapitre" type="text" placeholder="Nom du Profil">
       <button (click)="createCompetence()"
         class="bg-[#114C5A] hover:bg-[#F9BD4F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="button">
@@ -46,34 +46,78 @@
   </form>
 </div>
 
-<!-- Conteneur de défilement pour le tableau -->
-<div class="overflow-x-auto mt-10">
-  <table class="table-auto w-full border-collapse border border-gray-200">
-    <thead>
-      <tr class="bg-gray-100">
-        <th class="border border-gray-300 px-4 py-2">Competences</th>
-        <th class="border border-gray-300 px-4 py-2">User</th>
-        <th class="border border-gray-300 px-4 py-2">Date</th>
-        <th class="border border-gray-300 px-4 py-2">Action</th>
+<!-- Tableau -->
+<div class="bg-white shadow rounded p-4 w-full">
+  <h2 class="flex justify-center items-center   text-lg font-bold text-gray-700 mb-4">Liste des profils</h2>
+  <table class="min-w-full table-auto">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">#</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Profil</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Date</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let competence of filteredCompetence | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-        <td class="border border-gray-300 px-4 py-2">{{competence.nom}}</td>
-        <td class="border border-gray-300 px-4 py-2">Roland</td>
-        <td class="border border-gray-300 px-4 py-2">{{competence.created_at | date:'dd/MM/yyyy'}}</td>
-        <td class="border border-gray-300 px-4 py-2">
-          <svg (click)="OpenUpdateCompetence(competence.id)" class="text-[#114C5A] text-center py-1 px-4 w-20"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M7.24264 17.9967H3V13.754L14.435 2.319C14.8256 1.92848 15.4587 1.92848 15.8492 2.319L18.6777 5.14743C19.0682 5.53795 19.0682 6.17112 18.6777 6.56164L7.24264 17.9967ZM3 19.9967H21V21.9967H3V19.9967Z">
-            </path>
-          </svg>
+      <tr *ngFor="let Profil of profils;let i=index">
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{i+1 }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ Profil.libelle }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{Profil.created_at| date:'dd/MM/yyyy'}}</td>
+        <td class="px-6 py-3 border-b">
+          <div class="flex items-center gap-2">
+            <svg (click)="OpenUpdateCompetence(Profil.id)" class="text-[#F9BD4F]" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+              <path
+                d="M12.6844 4.02547C12.4588 4.00646 12.2306 3.9967 12 3.9967C7.58172 3.9967 4 7.57843 4 11.9967C4 16.415 7.58172 19.9967 12 19.9967C16.4183 19.9967 20 16.415 20 11.9967C20 11.7662 19.9902 11.5379 19.9711 11.3123C19.8996 10.4646 19.6953 9.6442 19.368 8.87344L20.8682 7.37114C21.2031 8.01192 21.4706 8.6935 21.6613 9.40649C21.8213 10.0063 21.9258 10.6222 21.9723 11.248C21.9907 11.4952 22 11.7449 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C12.2518 1.9967 12.5015 2.00601 12.7487 2.02431C13.3745 2.07081 13.9904 2.17542 14.5898 2.3358C15.3032 2.52609 15.9848 2.79359 16.6256 3.1285L15.1247 4.62934C14.3525 4.30143 13.5321 4.09707 12.6844 4.02547ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
+              </path>
+            </svg>
+            <svg (click)="deleteCitation(Profil.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red"
+              width="24" height="24" class="cursor-pointer">
+              <path
+                d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z">
+              </path>
+            </svg>
+            <svg (click)="showApitude(Profil.id,Profil.aptitudes)" class="text-[#2C7C79]"
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+              <path
+                d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z">
+              </path>
+            </svg>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <div class="mt-5">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>
+
+
+<!-- Modal pour afficher les aptitudes -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-gray-700">Liste des Aptitudes</h2>
+      <button (click)="closeModal()" class="text-red-500 hover:text-red-700 font-bold">×</button>
+    </div>
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-6 py-3 text-left text-gray-700 font-semibold">#</th>
+          <th class="px-6 py-3 text-left text-gray-700 font-semibold">Aptitude</th>
+          <th class="px-6 py-3 text-left text-gray-700 font-semibold">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let aptitude of aptitudes; let i = index">
+          <td class="px-6 py-3 border-b text-[#2C7C79]">{{ i + 1 }}</td>
+          <td class="px-6 py-3 border-b text-[#2C7C79]">{{ aptitude.libelle }}</td>
+          <td class="px-6 py-3 border-b text-[#2C7C79]">{{ aptitude.created_at | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
+
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>

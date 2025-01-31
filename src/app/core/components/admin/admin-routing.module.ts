@@ -7,7 +7,7 @@ import { ParcourComponent } from './parcour/parcour.component';
 
 const routes: Routes = [
   { path: "utilisateur", component: ListUtilisateurComponent, canActivate: [authGuard] },
-  { path: "tableau", component: TableauComponent, canActivate: [authGuard] },
+  { path: "", component: TableauComponent, canActivate: [authGuard] },
   { path: "parcour", component: ParcourComponent, canActivate: [authGuard] },
 ];
 

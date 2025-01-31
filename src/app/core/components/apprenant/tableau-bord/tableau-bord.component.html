@@ -1,0 +1,226 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-green-300 to-green-500 text-white">
+    <a routerLink="/core/apprenant/invitation">
+      <h3 class="text-xl font-bold">Nombre total affiliation</h3>
+      <p class="text-2xl font-inter">
+        <span appCountUp [endValue]="listeParcoursAchete.length"></span>
+      </p>
+    </a>
+  </div>
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-blue-500 text-white">
+    <a routerLink="/core/apprenant/">
+      <h3 class="text-xl font-bold">Nombre de parcours acheter</h3>
+      <p class="text-2xl font-inter">
+        <span appCountUp [endValue]="nombreparcourAchete"></span>
+      </p>
+    </a>
+  </div>
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-yellow-300 to-yellow-500 text-white">
+    <a routerLink="/core/apprenant/resultat">
+      <h3 class="text-xl font-bold">Nombre de test fait</h3>
+      <p class="text-2xl font-inter">
+        <span appCountUp [endValue]="testsMd.length"></span>
+      </p>
+    </a>
+  </div>
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-red-300 to-red-500 text-white">
+    <h3 class="text-xl font-bold">Nombre de points</h3>
+    <p class="text-2xl font-inter">
+      <span appCountUp [endValue]="503"></span>
+    </p>
+  </div>
+</div>
+
+<div class="flex-1 mt-5 border border-[#114C5A] rounded-lg p-6 bg-[#D9E8E3] shadow-md">
+  <!-- Carrousel container -->
+  <div class="relative">
+    <div class="overflow-hidden">
+      <!-- Carrousel content -->
+      <div class="flex transition-transform duration-500"
+        [style.transform]="'translateX(' + (currentIndex * -100) + '%)'">
+        <div *ngFor="let citation of citations" class="flex-none w-full p-4 text-center">
+          <blockquote class="italic text-lg text-[#114C5A]">
+            "{{ citation }}"
+          </blockquote>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons for navigation -->
+    <button (click)="previous()"
+      class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-[#114C5A] text-white p-2 rounded-full shadow-lg hover:bg-[#0e4c3d]">
+      &lt;
+    </button>
+    <button (click)="next()"
+      class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-[#114C5A] text-white p-2 rounded-full shadow-lg hover:bg-[#0e4c3d]">
+      &gt;
+    </button>
+  </div>
+</div>
+
+
+<div class="flex-1 mt-5 border border-[#114C5A] rounded-lg p-6 bg-[#D9E8E3] shadow-md">
+  <h2 class="text-lg font-inter mb-6 text-[#114C5A] text-center">Mes points d’apprentissage</h2>
+  <!-- Liste des tests -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div
+      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
+      <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M12.62 20.8096C12.28 20.9296 11.72 20.9296 11.38 20.8096C8.48 19.8196 2 15.6896 2 8.68961C2 5.59961 4.49 3.09961 7.56 3.09961C9.38 3.09961 10.99 3.97961 12 5.33961C13.01 3.97961 14.63 3.09961 16.44 3.09961C19.51 3.09961 22 5.59961 22 8.68961C22 15.6896 15.52 19.8196 12.62 20.8096Z"
+            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+      <span class="text-white font-inter">Points formations</span>
+      <span class="font-inter text-white">500pts</span>
+    </div>
+    <div
+      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
+      <span>
+        <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z"
+            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
+          <path
+            d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078"
+            stroke="white" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </span>
+      <span class="text-white font-inter">Points partage</span>
+      <span class="text-white font-inter">8pts</span>
+    </div>
+    <div
+      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
+      <span>
+        <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z"
+            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
+          <path
+            d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078"
+            stroke="white" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </span>
+      <span class="text-white font-inter">Points invitations</span>
+      <span class="text-white font-inter">5pts</span>
+    </div>
+    <div
+      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
+      <span class="text-white font-semibold">
+        <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z"
+            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
+          <path
+            d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078"
+            stroke="white" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+      </span>
+      <span class="text-white font-semibold">Total points</span>
+      <span class="font-semibold text-white">513pts</span>
+    </div>
+  </div>
+</div>
+
+<div class="border border-[#114C5A] rounded-lg p-6 bg-[#D9E8E3] shadow-md mt-5">
+  <div class="flex justify-between">
+    <h1 class="text-[#114C5A]">Suggestions de formations</h1>
+    <button *ngIf="elementsAffiches < parcours.length" (click)="voirPlus()" class="flex text-[#2C7C79]">
+      <span>Voir plus</span>
+      <svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z">
+        </path>
+      </svg>
+    </button>
+  </div>
+  <div class="flex justify-center items-center">
+    <p class="text-[#2C7C79]">Les formations suivantes vont vous aider à développer les compétences souhaitées</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 ">
+    <div *ngFor="let parcour of parcours | slice:0:elementsAffiches"
+      class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div (click)="openModalParcour(parcour.id)">
+        <div class="relative inline-block w-full">
+          <img class="w-full h-44 object-cover" src="assets/images/soi.avif" alt="product image" />
+          <span *ngIf="parcour.status_disponibilite === 'disponible'; else premiumLabel"
+            class="absolute top-2 left-2 bg-[#114C5A] text-white text-xs font-inter px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-[#EF7743]">
+            Free
+          </span>
+          <ng-template #premiumLabel>
+            <span
+              class="absolute top-2 left-2 bg-[#F9BD4F] text-white font-inter px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-[#EF7743]">
+              Premium
+            </span>
+          </ng-template>
+          <div
+            class="absolute flex  bottom-2 left-2 gap-2 text-xs font-inter px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-[#EF7743]">
+            <span
+              class="bg-blue-100 text-[#EF7743] text-xs font-inter px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-[#EF7743]">
+              {{ parcour.duree }} jours
+            </span>
+            <span class="bg-blue-100 text-[#EF7743] rounded px-2.5 py-0.5">Vidéos {{parcour.nombre_videos}}</span>
+            <span class="bg-blue-100 text-[#EF7743] rounded px-2.5 py-0.5">Documents {{parcour.nombre_documents}}</span>
+          </div>
+        </div>
+        <div
+          class="px-5 pb-5 sm:px-3 sm:pb-3 md:px-8 md:pb-8 lg:px-10 lg:pb-10 bg-white dark:bg-gray-800 shadow rounded-lg">
+          <div class="flex justify-between">
+            <h5 class="text-lg  font-inter tracking-tight text-[#2C7C79] dark:text-white text-center md:text-left">
+              {{ parcour.nom_parcour }}
+            </h5>
+            <span class="block text-[#2C7C79] dark:text-gray-300 text-center md:text-left mt-2"> Prix: {{ parcour.prix
+              }} </span>
+          </div>
+          <div class="flex flex-col md:flex-row items-center justify-between mt-4 space-y-4 md:space-y-0">
+            <img class="p-2 w-16 h-14 rounded-full object-cover" src="assets/images/user.png" alt="user image" />
+            <h1 class="text-lg font-medium text-[#2C7C79] dark:text-gray-200 md:ml-4 text-center md:text-left">
+              {{ parcour.user.name }}
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="border border-[#114C5A] rounded-lg p-6 bg-[#D9E8E3] shadow-md mt-5">
+  <div class="flex justify-between">
+    <h1 class="text-[#114C5A]">Suggestions de tests</h1>
+    <button *ngIf="elementsAffiches < parcours.length" (click)="voirPlus()" class="flex text-[#2C7C79]">
+      <span>Voir plus</span>
+      <svg class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z">
+        </path>
+      </svg>
+    </button>
+  </div>
+  <div class="flex justify-center items-center">
+    <p class="text-[#2C7C79]">Les tests comportementaux suivants vont vous aider à développer les compétences souhaitées
+    </p>
+  </div>
+
+  <div *ngFor="let parcour of parcours">
+    <div *ngFor="let test of parcour.tests_pre_evaluation.test">
+      <div class="flex">
+        <!-- <img src="assets/images/soi.avif" class="w-1/2" alt=""> -->
+        <!-- <div  class="bg-[#114C5A] text-white justify-between flex gap-4 p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
+        <span>{{parcour.tests_pre_evaluation.type}}</span>
+        <span>Questions {{test}}</span>
+      </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
+</div>

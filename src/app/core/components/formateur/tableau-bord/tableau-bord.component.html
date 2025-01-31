@@ -1,27 +1,63 @@
+<!-- Section des cartes -->
+<div class="flex flex-col gap-6 p-4 lg:flex-row">
+  <!-- Cartes -->
+  <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Apprenants et Parcours</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-[#D9E8E3] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombretotalAffilition"></h4>
+        <p class="text-[#2C7C79]">Nombre total Affiation</p>
+      </div>
+      <div class="bg-[#F9BD4F] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-white" appCountUp [endValue]="nbreAffiliationsInscris"></h4>
+        <p class="text-white">Affiation Inscris</p>
+      </div>
+      <div class="bg-[#2C7C79] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-white" appCountUp [endValue]="nbreAffiliationsNonInscris"></h4>
+        <p class="text-white">Affiation Non Inscris</p>
+      </div>
+      <div class="bg-[#D9E8E3] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-[#2C7C79]" appCountUp [endValue]="nbreAffiliationsNonInscris"></h4>
+        <p class="text-[#2C7C79]">Nombre Total Parcours</p>
+      </div>
+    </div>
+  </div>
+  <!-- Parcours les plus suivis -->
+  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="text-lg font-bold text-[#2C7C79] flex justify-center mb-4">Parcours les plus suivis</h3>
+
+    <div class="grid grid-row-1 sm:grid-row-2 lg:grid-row-5 gap-2" *ngFor="let parcour of parcoursPlusAchetes,let index = index">
+      <!-- Carte 1 -->
+      <div class="bg-white shadow-lg rounded-lg p-4 border border-gray-200 mb-3">
+        <div class="flex gap-3">
+          <span class="text-[#EF7743]">{{index + 1}}ére</span>
+          <span class="text-[#2C7C79]">{{parcour.parcour_name}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="flex flex-col gap-6 p-4 lg:flex-row">
   <!-- Graphique -->
-  <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
+  <div class="w-full lg:w-1/2 bg-white shadow-lg rounded-lg p-6">
     <div class="relative flex flex-col bg-white rounded-xl text-gray-700 shadow-md">
       <!-- Header -->
       <div class="flex flex-col gap-4 md:flex-row md:items-center">
-        <div>
           <h2 class="text-lg font-semibold text-[#114C5A]">Les ventes</h2>
           <div class="flex justify-between mt-2">
             <div>
-              <span class="text-xl font-bold text-[#114C5A]">{{total_vente}}</span>
+              <span class="text-xl font-bold text-[#114C5A]">{{totalRevenu}}</span>
               <span class="text-sm text-[#ABB0AB]">F.CFA</span>
             </div>
             <div class="flex gap-2">
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Aujourd’hui</button>
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Semaine</button>
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Mois</button>
-              <button
-                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">Année</button>
+              <button *ngFor="let filtre of ['day','week','month','year']" (click)="getDataParcour(filtre)"
+                class="px-4 py-1 text-sm border rounded text-[#114C5A] hover:bg-[#114C5A] hover:text-white">
+                <span> {{ filtre | titlecase }}</span>
+              </button>
             </div>
-          </div>
         </div>
       </div>
       <!-- Chart -->
@@ -32,54 +68,41 @@
   </div>
 
   <!-- Liste des formateurs -->
-  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-gray-800 mb-4">Liste des Apprenants</h3>
+  <div class="w-full lg:w-1/2 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="text-lg font-bold text-[#2C7C79] flex justify-center mb-4">Liste des Apprenants</h3>
     <div class="space-y-4">
       <!-- Formateur -->
-      <div class="flex items-center justify-between" *ngFor="let apprenant of apprenants_ayant_achete">
-        <div class="flex items-center">
-          <img class="w-12 h-12 rounded-full" src="assets/images/user1.jpg" alt="Photo Formateur">
-          <span class="ml-4 text-[#2C7C79] font-medium">{{apprenant.name}}</span>
-        </div>
-        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 1L7 7L1 13" stroke="#2C7C79" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
+      <div class="flex items-center justify-between">
+        <table class="w-full table-auto border-collapse border border-gray-300">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Apprenant</th>
+              <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Parcours</th>
+              <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Prix</th>
+              <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let apprenant of transactions">
+              <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+                {{ apprenant.user_name }}
+              </td>
+              <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+                {{apprenant.parcour_name}}
+              </td>
+              <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+                {{apprenant.parcour_prix}}
+              </td>
+              <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
+                {{apprenant.purchase_date}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+
       </div>
     </div>
   </div>
 </div>
 
-<!-- Section des cartes -->
-<div class="flex flex-col gap-6 p-4 lg:flex-row">
-  <!-- Cartes -->
-  <div class="w-full lg:w-1/2 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-gray-800 mb-4">Apprenants et Parcours</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="bg-white p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreInscrits"></h4>
-        <p class="text-[#2C7C79]">Inscrits</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreApprenants"></h4>
-        <p class="text-[#2C7C79]">Apprenants</p>
-      </div>
-      <div class="bg-white p-4 rounded shadow">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcours"></h4>
-        <p class="text-[#2C7C79]">Parcours</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Parcours les plus suivis -->
-  <div class="w-full lg:w-1/2 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-gray-800 mb-4">Parcours les plus suivis</h3>
-    <div class="grid grid-row-1 sm:grid-row-2 lg:grid-row-5 gap-2" *ngFor="let parcour of parcours,let index = index">
-      <!-- Carte 1 -->
-      <div class="bg-white shadow-lg rounded-lg p-4 border border-gray-200 mb-3">
-        <div class="flex gap-3">
-          <span class="text-[#EF7743]">{{index + 1}}ére</span>
-          <span class="text-[#2C7C79]">{{parcour.nom_parcour}}</span>
-        </div>
-      </div>
-    </div>
-  </div>

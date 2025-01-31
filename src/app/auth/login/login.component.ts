@@ -54,13 +54,13 @@ export class LoginComponent implements OnInit {
         let user = resp.data.userInfo;
         this.authService.authentificateUser(user, tocken).subscribe(rep => {
           if (user.role == "apprenant") {
-            this.router.navigateByUrl("core/apprenant/form");
+            this.router.navigateByUrl("core/apprenant/tableau");
           } if (user.role == "superviseur") {
             this.router.navigateByUrl("core/superviseur/participant");
           } if (user.role == "formateur") {
-            this.router.navigateByUrl("core/formateur/listParcours");
+            this.router.navigateByUrl("core/formateur");
           } if (user.role == "admin") {
-            this.router.navigateByUrl("/core/admin/tableau");
+            this.router.navigateByUrl("/core/admin");
           }
           // Réinitialisation du formulaire après succès
           this.loginForm.reset();

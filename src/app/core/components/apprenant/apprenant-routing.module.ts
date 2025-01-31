@@ -13,6 +13,7 @@ import { DernierTestComponent } from './dernier-test/dernier-test.component';
 import { ResultatLoisComponent } from './resultat-lois/resultat-lois.component';
 import { ParcourAcheterComponent } from './parcour-acheter/parcour-acheter.component';
 import { InvitationComponent } from './invitation/invitation.component';
+import { TableauBordComponent } from './tableau-bord/tableau-bord.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'resultatLois', component: ResultatLoisComponent, canActivate: [authGuard] },
       { path: '', component: ParcourAcheterComponent, canActivate: [authGuard] },
       { path: 'invitation', component: InvitationComponent, canActivate: [authGuard] },
+      { path: 'tableau', component: TableauBordComponent, canActivate: [authGuard] },
     ]
   }
 ];

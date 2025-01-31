@@ -44,6 +44,8 @@ export class AjoutApprenantComponent implements OnInit {
         error: (err) => {
             this.service.handleResponse(err);
             this.apprenantForm.reset();
+            console.log(err);
+
         }
     });
 }

@@ -36,6 +36,7 @@ export class ContenuComponent implements OnInit {
   isVideoFormVisible: boolean = false;
   // État pour savoir si le formulaire document est visible
   isDocumentFormVisible: boolean = false;
+  isLoading:boolean = false;
   isFormVisible: boolean = false;  // Pour contrôler l'affichage des boutons
   selectedFiles: { url: any; name: string; type: string, rawFile: any }[] = []; // Contient les fichiers sélectionnés
   formData: FormDataVideo = {
@@ -125,10 +126,11 @@ export class ContenuComponent implements OnInit {
   }
 
   getParcours() {
-    this.service.url = environment.apiBaseUrl + "parcours";
+    this.isLoading = true
+    this.service.url = environment.apiBaseUrl + "parcours/formateur";
     this.service.all().subscribe(resp => {
       this.parcours = resp.data.parcours;
-      //this.isLoading = false; // Données chargées, on masque le spinner
+      this.isLoading = false; // Données chargées, on masque le spinner
       //console.log(this.parcours);
     })
   }

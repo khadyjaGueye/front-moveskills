@@ -1,48 +1,54 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-  <div class="card p-4 text-[#008000] rounded-lg shadow-md flex flex-col items-center justify-center">
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-green-300 to-green-500 text-white">
     <h3 class="text-xl font-bold">Nombre total des utilisateurs</h3>
     <p class="text-2xl font-semibold">
       <span>100</span>
     </p>
   </div>
-  <div class="card p-4 text-[#008000] rounded-lg shadow-md flex flex-col items-center justify-center">
-    <h3 class="text-xl font-bold">Nombre total Formateur</h3>
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-blue-500 text-white">
+    <h3 class="text-xl font-bold">Nombre total Formateurs</h3>
     <p class="text-2xl font-semibold">
       <span>100</span>
     </p>
   </div>
-  <div class="card p-4 text-[#008000] rounded-lg shadow-md flex flex-col items-center justify-center">
-    <h3 class="text-xl font-bold">Nombre total superviseur</h3>
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-yellow-300 to-yellow-500 text-white">
+    <h3 class="text-xl font-bold">Nombre total superviseurs</h3>
     <p class="text-2xl font-semibold">
       <span>100</span>
     </p>
   </div>
-  <div class="card p-4 text-[#008000] rounded-lg shadow-md flex flex-col items-center justify-center">
-    <h3 class="text-xl font-bold">Nombre apprenant</h3>
-    <p class="text-2xl font-semibold">
-      <span>100</span>
+  <div
+    class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-red-300 to-red-500 text-white">
+    <h3 class="text-xl font-bold">Nombre apprenants</h3>
+    <p class="text-2xl font-semibold" appCountUp [endValue]="inscris.length">
+      <span>{{inscris.length}}</span>
     </p>
   </div>
 </div>
 
 
-<div class="flex justify-between items-center mt-5">
-  <div class="mr-5">
-    <div class="w-full max-w-sm min-w-[200px] relative">
-      <div class="relative">
-        <input
-          class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
-          placeholder="Search..." />
-        <button class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded " type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
-            class="w-8 h-8 text-slate-600">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-          </svg>
-        </button>
-      </div>
+<div class="mr-5 flex justify-end p-4">
+  <div class="w-full max-w-sm min-w-[200px] relative">
+    <div class="relative">
+      <input
+        [(ngModel)]="searchTerm"
+        (input)="filterResultats()"
+        class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
+        placeholder="Rechercher par nom ou email..." />
+      <button class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+          class="w-8 h-8 text-slate-600">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      </button>
     </div>
   </div>
+</div>
+<div class="flex justify-center gap-5 items-center mt-5 p-4">
   <!-- Bouton Imprimer la liste -->
   <button
     class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -57,87 +63,66 @@
   </button>
 </div>
 
-
-
-
-
-
-<div
-  class="relative mt-10 ml-5 flex flex-col h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-  <table id="listToConvert" class="w-full text-left table-auto min-w-max">
-    <thead id="tableHeader">
+<!-- Tableau -->
+<div class="bg-white shadow rounded p-4 w-full">
+  <h2 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Liste des inscris</h2>
+  <table class="min-w-full table-auto">
+    <thead class="bg-gray-200">
       <tr>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Numero
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Nom
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Email
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Role
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Action
-          </p>
-        </th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">#</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">Nom</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">Email</th>
+        <!-- <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">Date</th> -->
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">Action</th>
       </tr>
     </thead>
-    <tbody id="listToConvert">
-      <!-- <tr> -->
-      <tr class="hover:bg-slate-50">
-        <!-- *ngFor="let user of userDetails | paginate: { itemsPerPage: itemsPerPage, currentPage: page }; let index = index"> -->
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block  text-sm text-slate-800">1</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block  text-sm text-slate-800">Mamadou</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-800">Email</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm">
-            Role
-          </p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5 flex items-center space-x-2">
-          <svg (click)="openModalEdit()" class="w-10 h-10 text-[#DACF0A]" xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24" fill="currentColor">
+    <tbody>
+      <tr *ngFor="let ins of paginatedResultats;let i = index">
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{i+1}}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ins.name}}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ins.email}}</td>
+        <!-- <td class="px-6 py-3 border-b text-[#2C7C79]">{{ins.email}}</td> -->
+        <td class="px-6 py-3 border-b text-[#2C7C79]">
+          <svg class="text-[#F9BD4F]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+            width="16" height="16">
             <path
-              d="M16.6256 3.1285L9.29145 10.4626L9.29886 14.7098L13.537 14.7024L20.8682 7.37114C21.5912 8.75438 22 10.3278 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C13.6689 1.9967 15.2423 2.40553 16.6256 3.1285ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
+              d="M12.6844 4.02547C12.4588 4.00646 12.2306 3.9967 12 3.9967C7.58172 3.9967 4 7.57843 4 11.9967C4 16.415 7.58172 19.9967 12 19.9967C16.4183 19.9967 20 16.415 20 11.9967C20 11.7662 19.9902 11.5379 19.9711 11.3123C19.8996 10.4646 19.6953 9.6442 19.368 8.87344L20.8682 7.37114C21.2031 8.01192 21.4706 8.6935 21.6613 9.40649C21.8213 10.0063 21.9258 10.6222 21.9723 11.248C21.9907 11.4952 22 11.7449 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C12.2518 1.9967 12.5015 2.00601 12.7487 2.02431C13.3745 2.07081 13.9904 2.17542 14.5898 2.3358C15.3032 2.52609 15.9848 2.79359 16.6256 3.1285L15.1247 4.62934C14.3525 4.30143 13.5321 4.09707 12.6844 4.02547ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
             </path>
           </svg>
-          <svg class="w-10 h-10 text-[#0000FF]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-            fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="16" height="16"
+            style="cursor: pointer;">
             <path
-              d="M12 22C6.47715 22 2 17.5228 2 12 2 6.47715 6.47715 2 12 2 17.5228 2 22 6.47715 22 12 22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12 20 7.58172 16.4183 4 12 4 7.58172 4 4 7.58172 4 12 4 16.4183 7.58172 20 12 20ZM13 10.5V15H14V17H10V15H11V12.5H10V10.5H13ZM13.5 8C13.5 8.82843 12.8284 9.5 12 9.5 11.1716 9.5 10.5 8.82843 10.5 8 10.5 7.17157 11.1716 6.5 12 6.5 12.8284 6.5 13.5 7.17157 13.5 8Z">
+              d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z">
             </path>
           </svg>
         </td>
-
       </tr>
     </tbody>
   </table>
-  <!-- <div class="mt-5">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
-  </div> -->
-</div>
+  <!-- Pagination controls -->
+  <div class="pagination flex justify-center mt-4">
+    <!-- Bouton Précédent -->
+    <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300" [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)">
+      Précédent
+    </button>
 
-<!-- <div *ngIf="isLoading">
-  <app-loarder></app-loarder>
-</div> -->
+    <!-- Boutons pour les pages -->
+    <button *ngFor="let page of [].constructor(totalPages); let pageIndex = index" class="px-4 py-2 mx-1" [ngClass]="{
+        'bg-[#114C5A] text-white': currentPage === pageIndex + 1,
+        'bg-gray-200 text-gray-700': currentPage !== pageIndex + 1
+      }" (click)="changePage(pageIndex + 1)">
+      {{ pageIndex + 1 }}
+    </button>
+
+    <!-- Bouton Suivant -->
+    <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+      [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+      Suivant
+    </button>
+  </div>
+
+</div>
 
 <!-- Modal pour ajouter un utilisateur -->
 <div *ngIf="display"
@@ -280,4 +265,8 @@
       </form>
     </div>
   </div>
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>

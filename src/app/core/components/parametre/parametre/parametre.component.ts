@@ -50,8 +50,9 @@ export class ParametreComponent implements OnInit {
     });
     // Formulaire de modification du mot de passe
     this.passwordForm = this.fb.group({
-      oldPassword: ['', Validators.required],
-      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      current_password: ['', Validators.required],
+      new_password: ['', [Validators.required, Validators.minLength(8)]],
+      new_password_confirmation: ['', [Validators.required, Validators.minLength(8)]],
     }, { validators: this.passwordsMustDiffer });
   }
 
@@ -59,8 +60,8 @@ export class ParametreComponent implements OnInit {
 
   }
   passwordsMustDiffer(group: FormGroup) {
-    const oldPassword = group.get('oldPassword')?.value;
-    const newPassword = group.get('newPassword')?.value;
+    const oldPassword = group.get('current_password')?.value;
+    const newPassword = group.get('new_password')?.value;
     return oldPassword !== newPassword ? null : { passwordsSame: true };
   }
 
@@ -82,16 +83,18 @@ export class ParametreComponent implements OnInit {
   }
 
   updatePassword() {
+    this.service.url = environment.apiBaseUrl + "change-password";
     if (this.passwordForm.valid) {
       const passwordData = this.passwordForm.value; // Récupère les anciens et nouveaux mots de passe
-      const url = environment.apiBaseUrl + "update-password"; // L'URL de votre API pour modifier le mot de passe
 
-      this.service.update(passwordData, this.userId).subscribe({
+      this.service.store(passwordData).subscribe({
         next: (resp) => {
           this.service.handleResponse(resp); // Gérez la réponse positive
           this.closePasswordModal(); // Fermez le modal après succès
         },
         error: (err) => {
+          console.log(err);
+
           this.service.handleResponse(err); // Gérez l'erreur
         }
       });
@@ -119,6 +122,12 @@ export class ParametreComponent implements OnInit {
       }
     })
 
+  }
+
+  showPassword: boolean = false;
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
 }

@@ -1,7 +1,7 @@
 <div *ngIf="parcourName" class="flex items-center bg-gray-100">
   <div class="max-w-sm w-full bg-white shadow-lg rounded-lg overflow-hidden">
     <div class="px-6 py-4">
-      <h2 class="text-xl font-semibold text-gray-800">Le parcours que tu vient d'acheter</h2>
+      <h2 class="text-xl font-inte text-gray-800">Le parcours que tu vient d'acheter</h2>
       <p class="text-gray-600 mt-2">
         Nom du parcours :
         <span class="text-[#EF7743] font-bold">
@@ -11,93 +11,28 @@
     </div>
   </div>
 </div>
-<div class="flex-1 mt-5 border border-[#114C5A] rounded-lg p-6 bg-white shadow-md">
-  <h2 class="text-lg font-semibold mb-6 text-[#114C5A] text-center">Mes points d’apprentissage</h2>
-  <!-- Liste des tests -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-    <div
-      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
-      <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M12.62 20.8096C12.28 20.9296 11.72 20.9296 11.38 20.8096C8.48 19.8196 2 15.6896 2 8.68961C2 5.59961 4.49 3.09961 7.56 3.09961C9.38 3.09961 10.99 3.97961 12 5.33961C13.01 3.97961 14.63 3.09961 16.44 3.09961C19.51 3.09961 22 5.59961 22 8.68961C22 15.6896 15.52 19.8196 12.62 20.8096Z"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </span>
-      <span class="text-white font-semibold">Points formations</span>
-      <span class="font-semibold text-white">500pts</span>
-    </div>
-    <div
-      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
-      <span>
-        <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
-          <path
-            d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-        </svg>
-      </span>
-      <span class="text-white font-semibold">Points partage</span>
-      <span class="text-white font-semibold">8pts</span>
-    </div>
-    <div
-      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
-      <span>
-        <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
-          <path
-            d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-        </svg>
-      </span>
-      <span class="text-white font-semibold">Points invitations</span>
-      <span class="text-white font-semibold">5pts</span>
-    </div>
-    <div
-      class="bg-[#114C5A] justify-between flex p-4 rounded-lg shadow-md hover:shadow-lg hover:bg-[#88A5AC] hover:text-[#114C5A] transition-all cursor-pointer">
-      <span class="text-white font-semibold">
-        <svg width="21" height="23" viewBox="0 0 21 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M5.0825 6.73786C8.08958 7.268 9.8818 8.37693 10.5 9.01357C11.1182 8.37693 12.9104 7.268 15.9175 6.73786C17.4409 6.46929 18.2026 6.33501 18.8513 6.8497C19.5 7.3644 19.5 8.20019 19.5 9.87176V15.8791C19.5 17.4076 19.5 18.1718 19.0837 18.6489C18.6673 19.126 17.7507 19.2876 15.9175 19.6108C14.2833 19.8989 13.0079 20.3579 12.0847 20.8192C11.1765 21.2731 10.7223 21.5 10.5 21.5C10.2777 21.5 9.82354 21.2731 8.91526 20.8192C7.9921 20.3579 6.7167 19.8989 5.0825 19.6108C3.24929 19.2876 2.33268 19.126 1.91634 18.6489C1.5 18.1718 1.5 17.4076 1.5 15.8791V9.87176C1.5 8.20019 1.5 7.3644 2.1487 6.8497C2.79741 6.33501 3.55911 6.46929 5.0825 6.73786Z"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M10.5 8.5L10.5 21.5" stroke="white" stroke-width="1.5" stroke-linejoin="round" />
-          <path
-            d="M7 2.55857C8.01136 1.88797 9.20893 1.5 10.4926 1.5C11.7825 1.5 12.9855 1.89177 14 2.56841M12.1222 5C11.6421 4.71025 11.0857 4.54459 10.4926 4.54459C9.9058 4.54459 9.35498 4.70674 8.8784 4.99078"
-            stroke="white" stroke-width="1.5" stroke-linecap="round" />
-        </svg>
-      </span>
-      <span class="text-white font-semibold">Total points</span>
-      <span class="font-semibold text-white">513pts</span>
-    </div>
-  </div>
 
-</div>
 
-<div class="font-inter flex justify-center text-[#114C5A]">
-  <h1>Liste des parcours déja acheter</h1>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-  <div *ngFor="let parcour of parcours "
-    class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <div (click)="openListChapitre(parcour.id)">
-      <div class="relative inline-block w-full">
-        <img class="w-full h-44 object-cover" src="assets/images/soi.avif" alt="product image" />
-        <span
-          class="absolute bottom-2 left-2 bg-blue-100 text-[#EF7743] text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-[#EF7743]">
-          {{parcour.duree}} jours
-        </span>
-      </div>
-      <div
-        class="px-5 pb-5 sm:px-3 sm:pb-3 md:px-8 md:pb-8 lg:px-10 lg:pb-10 bg-white dark:bg-gray-800 shadow rounded-lg">
-        <h5
-          class="text-lg md:text-xl font-semibold tracking-tight text-gray-900 dark:text-white text-center md:text-left">
-          {{parcour.nom_parcour}}
-        </h5>
+<div class="flex-1 mt-5 border border-[#114C5A] rounded-lg p-6 bg-[#D9E8E3] shadow-md">
+  <h1 class="flex justify-center items-center text-[#114C5A]">Liste des parcours que tu as déja acheter</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div *ngFor="let parcour of parcours "
+      class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div (click)="openListChapitre(parcour.id)">
+        <div class="relative inline-block w-full">
+          <img class="w-full h-44 object-cover" src="assets/images/soi.avif" alt="product image" />
+          <span
+            class="absolute bottom-2 left-2 bg-blue-100 text-[#EF7743] text-xs font-inte px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-[#EF7743]">
+            {{parcour.duree}} jours
+          </span>
+        </div>
+        <div
+          class="px-5 pb-5 sm:px-3 sm:pb-3 md:px-8 md:pb-8 lg:px-10 lg:pb-10 bg-white dark:bg-gray-800 shadow rounded-lg">
+          <span class=" font-inter text-[#114C5A]">{{parcour.nom_parcour}} </span>
+          <span class=" font-inter text-[#114C5A]">{{parcour.description}}</span>
+
+        </div>
       </div>
     </div>
   </div>
@@ -108,7 +43,7 @@
   <div class="bg-white rounded-lg shadow-lg w-full max-w-3xl mx-4">
     <!-- Modal Header -->
     <div class="flex justify-between items-center p-4 border-b">
-      <h2 class="text-xl font-semibold text-[#114C5A]">La liste des chapitres du parcours </h2>
+      <h2 class="text-xl font-inte text-[#114C5A]">La liste des chapitres du parcours </h2>
 
     </div>
     <!-- Modal Body -->
@@ -204,4 +139,6 @@
   </div>
 </div>
 
-<!-- <app-card></app-card> -->
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
+</div>

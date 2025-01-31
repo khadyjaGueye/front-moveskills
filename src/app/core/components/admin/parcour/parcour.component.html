@@ -32,45 +32,80 @@
   </div>
   <div class="flex items-center space-x-2">
     <!-- Champ de recherche -->
-    <div class="flex items-center border border-gray-300 rounded-md p-2 focus-within:ring-2 focus-within:ring-[#EF7743]">
+    <div
+      class="flex items-center border border-gray-300 rounded-md p-2 focus-within:ring-2 focus-within:ring-[#EF7743]">
       <!-- Champ de recherche -->
-      <input
-        type="text"
-        placeholder="Rechercher un parcours..."
-        class="flex-1 outline-none text-gray-700"
-      />
+      <input type="text" placeholder="Rechercher un parcours..." class="flex-1 outline-none text-gray-700" />
       <!-- Icône SVG -->
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-gray-500">
-        <path d="M17.5 17.5L22 22" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z" stroke="#141B34" stroke-width="1.5" stroke-linejoin="round"/>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        class="text-gray-500">
+        <path d="M17.5 17.5L22 22" stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z"
+          stroke="#141B34" stroke-width="1.5" stroke-linejoin="round" />
       </svg>
     </div>
     <!-- Bouton avec une icône -->
     <button class="bg-[#114C5A] text-white px-4 py-2 rounded-md flex items-center space-x-1 hover:bg-[#D66336]">
       <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M6.5 7H5.5C4.08579 7 3.37868 7 2.93934 6.56066C2.5 6.12132 2.5 5.41421 2.5 4C2.5 2.58579 2.5 1.87868 2.93934 1.43934C3.37868 1 4.08579 1 5.5 1H6.5C7.91421 1 8.62132 1 9.06066 1.43934C9.5 1.87868 9.5 2.58579 9.5 4C9.5 5.41421 9.5 6.12132 9.06066 6.56066C8.62132 7 7.91421 7 6.5 7Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2.5 3H1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M21 3H19.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2.15224 15.7654L1.45933 16.0524L1.45933 16.0524L2.15224 15.7654ZM3.23463 16.8478L2.94762 17.5407H2.94762L3.23463 16.8478ZM3.23463 11.1522L2.94762 10.4593L2.94762 10.4593L3.23463 11.1522ZM2.15224 12.2346L1.45933 11.9476V11.9476L2.15224 12.2346ZM20 11.75C20.4142 11.75 20.75 11.4142 20.75 11C20.75 10.5858 20.4142 10.25 20 10.25V11.75ZM20 17.75C20.4142 17.75 20.75 17.4142 20.75 17C20.75 16.5858 20.4142 16.25 20 16.25V17.75ZM19 17.75C19.4142 17.75 19.75 17.4142 19.75 17C19.75 16.5858 19.4142 16.25 19 16.25V17.75ZM19 11.75C19.4142 11.75 19.75 11.4142 19.75 11C19.75 10.5858 19.4142 10.25 19 10.25V11.75ZM1.25 14C1.25 14.4557 1.24959 14.835 1.27077 15.1454C1.29241 15.4625 1.33905 15.762 1.45933 16.0524L2.84515 15.4784C2.81319 15.4012 2.78372 15.284 2.76729 15.0433C2.75041 14.7958 2.75 14.4762 2.75 14H1.25ZM5 16.25C4.5238 16.25 4.20421 16.2496 3.95674 16.2327C3.71602 16.2163 3.5988 16.1868 3.52165 16.1548L2.94762 17.5407C3.23801 17.661 3.53754 17.7076 3.85464 17.7292C4.165 17.7504 4.54432 17.75 5 17.75V16.25ZM1.45933 16.0524C1.73844 16.7262 2.27379 17.2616 2.94762 17.5407L3.52165 16.1548C3.21536 16.028 2.97202 15.7846 2.84515 15.4784L1.45933 16.0524ZM5 10.25C4.54432 10.25 4.165 10.2496 3.85464 10.2708C3.53754 10.2924 3.23801 10.339 2.94762 10.4593L3.52165 11.8452C3.5988 11.8132 3.71602 11.7837 3.95674 11.7673C4.20421 11.7504 4.5238 11.75 5 11.75V10.25ZM2.75 14C2.75 13.5238 2.75041 13.2042 2.76729 12.9567C2.78372 12.716 2.81319 12.5988 2.84515 12.5216L1.45933 11.9476C1.33905 12.238 1.29241 12.5375 1.27077 12.8546C1.24959 13.165 1.25 13.5443 1.25 14H2.75ZM2.94762 10.4593C2.27379 10.7384 1.73844 11.2738 1.45933 11.9476L2.84515 12.5216C2.97202 12.2154 3.21536 11.972 3.52165 11.8452L2.94762 10.4593ZM20 10.25H5V11.75H20V10.25ZM5 17.75H20V16.25H5V17.75ZM19 16.25C18.7765 16.25 18.4824 16.1141 18.2098 15.7053C17.9408 15.3017 17.75 14.701 17.75 14H16.25C16.25 14.9558 16.5069 15.8551 16.9617 16.5373C17.4131 17.2143 18.1189 17.75 19 17.75V16.25ZM17.75 14C17.75 13.299 17.9408 12.6983 18.2098 12.2947C18.4824 11.8859 18.7765 11.75 19 11.75V10.25C18.1189 10.25 17.4131 10.7857 16.9617 11.4627C16.5069 12.1449 16.25 13.0442 16.25 14H17.75Z" fill="#D9E8E3"/>
-        <path d="M15.5 7H16.5C17.9142 7 18.6213 7 19.0607 6.56066C19.5 6.12132 19.5 5.41421 19.5 4C19.5 2.58579 19.5 1.87868 19.0607 1.43934C18.6213 1 17.9142 1 16.5 1H15.5C14.0858 1 13.3787 1 12.9393 1.43934C12.5 1.87868 12.5 2.58579 12.5 4C12.5 5.41421 12.5 6.12132 12.9393 6.56066C13.3787 7 14.0858 7 15.5 7Z" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3" stroke-width="1.5"/>
-        </svg>
+        <path
+          d="M6.5 7H5.5C4.08579 7 3.37868 7 2.93934 6.56066C2.5 6.12132 2.5 5.41421 2.5 4C2.5 2.58579 2.5 1.87868 2.93934 1.43934C3.37868 1 4.08579 1 5.5 1H6.5C7.91421 1 8.62132 1 9.06066 1.43934C9.5 1.87868 9.5 2.58579 9.5 4C9.5 5.41421 9.5 6.12132 9.06066 6.56066C8.62132 7 7.91421 7 6.5 7Z"
+          stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M2.5 3H1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M21 3H19.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M2.15224 15.7654L1.45933 16.0524L1.45933 16.0524L2.15224 15.7654ZM3.23463 16.8478L2.94762 17.5407H2.94762L3.23463 16.8478ZM3.23463 11.1522L2.94762 10.4593L2.94762 10.4593L3.23463 11.1522ZM2.15224 12.2346L1.45933 11.9476V11.9476L2.15224 12.2346ZM20 11.75C20.4142 11.75 20.75 11.4142 20.75 11C20.75 10.5858 20.4142 10.25 20 10.25V11.75ZM20 17.75C20.4142 17.75 20.75 17.4142 20.75 17C20.75 16.5858 20.4142 16.25 20 16.25V17.75ZM19 17.75C19.4142 17.75 19.75 17.4142 19.75 17C19.75 16.5858 19.4142 16.25 19 16.25V17.75ZM19 11.75C19.4142 11.75 19.75 11.4142 19.75 11C19.75 10.5858 19.4142 10.25 19 10.25V11.75ZM1.25 14C1.25 14.4557 1.24959 14.835 1.27077 15.1454C1.29241 15.4625 1.33905 15.762 1.45933 16.0524L2.84515 15.4784C2.81319 15.4012 2.78372 15.284 2.76729 15.0433C2.75041 14.7958 2.75 14.4762 2.75 14H1.25ZM5 16.25C4.5238 16.25 4.20421 16.2496 3.95674 16.2327C3.71602 16.2163 3.5988 16.1868 3.52165 16.1548L2.94762 17.5407C3.23801 17.661 3.53754 17.7076 3.85464 17.7292C4.165 17.7504 4.54432 17.75 5 17.75V16.25ZM1.45933 16.0524C1.73844 16.7262 2.27379 17.2616 2.94762 17.5407L3.52165 16.1548C3.21536 16.028 2.97202 15.7846 2.84515 15.4784L1.45933 16.0524ZM5 10.25C4.54432 10.25 4.165 10.2496 3.85464 10.2708C3.53754 10.2924 3.23801 10.339 2.94762 10.4593L3.52165 11.8452C3.5988 11.8132 3.71602 11.7837 3.95674 11.7673C4.20421 11.7504 4.5238 11.75 5 11.75V10.25ZM2.75 14C2.75 13.5238 2.75041 13.2042 2.76729 12.9567C2.78372 12.716 2.81319 12.5988 2.84515 12.5216L1.45933 11.9476C1.33905 12.238 1.29241 12.5375 1.27077 12.8546C1.24959 13.165 1.25 13.5443 1.25 14H2.75ZM2.94762 10.4593C2.27379 10.7384 1.73844 11.2738 1.45933 11.9476L2.84515 12.5216C2.97202 12.2154 3.21536 11.972 3.52165 11.8452L2.94762 10.4593ZM20 10.25H5V11.75H20V10.25ZM5 17.75H20V16.25H5V17.75ZM19 16.25C18.7765 16.25 18.4824 16.1141 18.2098 15.7053C17.9408 15.3017 17.75 14.701 17.75 14H16.25C16.25 14.9558 16.5069 15.8551 16.9617 16.5373C17.4131 17.2143 18.1189 17.75 19 17.75V16.25ZM17.75 14C17.75 13.299 17.9408 12.6983 18.2098 12.2947C18.4824 11.8859 18.7765 11.75 19 11.75V10.25C18.1189 10.25 17.4131 10.7857 16.9617 11.4627C16.5069 12.1449 16.25 13.0442 16.25 14H17.75Z"
+          fill="#D9E8E3" />
+        <path
+          d="M15.5 7H16.5C17.9142 7 18.6213 7 19.0607 6.56066C19.5 6.12132 19.5 5.41421 19.5 4C19.5 2.58579 19.5 1.87868 19.0607 1.43934C18.6213 1 17.9142 1 16.5 1H15.5C14.0858 1 13.3787 1 12.9393 1.43934C12.5 1.87868 12.5 2.58579 12.5 4C12.5 5.41421 12.5 6.12132 12.9393 6.56066C13.3787 7 14.0858 7 15.5 7Z"
+          stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3"
+          stroke-width="1.5" />
+      </svg>
       <span>Créer un parcours</span>
     </button>
   </div>
 </div>
 
- <!-- Tableau -->
- <div  class="bg-white shadow rounded p-4 w-full">
-  <h2 class="text-lg font-bold text-gray-700 mb-4">Liste des utilisateurs</h2>
-  <table class="min-w-full table-auto">
+
+<!-- Boutons de filtrage -->
+<div class="flex justify-center gap-4 mb-4">
+  <button *ngFor="let status of ['draft', 'pending', 'approved', 'rejected']" (click)="getDataParcours(status)"
+    class="bg-[#114C5A] text-white px-4 py-2 rounded-md flex items-center space-x-1 hover:bg-[#D66336]">
+    <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M6.5 7H5.5C4.08579 7 3.37868 7 2.93934 6.56066C2.5 6.12132 2.5 5.41421 2.5 4C2.5 2.58579 2.5 1.87868 2.93934 1.43934C3.37868 1 4.08579 1 5.5 1H6.5C7.91421 1 8.62132 1 9.06066 1.43934C9.5 1.87868 9.5 2.58579 9.5 4C9.5 5.41421 9.5 6.12132 9.06066 6.56066C8.62132 7 7.91421 7 6.5 7Z"
+        stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M2.5 3H1" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M21 3H19.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path
+        d="M2.15224 15.7654L1.45933 16.0524L1.45933 16.0524L2.15224 15.7654ZM3.23463 16.8478L2.94762 17.5407H2.94762L3.23463 16.8478ZM3.23463 11.1522L2.94762 10.4593L2.94762 10.4593L3.23463 11.1522ZM2.15224 12.2346L1.45933 11.9476V11.9476L2.15224 12.2346ZM20 11.75C20.4142 11.75 20.75 11.4142 20.75 11C20.75 10.5858 20.4142 10.25 20 10.25V11.75ZM20 17.75C20.4142 17.75 20.75 17.4142 20.75 17C20.75 16.5858 20.4142 16.25 20 16.25V17.75ZM19 17.75C19.4142 17.75 19.75 17.4142 19.75 17C19.75 16.5858 19.4142 16.25 19 16.25V17.75ZM19 11.75C19.4142 11.75 19.75 11.4142 19.75 11C19.75 10.5858 19.4142 10.25 19 10.25V11.75ZM1.25 14C1.25 14.4557 1.24959 14.835 1.27077 15.1454C1.29241 15.4625 1.33905 15.762 1.45933 16.0524L2.84515 15.4784C2.81319 15.4012 2.78372 15.284 2.76729 15.0433C2.75041 14.7958 2.75 14.4762 2.75 14H1.25ZM5 16.25C4.5238 16.25 4.20421 16.2496 3.95674 16.2327C3.71602 16.2163 3.5988 16.1868 3.52165 16.1548L2.94762 17.5407C3.23801 17.661 3.53754 17.7076 3.85464 17.7292C4.165 17.7504 4.54432 17.75 5 17.75V16.25ZM1.45933 16.0524C1.73844 16.7262 2.27379 17.2616 2.94762 17.5407L3.52165 16.1548C3.21536 16.028 2.97202 15.7846 2.84515 15.4784L1.45933 16.0524ZM5 10.25C4.54432 10.25 4.165 10.2496 3.85464 10.2708C3.53754 10.2924 3.23801 10.339 2.94762 10.4593L3.52165 11.8452C3.5988 11.8132 3.71602 11.7837 3.95674 11.7673C4.20421 11.7504 4.5238 11.75 5 11.75V10.25ZM2.75 14C2.75 13.5238 2.75041 13.2042 2.76729 12.9567C2.78372 12.716 2.81319 12.5988 2.84515 12.5216L1.45933 11.9476C1.33905 12.238 1.29241 12.5375 1.27077 12.8546C1.24959 13.165 1.25 13.5443 1.25 14H2.75ZM2.94762 10.4593C2.27379 10.7384 1.73844 11.2738 1.45933 11.9476L2.84515 12.5216C2.97202 12.2154 3.21536 11.972 3.52165 11.8452L2.94762 10.4593ZM20 10.25H5V11.75H20V10.25ZM5 17.75H20V16.25H5V17.75ZM19 16.25C18.7765 16.25 18.4824 16.1141 18.2098 15.7053C17.9408 15.3017 17.75 14.701 17.75 14H16.25C16.25 14.9558 16.5069 15.8551 16.9617 16.5373C17.4131 17.2143 18.1189 17.75 19 17.75V16.25ZM17.75 14C17.75 13.299 17.9408 12.6983 18.2098 12.2947C18.4824 11.8859 18.7765 11.75 19 11.75V10.25C18.1189 10.25 17.4131 10.7857 16.9617 11.4627C16.5069 12.1449 16.25 13.0442 16.25 14H17.75Z"
+        fill="#D9E8E3" />
+      <path
+        d="M15.5 7H16.5C17.9142 7 18.6213 7 19.0607 6.56066C19.5 6.12132 19.5 5.41421 19.5 4C19.5 2.58579 19.5 1.87868 19.0607 1.43934C18.6213 1 17.9142 1 16.5 1H15.5C14.0858 1 13.3787 1 12.9393 1.43934C12.5 1.87868 12.5 2.58579 12.5 4C12.5 5.41421 12.5 6.12132 12.9393 6.56066C13.3787 7 14.0858 7 15.5 7Z"
+        stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3"
+        stroke-width="1.5" />
+    </svg>
+    <span> {{ status | titlecase }}</span>
+  </button>
+</div>
+
+<!-- Tableau -->
+<div class="bg-white shadow rounded p-4 w-full">
+  <h2 class="text-lg font-bold text-gray-700 mb-4">Liste des parcours</h2>
+    <!-- Message si le tableau est vide -->
+    <div *ngIf="!parcours?.length && !isLoading" class="text-center text-gray-500 py-4">
+      Aucun parcours trouvé.
+    </div>
+  <table *ngIf="parcours.length > 0" class="min-w-full table-auto">
     <thead class="bg-gray-200">
       <tr>
         <th class="px-6 py-3 text-left text-gray-700 font-semibold">Parcours</th>
         <th class="px-6 py-3 text-left text-gray-700 font-semibold">Formateur</th>
         <th class="px-6 py-3 text-left text-gray-700 font-semibold">Type</th>
         <th class="px-6 py-3 text-left text-gray-700 font-semibold">Prix(fcfa)</th>
-        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Apprenants</th>
+        <!-- <th class="px-6 py-3 text-left text-gray-700 font-semibold">Apprenants</th> -->
         <th class="px-6 py-3 text-left text-gray-700 font-semibold">Durée</th>
         <th class="px-6 py-3 text-left text-gray-700 font-semibold">Publier</th>
       </tr>
@@ -79,23 +114,21 @@
       <tr *ngFor="let parcour of parcours">
         <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.nom_parcour }}</td>
         <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.user.name }}</td>
-          <td class="px-6 py-3 border-b" [ngClass]="{
-            'bg-green-200': parcour.status_type === 1,
-            'bg-red-200': parcour.status_type === 0,
-          }" > {{ parcour.status_type === 0 ? 'Gratuit' : 'Premium' }}</td>
-        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.prix }}</td>
-        <td class="px-6 py-3 border-b text-[#2C7C79]"> 90</td>
-        <td class="px-6 py-3 border-b text-[#2C7C79]">{{parcour.duree}}</td>
         <td class="px-6 py-3 border-b" [ngClass]="{
-          'bg-green-200': parcour.status_audiance === 1,
-          'bg-red-200': parcour.status_audiance === 0
-        }"
-        >{{ parcour.status_audiance === 0 ? 'Publier' : 'Non publier' }}</td>
+            'bg-green-200': parcour.status_type === 1,
+            'bg-red-200': parcour.status_type === 0
+          }"> {{ parcour.status_type === 0 ? 'Gratuit' : 'Premium' }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.prix }}</td>
+        <!-- <td class="px-6 py-3 border-b text-[#2C7C79]">90</td> -->
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.duree }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">
+          <button class="bg-[#F9BD4F] p-2 rounded-md" (click)="publierParcour(parcour.id)">Publier</button>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
 
-
-
-
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
+</div>

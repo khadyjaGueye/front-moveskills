@@ -297,9 +297,6 @@ export class FormComponent implements OnInit {
   testInProgress = false; // Indique si les résultats sont en cours d'envoi
 
   sendResults() {
-    // console.log(environment.apiBaseUrl + "question1");
-
-    // this.service.url = environment.apiBaseUrl + "question1";
     const percentages = this.calculatePercentages();
 
     // Conversion en entier pour chaque pourcentage
@@ -311,7 +308,7 @@ export class FormComponent implements OnInit {
       user_id: this.userId,
     };
 
-    //console.log(data);
+    console.log(data);
 
     this.testInProgress = true; // Indiquer que l'envoi est en cours
 
@@ -452,4 +449,10 @@ export class FormComponent implements OnInit {
       this.showAnimation = false;
     }, 5000); // 5000 ms = 5 secondes
   }
+
+
+
+
+
+
 }

@@ -17,25 +17,43 @@ export class ParcourComponent implements OnInit {
 
   parcours: Parcour[] = [];
   isLoading: boolean = true;
+  status: string = "";
 
   constructor(private service: ApprenantService) { }
 
   ngOnInit(): void {
-    this.getDataParcours();
+    this.getDataParcours('draft');
+
   }
 
-  getDataParcours() {
-    this.service.url = environment.apiBaseUrl + "parcours";
-    this.service.all().subscribe(resp => {
-      this.parcours = resp.data.parcours;
-      this.isLoading = false; // Données chargées, on masque le spinner
-      //console.log(this.parcours);
+  getDataParcours(status: string): void {
+    this.isLoading = true; // Afficher le spinner pendant le chargement
+    this.service.url = `${environment.apiBaseUrl}parcours/status/${status}`;
+    this.service.all().subscribe({
+      next: (resp: any) => {
+        this.status = status;
+        this.parcours = resp.data.parcours;
+        this.isLoading = false; // Masquer le spinner une fois les données chargées
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des parcours', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  publierParcour(id: number) {
+    const parcour = "/status/approved"
+    this.service.edit("approved", id, parcour).subscribe({
+      next: (resp) => {
+        this.service.handleResponse(resp)
+      }, error: (err) => {
+        console.log(err);
+        this.service.handleResponse(err);
+      }
     })
   }
 
-  publierParcour(){
-   // this.service.url = environment.apiBaseUrl + "publier";
-   
-  }
+
 
 }

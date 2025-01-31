@@ -1,3 +1,5 @@
+import { User } from "../../../../interfaces/model"
+
 export interface Formateur {
   id: number
   name: string
@@ -9,6 +11,12 @@ export interface Vente {
   name: string
   email: string
   purchased_parcours: PurchasedParcour[]
+}
+
+export interface Inscrit {
+  id: number
+  name: string
+  email: string
 }
 
 export interface PurchasedParcour {
@@ -40,4 +48,5 @@ export interface TopParcour {
   id: number
   nom_parcour: string
   total_achats: number
+  user:User
 }

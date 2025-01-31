@@ -61,8 +61,6 @@ export class ListApprenantComponent implements OnInit {
     } else {
       console.error('Aucun utilisateur authentifié trouvé dans le localStorage.');
     }
-
-
   }
   openModal(id: number) {
     this.display = true;
@@ -83,10 +81,10 @@ export class ListApprenantComponent implements OnInit {
 
 
   getDataUser() {
+    this.isLoading = true;
     this.service.url = environment.apiBaseUrl + "my-users";
     this.service.all().subscribe(resp => {
       this.apprenants = resp.data.users
-
       this.isLoading = false; // Données chargées, on masque le spinner
     })
   }
@@ -243,8 +241,7 @@ export class ListApprenantComponent implements OnInit {
           password: row[2],
           code_invitatin: row[3],
         }));
-
-      console.log(this.file); // Affichez les données dans la console
+      //console.log(this.file); // Affichez les données dans la console
     };
 
     reader.readAsBinaryString(target.files[0]);
@@ -253,7 +250,7 @@ export class ListApprenantComponent implements OnInit {
 
   // Soumettre les données
   submitData(): void {
-       this.service.url = environment.apiBaseUrl + "users";
+    this.service.url = environment.apiBaseUrl + "users";
     if (!this.file || this.file.length === 0) {
       console.error('Aucune donnée à soumettre');
       return;

@@ -5,7 +5,8 @@
     <form [formGroup]="chapitreForm" (ngSubmit)="addChapitre()">
       <div class="flex flex-col lg:flex-row gap-6 items-stretch">
         <!-- Section Input -->
-        <div class="w-full border-4 border-dashed border-gray-400 lg:w-2/3 bg-white rounded-md shadow-md p-4 flex flex-col justify-between">
+        <div
+          class="w-full border-4 border-dashed border-gray-400 lg:w-2/3 bg-white rounded-md shadow-md p-4 flex flex-col justify-between">
           <!-- Champ "Chapitre" -->
           <div>
             <label class="text-gray-700 block font-medium mb-1" for="nom">Chapitre</label>
@@ -37,8 +38,7 @@
 
           <!-- Bouton "Envoyer" -->
           <div class="mt-6">
-            <button type="submit" [disabled]="chapitreForm.invalid"
-            [ngClass]="{
+            <button type="submit" [disabled]="chapitreForm.invalid" [ngClass]="{
               'bg-gray-400 cursor-not-allowed': chapitreForm.invalid,
               'bg-[#114C5A] hover:bg-[#0d3b47]': !chapitreForm.invalid
             }"
@@ -58,24 +58,74 @@
         </div>
       </div>
     </form>
-
   </div>
 
-
-  <!-- Section Liste des Chapitres -->
-  <div class="bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-xl font-bold mb-4">Liste des Chapitres</h2>
-    <div *ngFor="let chapitre of chapitres" class="border-b pb-4 mb-4">
-      <h3 class="text-lg font-semibold">{{ chapitre.nom_chapitre }}</h3>
-      <p class="text-gray-600">Parcours : {{ chapitre.parcour_id }}</p>
-      <div class="flex gap-2 mt-2">
-        <button (click)="editChapitre(chapitre)" class="text-blue-500 hover:underline">
-          Éditer
-        </button>
-        <button (click)="deleteChapitre(chapitre.id)" class="text-red-500 hover:underline">
-          Supprimer
-        </button>
+  <div class="w-full max-w-3xl p-4">
+    <span class="flex justify-center items-center text-lg font-inter text-[#114C5A]">Liste des parcours</span>
+    <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-2 gap-4 mt-4">
+      <div *ngFor="let parcour of parcours"
+        class="flex gap-4 items-center justify-center p-6 border border-gray-300 rounded-md shadow-md cursor-pointer"
+        (click)="getDataChapitre(parcour.id,parcour.nom_parcour)">
+        <svg class="text-[#114C5A]" width="14" height="8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 1L6.29289 6.29289C6.62623 6.62623 6.79289 6.79289 7 6.79289C7.20711 6.79289 7.37377 6.62623 7.70711 6.29289L13 1"
+            stroke="#141B34" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="text-[#114C5A]">{{ parcour.nom_parcour }}</span>
       </div>
     </div>
   </div>
+
+  <!-- Section Liste des Chapitres -->
+  <div *ngIf="chapitres && chapitres.length > 0" class="bg-white shadow rounded p-4 w-full">
+    <h2 class="flex justify-center items-center text-lg font-bold text-gray-700 mb-4">Liste des chapitres du parcours
+      {{parcour}}</h2>
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-6 py-3 text-left text-[#114C5A] font-semibold">#</th>
+          <th class="px-6 py-3 text-left text-[#114C5A] font-semibold">Chapitre</th>
+          <!-- <th class="px-6 py-3 text-left text-[#114C5A] font-semibold">Parcours</th> -->
+          <th class="px-6 py-3 text-left text-[#114C5A] font-semibold">Date</th>
+          <th class="px-6 py-3 text-left text-[#114C5A] font-semibold">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let chapitre of chapitres;let i=index">
+          <td class="px-6 text-[#114C5A] py-3 border-b">{{ i+1 }}</td>
+          <td class="px-6 text-[#114C5A] py-3 border-b">{{ chapitre.nom_chapitre }}</td>
+          <!-- <td class="px-6 text-[#114C5A] py-3 border-b">{{ chapitre.parcour_id }}</td> -->
+          <td class="px-6 text-[#114C5A] py-3 border-b"> {{chapitre.updated_at| date:'dd/MM/yyyy'}}</td>
+          <td class="px-6 text-[#114C5A] py-3 border-b">
+            <div class="flex items-center gap-2">
+              <svg (click)="editChapitre(chapitre.id)" class="text-[#F9BD4F]" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path
+                  d="M12.6844 4.02547C12.4588 4.00646 12.2306 3.9967 12 3.9967C7.58172 3.9967 4 7.57843 4 11.9967C4 16.415 7.58172 19.9967 12 19.9967C16.4183 19.9967 20 16.415 20 11.9967C20 11.7662 19.9902 11.5379 19.9711 11.3123C19.8996 10.4646 19.6953 9.6442 19.368 8.87344L20.8682 7.37114C21.2031 8.01192 21.4706 8.6935 21.6613 9.40649C21.8213 10.0063 21.9258 10.6222 21.9723 11.248C21.9907 11.4952 22 11.7449 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C12.2518 1.9967 12.5015 2.00601 12.7487 2.02431C13.3745 2.07081 13.9904 2.17542 14.5898 2.3358C15.3032 2.52609 15.9848 2.79359 16.6256 3.1285L15.1247 4.62934C14.3525 4.30143 13.5321 4.09707 12.6844 4.02547ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
+                </path>
+              </svg>
+              <svg (click)="deleteChapitre(chapitre.id)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                fill="red" width="24" height="24" class="cursor-pointer">
+                <path
+                  d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z">
+                </path>
+              </svg>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Message si aucun chapitre n'est disponible -->
+  <div class="bg-white shadow-md rounded-lg p-6 mt-8" *ngIf="chapitres && chapitres.length === 0">
+    <p class="text-[#114C5A]  font-inter flex justify-center items-center">Pour voir les chapitres cliquer sur un parcours</p>
+  </div>
+
+
+
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>

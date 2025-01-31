@@ -28,7 +28,7 @@ export class ParcourAcheterComponent implements OnInit {
   apiUrlpathvideos = environment.apiUrlpathvideos;
   apiUrlpathdocuments = environment.apiUrlpathdocuments;
   safeUrl: SafeResourceUrl | null = null;
-
+  isLoading:boolean = false;
 
   constructor(private service: ApprenantService, private route: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
@@ -108,12 +108,13 @@ export class ParcourAcheterComponent implements OnInit {
   }
 
   getDataParcourAcheter() {
+    this.isLoading = true;
     this.service.url = `${environment.apiBaseUrl}user/parcour/${this.userId}`;
     this.service.all().subscribe({
       next: (resp) => {
-        this.parcours = resp.data.data
-        console.log(this.parcours);
-
+        this.parcours = resp.data.parcoursAcheter
+     //  console.log(this.parcours);
+        this.isLoading = false
       }, error: (err) => {
 
       }

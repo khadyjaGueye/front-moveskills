@@ -1,10 +1,7 @@
 <!-- Affichage des résultats -->
 
-
-
-
-<div class="flex flex-col items-center mt-8 font-inter">
-  <h2 class="uppercase text-3xl font-bold text-center mb-6">
+<div class="flex flex-col items-center mt-8 font-inter border border-[#114C5A] rounded-lg p-6 bg-[#D9E8E3] shadow-md">
+  <h2 class="uppercase text-3xl font-bold text-[#114C5A] text-center mb-6">
     Bravo, votre couleur dominante est
     <span [ngStyle]="{ 'color': getDominantColorHex() }" class="">{{ getDominantColorInFrench() }}</span>
   </h2>
@@ -18,7 +15,7 @@
       class="mx-auto w-40 h-40 object-cover rounded-full shadow-lg">
   </div>
 
-  <p class="mt-6 text-xl font-semibold text-gray-700 text-center">
+  <p class="mt-6 text-xl font-semibold text-[#114C5A] text-center">
     L'animal qui me correspond est un :
     <span [ngStyle]="{ 'color': getDominantColorHex() }" class="font-bold">{{ getAnimalName() }}</span>
   </p>
@@ -85,4 +82,8 @@
       </ul>
     </div>
   </div>
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>

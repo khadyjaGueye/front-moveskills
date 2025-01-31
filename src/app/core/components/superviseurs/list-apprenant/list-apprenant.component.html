@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<div class="mt-5 ml-2 flex justify-between">
+<div class="mt-5 ml-2 flex justify-center gap-3 p-4">
   <!-- Bouton Générer -->
   <button (click)="generateCode()"
     class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100">
@@ -46,7 +46,8 @@
   </button>
 
   <!-- Bouton pour ouvrir le modal -->
-  <button (click)="openTab()"  class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+  <button (click)="openTab()"
+    class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
     Exporter
   </button>
 
@@ -79,48 +80,26 @@
   </table>
 </div>
 
-<div
-  class="relative mt-10 ml-5 flex flex-col h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-  <table id="listToConvert" class="w-full text-left table-auto min-w-max">
-    <thead id="tableHeader">
+<!-- Tableau -->
+<div class="bg-white shadow rounded w-full p-4">
+  <table class="min-w-full table-auto p-4">
+    <thead class="bg-gray-200">
       <tr>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Numero
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Nom
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Email
-          </p>
-        </th>
-        <th class="p-4 border-b border-slate-300 bg-slate-50">
-          <p class="block text-xl font-normal leading-none text-slate-500">
-            Option
-          </p>
-        </th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">#</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Nom</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Email</th>
+        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Option</th>
       </tr>
     </thead>
-    <tbody id="listToConvert">
-      <tr class="hover:bg-slate-50"
-        *ngFor="let apprenant of filteredApprenant | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ;let i= index">
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block  text-sm text-slate-800">{{ (page - 1) * itemsPerPage + i + 1 }}</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="block  text-sm text-slate-800">{{apprenant.name}}</p>
-        </td>
-        <td class="p-4 border-b border-slate-200 py-5">
-          <p class="text-sm text-slate-800">{{apprenant.email}}</p>
-        </td>
-        <td class="border-b border-slate-200 ">
-          <svg (click)="openModal(apprenant.id)" class="text-[#114C5A] py-1 px-1 w-10"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <tbody
+      *ngFor="let apprenant of filteredApprenant | paginate: { itemsPerPage: itemsPerPage, currentPage: page } ;let i= index">
+      <tr>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ (page - 1) * itemsPerPage + i + 1 }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{apprenant.name}}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{apprenant.email}}</td>
+        <td  class="px-6 py-3 border-b text-[#2C7C79]">
+          <svg (click)="openModal(apprenant.id)" class="text-[#2C7C79]" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
             <path
               d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z">
             </path>
@@ -187,7 +166,9 @@
         Importer
         <input type="file" accept=".xlsx, .xls" (change)="onFileChange($event)" class="hidden">
       </label>
-      <button  class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" (click)="closeTab()">
+      <button
+        class="py-2.5 px-4 bg-[#114C5A] text-sm font-medium text-white rounded-lg border border-[#EF7743] hover:bg-[#EF7743] hover:text-[#114C5A] focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+        (click)="closeTab()">
         Fermer
       </button>
     </div>
@@ -195,7 +176,7 @@
 </div>
 
 
-<!--
+
 <div *ngIf="isLoading">
   <app-loarder></app-loarder>
-</div> -->
+</div>
