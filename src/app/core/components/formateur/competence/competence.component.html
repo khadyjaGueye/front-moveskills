@@ -1,7 +1,4 @@
-<div class="flex justify-between">
-  <div class="ml-5">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Liste des compétences</h2>
-  </div>
+<div class="flex justify-center items-center gap-5 p-5">
   <div class="relative">
     <input [(ngModel)]="searchTerm"
       class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
@@ -31,7 +28,7 @@
 <div *ngIf="showAddCompetenceForm" class="mt-4">
   <form [formGroup]="formData" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <div class="mb-4 flex gap-4 justify-center">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="nomChapitre">
+      <label class="block text-[#2C7C79] text-sm font-bold mb-2" for="nomChapitre">
         Nom du Profil
       </label>
       <input formControlName="nom"
@@ -48,14 +45,14 @@
 
 <!-- Tableau -->
 <div class="bg-white shadow rounded p-4 w-full">
-  <h2 class="flex justify-center items-center   text-lg font-bold text-gray-700 mb-4">Liste des profils</h2>
+  <h2 class="flex justify-center items-center   text-lg font-bold text-[#2C7C79] mb-4">Liste des profils</h2>
   <table class="min-w-full table-auto">
     <thead class="bg-gray-200">
       <tr>
-        <th class="px-6 py-3 text-left text-gray-700 font-semibold">#</th>
-        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Profil</th>
-        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Date</th>
-        <th class="px-6 py-3 text-left text-gray-700 font-semibold">Action</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">#</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">Profil</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">Date</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-semibold">Action</th>
       </tr>
     </thead>
     <tbody>

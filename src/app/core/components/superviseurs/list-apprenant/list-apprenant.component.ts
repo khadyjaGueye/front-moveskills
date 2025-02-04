@@ -88,6 +88,7 @@ export class ListApprenantComponent implements OnInit {
       this.isLoading = false; // Données chargées, on masque le spinner
     })
   }
+  
   get filteredApprenant() {
     return this.apprenants.filter(appreant =>
       appreant.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||

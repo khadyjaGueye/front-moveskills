@@ -44,7 +44,7 @@
         [style.transform]="'translateX(' + (currentIndex * -100) + '%)'">
         <div *ngFor="let citation of citations" class="flex-none w-full p-4 text-center">
           <blockquote class="italic text-lg text-[#114C5A]">
-            "{{ citation }}"
+            "{{ citation.libelle }}"
           </blockquote>
         </div>
       </div>

@@ -343,7 +343,7 @@ export class ListParcourComponent implements OnInit {
     this.service.url = environment.apiBaseUrl + "parcours/formateur";
     this.service.all().subscribe(resp => {
       this.parcours = resp.data.parcours;
-     // console.log(this.parcours);
+      //console.log(this.parcours);
       this.isLoading = false; // Données chargées, on masque le spinner
       //console.log(this.parcours);
     })
@@ -468,17 +468,41 @@ export class ListParcourComponent implements OnInit {
     });
   }
 
-  demandePublicationParcour(id: number) {
-    const parcour = "/status/pending"
-    //console.log(id);
-    this.service.edit("pending", id, parcour).subscribe({
-      next: (resp) => {
-        this.service.handleResponse(resp);
-      }, error: (erreur) => {
-        console.log(erreur);
-      }
-    })
+
+
+  demandePublicationParcour(parcour: Parcour) {
+    if (parcour.status === "approved") {
+      Swal.fire({
+        icon: 'info',
+        title: 'Publication impossible',
+        text: 'Le parcours a déjà été publié.',
+        confirmButtonColor: '#2C7C79'
+      });
+    } else if (parcour.status === "pending") {
+      const url = "/status/pending";
+      this.service.edit("pending", parcour.id, url).subscribe({
+        next: (resp) => {
+          this.service.handleResponse(resp);
+          Swal.fire({
+            icon: 'success',
+            title: 'Demande envoyée',
+            text: 'Votre demande de publication a été envoyée avec succès.',
+            confirmButtonColor: '#2C7C79'
+          });
+        },
+        error: (erreur) => {
+         // console.log(erreur);
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: 'Une erreur est survenue lors de l’envoi de la demande.',
+            confirmButtonColor: '#d33'
+          });
+        }
+      });
+    }
   }
+
 
 
 }

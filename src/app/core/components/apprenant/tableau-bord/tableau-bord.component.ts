@@ -12,29 +12,29 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-tableau-bord',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule,RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, RouterLink],
   templateUrl: './tableau-bord.component.html',
   styleUrl: './tableau-bord.component.css'
 })
 export class TableauBordComponent implements OnInit {
 
-  //citations: Citation[] = [];
+  citations: Citation[] = [];
   listeParcoursAchete: Parcours[] = [];
   parcours: Parcour[] = [];
-  citations = [
-    "L'avenir appartient à ceux qui croient à la beauté de leurs rêves.",
-    "La vie est ce qui se passe pendant que vous êtes occupé à faire d'autres projets.",
-    "Le succès est la somme de petits efforts répétés jour après jour.",
-    "Ne regardez pas l'horloge; faites ce qu'elle fait. Continuez.",
-    "La seule limite à notre épanouissement de demain sera nos doutes et hésitations d'aujourd'hui."
-  ];
+  // citations = [
+  //   "L'avenir appartient à ceux qui croient à la beauté de leurs rêves.",
+  //   "La vie est ce qui se passe pendant que vous êtes occupé à faire d'autres projets.",
+  //   "Le succès est la somme de petits efforts répétés jour après jour.",
+  //   "Ne regardez pas l'horloge; faites ce qu'elle fait. Continuez.",
+  //   "La seule limite à notre épanouissement de demain sera nos doutes et hésitations d'aujourd'hui."
+  // ];
   totalAffilition: number = 0;
   nombreTestFait: number = 0;
   nombreparcourAchete: number = 0;
   currentIndex = 0;
   interval: any;
   display: boolean = true;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   elementsAffiches: number = 4; // Par défaut, afficher 4 éléments
   tests: Test[] = [];
   testsMd: Test[] = []
@@ -43,9 +43,11 @@ export class TableauBordComponent implements OnInit {
   constructor(private service: ApprenantService) { }
 
   ngOnInit(): void {
-    this.getCitationDuJours();
+    // this.getCitationDuJours();
     // Démarrer le défilement automatique à l'initialisation
-    this.startAutoScroll();
+    if (this.citations.length > 0) {
+      this.startAutoScroll(); // Démarre le carrousel automatiquement
+    }
     this.getData();
     this.getDataParcours();
     // Récupérer l'utilisateur JSON
@@ -78,7 +80,7 @@ export class TableauBordComponent implements OnInit {
     this.service.url = environment.apiBaseUrl + "citations/published-by"
     this.service.all().subscribe({
       next: (resp) => {
-        // this.citations = resp.data.data;
+        //x;
         // console.log(this.citations);
         this.isLoading = false;
       }
@@ -123,7 +125,8 @@ export class TableauBordComponent implements OnInit {
     this.service.all().subscribe({
       next: (resp) => {
         this.parcours = resp.data.parcours;
-        // console.log(this.parcours);
+        this.citations = resp.data.citations
+        //console.log(resp);
         this.isLoading = false;
       }, error: (err) => {
       }
@@ -140,13 +143,14 @@ export class TableauBordComponent implements OnInit {
   }
 
   closeModalParcour() { }
+
   getDataResultatsTest() {
     this.isLoading = true;
     this.service.url = `${environment.apiBaseUrl}question1/${this.id}`;
     this.service.all().subscribe({
       next: (rep) => {
         this.testsMd = rep.data.tests;
-        //  console.log(this.testsMd);
+        //console.log(this.testsMd);
         this.isLoading = false;
       }, error: (err) => {
         //console.log(err);

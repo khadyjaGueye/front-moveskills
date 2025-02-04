@@ -343,23 +343,6 @@
       </li>
 
       <li class="mb-1 group">
-        <a *ngIf="role== 'formateur'" routerLinkActive="router-active"
-          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M13.001 1.5C16.7722 1.5 18.6578 1.5 19.8294 2.7448C21.001 3.98959 21.001 5.99306 21.001 10C21.001 14.0069 21.001 16.0104 19.8294 17.2552C18.6578 18.5 16.7722 18.5 13.001 18.5L9.00098 18.5C5.22974 18.5 3.34412 18.5 2.17255 17.2552C1.00098 16.0104 1.00098 14.0069 1.00098 10C1.00098 5.99306 1.00098 3.98959 2.17255 2.7448C3.34412 1.5 5.22974 1.5 9.00098 1.5L13.001 1.5Z"
-              stroke="#D9E8E3" stroke-width="1.5" stroke-linejoin="round" />
-            <path
-              d="M4.00098 13.4999C5.60963 11.3625 9.35488 11.2458 11.001 13.4999M9.25 8.25C9.25 9.2165 8.4665 10 7.5 10C6.5335 10 5.75 9.2165 5.75 8.25C5.75 7.2835 6.5335 6.5 7.5 6.5C8.4665 6.5 9.25 7.2835 9.25 8.25Z"
-              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M14.001 7.5L18.001 7.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M14.001 11.5H16.001" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
-          </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Mes clients B2B</span>
-        </a>
-      </li>
-
-      <li class="mb-1 group">
         <a routerLink="/core/formateur/affinite" *ngIf="role== 'formateur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -482,12 +465,12 @@
             <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3"
               stroke-width="1.5" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Les parcours</span>
+          <span class="font-inter font-semibold text-sm ml-2">Parcours</span>
         </a>
       </li>
 
       <li class="mb-1 group">
-        <a routerLink="/core/admin/parcour" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a routerLink="/core/admin/formateur" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 13C9.70833 19 3.29167 13 1 19" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"
@@ -500,7 +483,7 @@
             <path d="M11 5H17M17 9H14" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Formateur</span>
+          <span class="font-inter font-semibold text-sm ml-2">Formateurs</span>
         </a>
       </li>
 
@@ -522,7 +505,7 @@
       </li>
 
       <li class="mb-1 group">
-        <a *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a routerLink="/core/admin/citation"  *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -536,12 +519,12 @@
             <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5"
               stroke-linecap="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Les citations</span>
+          <span class="font-inter font-semibold text-sm ml-2">Citations</span>
         </a>
       </li>
 
       <li class="mb-1 group">
-        <a *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a routerLink="/core/admin/transaction" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -910,23 +893,6 @@
         </a>
       </li>
 
-      <li (click)="closeNav()" class="mb-1 group">
-        <a *ngIf="role== 'formateur'" routerLinkActive="router-active"
-          class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-          <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M13.001 1.5C16.7722 1.5 18.6578 1.5 19.8294 2.7448C21.001 3.98959 21.001 5.99306 21.001 10C21.001 14.0069 21.001 16.0104 19.8294 17.2552C18.6578 18.5 16.7722 18.5 13.001 18.5L9.00098 18.5C5.22974 18.5 3.34412 18.5 2.17255 17.2552C1.00098 16.0104 1.00098 14.0069 1.00098 10C1.00098 5.99306 1.00098 3.98959 2.17255 2.7448C3.34412 1.5 5.22974 1.5 9.00098 1.5L13.001 1.5Z"
-              stroke="#D9E8E3" stroke-width="1.5" stroke-linejoin="round" />
-            <path
-              d="M4.00098 13.4999C5.60963 11.3625 9.35488 11.2458 11.001 13.4999M9.25 8.25C9.25 9.2165 8.4665 10 7.5 10C6.5335 10 5.75 9.2165 5.75 8.25C5.75 7.2835 6.5335 6.5 7.5 6.5C8.4665 6.5 9.25 7.2835 9.25 8.25Z"
-              stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M14.001 7.5L18.001 7.5" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M14.001 11.5H16.001" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round" />
-          </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Mes clients B2B</span>
-        </a>
-      </li>
-
       <li class="mb-1 group">
         <a (click)="closeNav()" routerLink="/core/formateur/affinite" *ngIf="role== 'formateur'" routerLinkActive="router-active"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
@@ -1050,12 +1016,12 @@
             <path d="M12.5 3C12.5 2.17157 11.8284 1.5 11 1.5C10.1716 1.5 9.5 2.17157 9.5 3" stroke="#D9E8E3"
               stroke-width="1.5" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Les parcours</span>
+          <span class="font-inter font-semibold text-sm ml-2">Parcours</span>
         </a>
       </li>
 
       <li class="mb-1 group">
-        <a (click)="closeNav()" routerLink="/core/admin/parcour" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a (click)="closeNav()" routerLink="/core/admin/formateur" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 13C9.70833 19 3.29167 13 1 19" stroke="#D9E8E3" stroke-width="1.5" stroke-linecap="round"
@@ -1090,7 +1056,7 @@
       </li>
 
       <li class="mb-1 group">
-        <a (click)="closeNav()" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a  routerLink="/core/admin/citation" (click)="closeNav()" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -1104,12 +1070,12 @@
             <path d="M1 13V8.86265C1 5.19569 3.51571 2.08584 7 1" stroke="#D9E8E3" stroke-width="1.5"
               stroke-linecap="round" />
           </svg>
-          <span class="font-inter font-semibold text-sm ml-2">Les citations</span>
+          <span class="font-inter font-semibold text-sm ml-2">Citations</span>
         </a>
       </li>
 
       <li class="mb-1 group">
-        <a  (click)="closeNav()" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
+        <a routerLink="/core/admin/transaction" (click)="closeNav()" *ngIf="role== 'admin'" routerLinkActive="group-[.active]:bg-[#EF7743]"
           class="flex items-center py-2 px-4 text-gray-300 hover:bg-[#EF7743] hover:text-gray-100 rounded-md  group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

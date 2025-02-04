@@ -60,7 +60,7 @@ export interface Data {
   nombreTotalSuperviseur: User[]
   nombreParcourPublie: Parcour[];
   nombreParcourNonPublie: Parcour[]
-  nombreParcourAchete: Parcour[];
+  nombreParcourAchete: NombreParcourAchete[];
   data: Citation[];
   listeParcoursAchete: Parcours[];
   nombreTestFait: number;
@@ -81,6 +81,12 @@ export interface ParcoursPlusAchetes {
   id: number
   parcour_name: string
   total_achats: number
+}
+
+export interface NombreParcourAchete{
+  parcour_id:number
+  parcour:Parcour
+
 }
 
 export interface UserAchetesParcourDetails {
@@ -197,7 +203,9 @@ export interface Parcour {
   nombre_documents: number
   image: string;
   description: string;
-  tests_pre_evaluation: TestsPreEvaluation
+  tests_pre_evaluation: TestsPreEvaluation;
+  status:string
+  created_at:string
 }
 
 export interface TestsPreEvaluation {
@@ -391,4 +399,5 @@ export interface Citation {
   libelle: string;
   content: string;
   auteur: string;
+  created_at:string
 }

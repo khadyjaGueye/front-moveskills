@@ -6,6 +6,7 @@ import { environment } from '../../../../../environments/environment.development
 import { tap } from 'rxjs';
 import { Inscrit } from '../interface/model';
 import { SharedModule } from '../../../../shared/shared.module';
+import { SearchService } from '../../../../shared/services/search.service';
 
 @Component({
   selector: 'app-list-utilisateur',
@@ -27,7 +28,7 @@ export class ListUtilisateurComponent implements OnInit {
   searchTerm: string = ''; // Terme de recherche
   isLoading:boolean = false;
 
-  constructor(private fb: FormBuilder, private service: ApprenantService) {
+  constructor(private fb: FormBuilder, private service: ApprenantService,private searchService: SearchService) {
     this.inscriptionForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -122,14 +123,9 @@ export class ListUtilisateurComponent implements OnInit {
     return this.inscris.slice(startIndex, endIndex);
   }
 
-
-  // Méthode pour filtrer les résultats
-  filterResultats() {
-    const search = this.searchTerm.toLowerCase();
-    this.filteredResultats = this.inscris.filter(item =>
-      item.name.toLowerCase().includes(search) || item.email.toLowerCase().includes(search)
-    );
-    this.currentPage = 1; // Réinitialiser à la première page après la recherche
+  get filteredApprenants() {
+    return this.searchService.filter(this.inscris, this.searchTerm);
   }
+
 
 }

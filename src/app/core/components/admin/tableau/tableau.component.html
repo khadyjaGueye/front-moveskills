@@ -6,18 +6,24 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <!-- Card 1 -->
       <div class="bg-[#D9E8E3] p-4 rounded shadow flex flex-col justify-center items-center">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreInscrits"></h4>
-        <p class="text-[#2C7C79]"><a routerLink="/core/admin/utilisateur">Inscrits</a></p>
+        <a routerLink="/core/admin/utilisateur">
+          <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreInscrits"></h4>
+          <p class="text-[#2C7C79]">Apprenants</p>
+        </a>
       </div>
       <!-- Card 2 -->
       <div class="bg-[#F9BD4F] p-4 rounded shadow flex flex-col justify-center items-center">
-        <h4 class="font-bold text-[#2C7C79]" appCountUp [endValue]="nombreApprenants"></h4>
-        <p class="text-white">Apprenants</p>
+        <a routerLink="/core/admin/citation">
+          <h4 class="font-bold text-[#2C7C79]" appCountUp [endValue]="nombreApprenants"></h4>
+          <p class="text-white">Citations</p>
+        </a>
       </div>
       <!-- Card 3 -->
       <div class="bg-[#2C7C79] p-4 rounded shadow flex flex-col justify-center items-center">
-        <h4 class="font-bold text-[#F9BD4F]" appCountUp [endValue]="nombreFormateur"></h4>
-        <p class="text-white">Formateurs</p>
+        <a routerLink="/core/admin/formateur">
+          <h4 class="font-bold text-[#F9BD4F]" appCountUp [endValue]="nombreFormateur"></h4>
+          <p class="text-white">Formateurs</p>
+        </a>
       </div>
       <!-- Card 4 -->
       <div class="bg-[#2C7C7933] p-4 rounded shadow flex flex-col justify-center items-center">
@@ -59,16 +65,22 @@
     <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Apprenants et Parcours</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-[#D9E8E3] p-4 rounded shadow flex flex-col justify-center items-center">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotalPublier"></h4>
-        <p class="text-[#2C7C79]"><a routerLink="/core/admin/parcour">Nombre Parcours Publier</a></p>
+        <a routerLink="/core/admin/parcour">
+          <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotalPublier"></h4>
+          <p class="text-[#2C7C79]">Nombre Parcours Publier</p>
+        </a>
       </div>
       <div class="bg-[#F9BD4F] p-4 rounded shadow flex flex-col justify-center items-center">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcoursTotalNonPublier"></h4>
-        <p class="text-white"><a routerLink="/core/admin/parcour">Nombre Parcours Non Publier</a></p>
+        <a routerLink="/core/admin/parcour">
+          <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcoursTotalNonPublier"></h4>
+          <p class="text-white">Nombre Parcours Non Publier</p>
+        </a>
       </div>
       <div class="bg-[#2C7C79] p-4 rounded shadow flex flex-col justify-center items-center">
-        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotal"></h4>
-        <p class="text-white"><a routerLink="/core/admin/parcour">Nombre Total Parcours</a></p>
+        <a routerLink="/core/admin/parcour">
+          <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotal"></h4>
+          <p class="text-white">Nombre Total Parcours</p>
+        </a>
       </div>
       <div class="bg-[#D9E8E3] p-4 rounded shadow flex flex-col justify-center items-center">
         <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombreParcourTotalAcheter"></h4>
@@ -77,30 +89,30 @@
     </div>
   </div>
 
+
   <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-[#2C7C79] mb-4">Liste des apprenants ayant acheté un parcours</h3>
-    <table class="w-full table-auto border-collapse border border-gray-300">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Apprenant</th>
-          <th class="border border-gray-300 px-4 py-2 text-left text-[#2C7C79]">Parcours</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let vente of ventes">
-          <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
-            {{ vente.name }}
-          </td>
-          <td class="border border-gray-300 px-4 py-2 text-[#2C7C79]">
-            <ul>
-              <li *ngFor="let parcour of vente.purchased_parcours">{{ parcour.nom_parcour }}</li>
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- En-tête -->
+    <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <h3 class="text-lg font-bold text-[#2C7C79]">Transactions</h3>
+      <!-- <a routerLink="/core/admin/transaction"> -->
+        <span class="text-lg text-[#2C7C79] hover:underline cursor-pointer">Voir plus</span>
+      <!-- </a> -->
+    </div>
+
+    <!-- Liste des Transactions -->
+    <div class="space-y-4">
+      <div class="p-4 bg-gray-100 rounded-lg shadow-sm flex justify-between items-center"
+        *ngFor="let parcour of parcourAchetes | slice:0:2">
+        <div class="flex flex-col">
+          <span class="text-[#2C7C79] font-medium">{{ parcour.parcour.nom_parcour }}</span>
+          <span class="text-gray-500 text-sm">Prix : {{ parcour.parcour.prix }} FCFA</span>
+        </div>
+        <span class="text-gray-600 text-sm">{{ parcour.parcour.created_at | date:'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
   </div>
 </div>
+
 
 
 <div class="flex flex-col gap-6 p-4 lg:flex-row">
@@ -134,10 +146,15 @@
 
   <!-- Liste des formateurs -->
   <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="text-lg font-bold text-[#2C7C79] mb-4">Liste des Formateurs</h3>
+    <div class="flex justify-between">
+      <h3 class="text-lg font-bold text-[#2C7C79] mb-4">Formateurs</h3>
+      <a routerLink="/core/admin/formateur">
+        <span class="text-lg text-[#2C7C79] mb-4">Voir plus</span>
+      </a>
+    </div>
     <div class="space-y-4">
       <!-- Formateur -->
-      <div class="flex items-center justify-between" *ngFor="let formateur of formateurs">
+      <div class="flex items-center justify-between" *ngFor="let formateur of formateurs |slice:0:5">
         <div class="flex items-center">
           <img class="w-12 h-12 rounded-full" src="assets/images/user.png" alt="Photo Formateur">
           <span class="ml-4 text-[#2C7C79] font-medium">{{formateur.name}}</span>

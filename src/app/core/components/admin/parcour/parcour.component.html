@@ -111,7 +111,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let parcour of parcours">
+      <tr *ngFor="let parcour of paginatedResultats">
         <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.nom_parcour }}</td>
         <td class="px-6 py-3 border-b text-[#2C7C79]">{{ parcour.user.name }}</td>
         <td class="px-6 py-3 border-b" [ngClass]="{
@@ -127,6 +127,28 @@
       </tr>
     </tbody>
   </table>
+  <!-- Pagination controls -->
+  <div class="pagination flex justify-center mt-4">
+    <!-- Bouton Précédent -->
+    <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300" [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)">
+      Précédent
+    </button>
+
+    <!-- Boutons pour les pages -->
+    <button *ngFor="let page of [].constructor(totalPages); let pageIndex = index" class="px-4 py-2 mx-1" [ngClass]="{
+        'bg-[#114C5A] text-white': currentPage === pageIndex + 1,
+        'bg-gray-200 text-gray-700': currentPage !== pageIndex + 1
+      }" (click)="changePage(pageIndex + 1)">
+      {{ pageIndex + 1 }}
+    </button>
+
+    <!-- Bouton Suivant -->
+    <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+      [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+      Suivant
+    </button>
+  </div>
 </div>
 
 <div *ngIf="isLoading">

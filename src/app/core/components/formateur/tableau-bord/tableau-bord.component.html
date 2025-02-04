@@ -2,7 +2,7 @@
 <div class="flex flex-col gap-6 p-4 lg:flex-row">
   <!-- Cartes -->
   <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
-    <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Apprenants et Parcours</h3>
+    <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Affiations et Parcours</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-[#D9E8E3] flex flex-col justify-center items-center p-4 rounded shadow">
         <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="nombretotalAffilition"></h4>
@@ -37,6 +37,55 @@
     </div>
   </div>
 </div>
+
+<!-- Section des cartes -->
+<div class="flex flex-col gap-6 p-4 lg:flex-row">
+  <!-- Cartes -->
+  <div class="w-full lg:w-2/3 bg-white shadow-lg rounded-lg p-6">
+    <h3 class="flex justify-center text-lg font-bold text-[#2C7C79] mb-4">Apprenants et Tests</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-[#D9E8E3] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-[#EF7743]" appCountUp [endValue]="0"></h4>
+        <p class="text-[#2C7C79]">Nombre Apprenants achéter parcours</p>
+      </div>
+      <div class="bg-[#F9BD4F] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-white" appCountUp [endValue]="0"></h4>
+        <p class="text-white">Nombre Apprenants commencer parcours</p>
+      </div>
+      <div class="bg-[#2C7C79] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-white" appCountUp [endValue]="0"></h4>
+        <p class="text-white">Nombre Apprenants commencer et terminer parcours</p>
+      </div>
+      <div class="bg-[#D9E8E3] flex flex-col justify-center items-center p-4 rounded shadow">
+        <h4 class="font-bold text-[#2C7C79]" appCountUp [endValue]="1"></h4>
+        <p class="text-[#2C7C79]">Nombre Total Tests</p>
+      </div>
+    </div>
+  </div>
+  <!-- Trasanction -->
+  <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-lg p-6">
+    <!-- En-tête -->
+    <div class="flex justify-between items-center border-b pb-3 mb-4">
+      <h3 class="text-lg font-bold text-[#2C7C79]">Transactions</h3>
+      <a routerLink="/core/admin/transaction">
+        <span class="text-lg text-[#2C7C79] hover:underline cursor-pointer">Voir plus</span>
+      </a>
+    </div>
+
+    <!-- Liste des Transactions -->
+    <div class="space-y-4">
+      <div class="p-4 bg-gray-100 rounded-lg shadow-sm flex justify-between items-center"
+        *ngFor="let parcour of parcourAchetes | slice:0:2">
+        <div class="flex flex-col">
+          <span class="text-[#2C7C79] font-medium">{{ parcour.parcour.nom_parcour }}</span>
+          <span class="text-gray-500 text-sm">Prix : {{ parcour.parcour.prix }} FCFA</span>
+        </div>
+        <span class="text-gray-600 text-sm">{{ parcour.parcour.created_at | date:'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 
@@ -104,5 +153,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
 </div>
 

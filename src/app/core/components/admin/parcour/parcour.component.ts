@@ -16,8 +16,10 @@ import { SharedModule } from '../../../../shared/shared.module';
 export class ParcourComponent implements OnInit {
 
   parcours: Parcour[] = [];
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   status: string = "";
+  currentPage: number = 1; // Page actuelle
+  itemsPerPage: number = 5; // Nombre d'éléments par page
 
   constructor(private service: ApprenantService) { }
 
@@ -53,6 +55,23 @@ export class ParcourComponent implements OnInit {
       }
     })
   }
+
+  // Méthode pour calculer le nombre total de pages
+  get totalPages() {
+    return Math.ceil(this.parcours.length / this.itemsPerPage);
+  }
+  // Méthode pour changer de page
+  changePage(page: number) {
+    this.currentPage = page;
+  }
+
+  // Méthode pour récupérer les données à afficher pour la page actuelle
+  get paginatedResultats() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.parcours.slice(startIndex, endIndex);
+  }
+
 
 
 

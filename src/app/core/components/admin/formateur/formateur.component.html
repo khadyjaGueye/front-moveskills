@@ -1,0 +1,81 @@
+<div class="mr-5 flex justify-end p-4">
+  <div class="w-full max-w-sm min-w-[200px] relative">
+    <div class="relative">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
+        placeholder="Rechercher par nom ou email..." />
+      <button (click)="searchTerm = ''" *ngIf="searchTerm" class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+          class="w-8 h-8 text-slate-600">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="bg-white shadow rounded p-4 w-full">
+  <h2 class="text-lg font-bold text-[#2C7C79] mb-4 flex justify-center items-center">Liste des formateurs</h2>
+  <table class="min-w-full table-auto">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-inter">#</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-inter">Nom</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-inter">Email</th>
+        <th class="px-6 py-3 text-left text-[#2C7C79] font-inter">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let formateur of filteredApprenants;let i = index">
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ i+1 }}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{ formateur.name}}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">{{formateur.email}}</td>
+        <td class="px-6 py-3 border-b text-[#2C7C79]">
+          <svg class="text-[#F9BD4F]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+            width="16" height="16">
+            <path
+              d="M12.6844 4.02547C12.4588 4.00646 12.2306 3.9967 12 3.9967C7.58172 3.9967 4 7.57843 4 11.9967C4 16.415 7.58172 19.9967 12 19.9967C16.4183 19.9967 20 16.415 20 11.9967C20 11.7662 19.9902 11.5379 19.9711 11.3123C19.8996 10.4646 19.6953 9.6442 19.368 8.87344L20.8682 7.37114C21.2031 8.01192 21.4706 8.6935 21.6613 9.40649C21.8213 10.0063 21.9258 10.6222 21.9723 11.248C21.9907 11.4952 22 11.7449 22 11.9967C22 17.5196 17.5228 21.9967 12 21.9967C6.47715 21.9967 2 17.5196 2 11.9967C2 6.47386 6.47715 1.9967 12 1.9967C12.2518 1.9967 12.5015 2.00601 12.7487 2.02431C13.3745 2.07081 13.9904 2.17542 14.5898 2.3358C15.3032 2.52609 15.9848 2.79359 16.6256 3.1285L15.1247 4.62934C14.3525 4.30143 13.5321 4.09707 12.6844 4.02547ZM20.4853 2.09721L21.8995 3.51142L12.7071 12.7038L11.2954 12.7063L11.2929 11.2896L20.4853 2.09721Z">
+            </path>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red" width="16" height="16"
+            style="cursor: pointer;">
+            <path
+              d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z">
+            </path>
+          </svg>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination controls -->
+  <div class="pagination flex justify-center mt-4">
+    <!-- Bouton Précédent -->
+    <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300" [disabled]="currentPage === 1"
+      (click)="changePage(currentPage - 1)">
+      Précédent
+    </button>
+
+    <!-- Boutons pour les pages -->
+    <button *ngFor="let page of [].constructor(totalPages); let pageIndex = index" class="px-4 py-2 mx-1" [ngClass]="{
+        'bg-[#114C5A] text-white': currentPage === pageIndex + 1,
+        'bg-gray-200 text-gray-700': currentPage !== pageIndex + 1
+      }" (click)="changePage(pageIndex + 1)">
+      {{ pageIndex + 1 }}
+    </button>
+
+    <!-- Bouton Suivant -->
+    <button class="px-4 py-2 mx-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
+      [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+      Suivant
+    </button>
+  </div>
+
+</div>
+
+<div *ngIf="isLoading">
+  <app-loarder></app-loarder>
+</div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import ApexCharts from 'apexcharts';
 import { ApprenantService } from '../../apprenant/service/apprenant.service';
 import { environment } from '../../../../../environments/environment.development';
-import { Parcour, User } from '../../../../interfaces/model';
+import { NombreParcourAchete, Parcour, User } from '../../../../interfaces/model';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -27,7 +27,7 @@ export class TableauComponent implements OnInit {
   superviseurs: User[] = [];
   nombreParcourPublies: Parcour[] = [];
   parcourNonPublies: Parcour[] = []
-  parcourAchetes: Parcour[] = [];
+  parcourAchetes: NombreParcourAchete[] = [];
   nombreInscrits: number = 0;
   nombreApprenants: number = 0;
   nombreFormateur: number = 0;
@@ -163,6 +163,7 @@ export class TableauComponent implements OnInit {
         this.nombreApprenants = this.apprenants_ayant_achete.length;
         this.top_parcours = resp.data.top_parcours;
 
+
         this.parcours = resp.data.nombreTotalParcours
         this.nombreParcourTotal = this.parcours.length;
 
@@ -176,6 +177,8 @@ export class TableauComponent implements OnInit {
         this.nombreParcoursTotalNonPublier = this.parcourNonPublies.length
 
         this.parcourAchetes = resp.data.nombreParcourAchete
+        console.log(this.parcourAchetes);
+
         this.nombreParcourTotalAcheter = this.parcourAchetes.length
 
         const months = resp?.data?.months || []; // Utilisation d'une valeur par défaut si undefined

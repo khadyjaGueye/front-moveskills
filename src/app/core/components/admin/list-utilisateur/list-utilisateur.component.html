@@ -1,23 +1,23 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
   <div
     class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-green-300 to-green-500 text-white">
-    <h3 class="text-xl font-bold">Nombre total des utilisateurs</h3>
-    <p class="text-2xl font-semibold">
-      <span>100</span>
+    <h3 class="text-xl font-bold">Nombre apprenant achéter parcours</h3>
+    <p class="text-2xl font-semibold" appCountUp [endValue]="2">
+      <span>2</span>
     </p>
   </div>
   <div
     class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-blue-300 to-blue-500 text-white">
-    <h3 class="text-xl font-bold">Nombre total Formateurs</h3>
-    <p class="text-2xl font-semibold">
-      <span>100</span>
+    <h3 class="text-xl font-bold">Nombre apprenant commencer parcours</h3>
+    <p class="text-2xl font-semibold" appCountUp [endValue]="2">
+      <span>2</span>
     </p>
   </div>
   <div
     class="card p-4 rounded-lg shadow-md flex flex-col items-center justify-center bg-gradient-to-r from-yellow-300 to-yellow-500 text-white">
-    <h3 class="text-xl font-bold">Nombre total superviseurs</h3>
-    <p class="text-2xl font-semibold">
-      <span>100</span>
+    <h3 class="text-xl font-bold">Nombre apprenants commencer et derminer parcours</h3>
+    <p class="text-2xl font-semibold" appCountUp [endValue]="0">
+      <span>0</span>
     </p>
   </div>
   <div
@@ -34,11 +34,11 @@
   <div class="w-full max-w-sm min-w-[200px] relative">
     <div class="relative">
       <input
+        type="text"
         [(ngModel)]="searchTerm"
-        (input)="filterResultats()"
         class="bg-white w-full pr-11 h-10 pl-3 py-2 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md"
         placeholder="Rechercher par nom ou email..." />
-      <button class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded" type="button">
+      <button (click)="searchTerm = ''" *ngIf="searchTerm" class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex items-center bg-white rounded" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
           class="w-8 h-8 text-slate-600">
           <path stroke-linecap="round" stroke-linejoin="round"
@@ -48,6 +48,7 @@
     </div>
   </div>
 </div>
+
 <div class="flex justify-center gap-5 items-center mt-5 p-4">
   <!-- Bouton Imprimer la liste -->
   <button

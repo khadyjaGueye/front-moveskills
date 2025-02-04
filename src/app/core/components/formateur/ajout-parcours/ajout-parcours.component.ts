@@ -205,7 +205,7 @@ export class AjoutParcoursComponent implements OnInit {
 
   // Ajouter une aptitude à la liste finale
   addToFinalAptitudes(apt: Aptitude): void {
-    console.log(this.finalAptitudes);
+   // console.log(this.finalAptitudes);
     if (!this.finalAptitudes.find(a => a.id === apt.id)) {
       this.finalAptitudes.push(apt);
       //console.log(apt);

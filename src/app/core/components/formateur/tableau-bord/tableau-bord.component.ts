@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import ApexCharts from 'apexcharts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
-import { Parcour, ParcoursPlusAchetes, Transactions, User, UserAchetesParcourDetails } from '../../../../interfaces/model';
+import { NombreParcourAchete, Parcour, ParcoursPlusAchetes, Transactions, User, UserAchetesParcourDetails } from '../../../../interfaces/model';
 import { ApprenantsAyantAchete, Inscrit, PurchasedParcour, TopParcour, Vente } from '../../admin/interface/model';
 import { FormateurService } from '../service/formateur.service';
 import { environment } from '../../../../../environments/environment.development';
@@ -29,7 +29,8 @@ export class TableauBordComponent implements OnInit {
   parcoursPlusAchetes: ParcoursPlusAchetes[] = []
   vente_par_mois: number[] = []
   nombreInscrits: number = 0;
-  affiations: User[] = []
+  affiations: User[] = [];
+   parcourAchetes: NombreParcourAchete[] = [];
   nombretotalAffilition: number = 0;
   nombreApprenants: number = 0;
   nombreFormateur: number = 0;
@@ -40,7 +41,8 @@ export class TableauBordComponent implements OnInit {
   nbreAffiliationsNonInscris: number = 0;
   nbreAffiliationsInscris: number = 0;
   registeredAffiliations: User[] = []
-  notregisteredAffiliations: User[] = []
+  notregisteredAffiliations: User[] = [];
+  isLoading: boolean = false;
 
 
   constructor(private service: FormateurService) { }
@@ -151,9 +153,11 @@ export class TableauBordComponent implements OnInit {
 
 
   getDataParcour(filtre: string) {
+    this.isLoading = true
     this.service.url = `${environment.apiBaseUrl}dashboard/formateur?filter=${filtre}`;
     this.service.all().subscribe({
       next: (response) => {
+        this.isLoading = false
         this.nombreAchat = response.data.nombreAchat;
         this.transactions = response.data.transactions;
         this.parcoursPlusAchetes = response.data.parcoursPlusAchetes;
@@ -163,7 +167,7 @@ export class TableauBordComponent implements OnInit {
         this.registeredAffiliations = response.data.registeredAffiliations;
 
         this.nbreAffiliationsInscris = this.registeredAffiliations.length
-        
+
         this.notregisteredAffiliations = response.data.notregisteredAffiliations;
         this.nbreAffiliationsNonInscris = this.notregisteredAffiliations.length
         this.userAchetesParcourDetails = response.data.userAchetesParcourDetails
